@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MultilevelSidebar from "react-multilevel-sidebar";
 import "react-multilevel-sidebar/src/Sidebar.css";
 import "./CSS/navbar.css"
+import { Link } from "react-router-dom";
 let options = [
     {
         name: "",
@@ -10,7 +11,7 @@ let options = [
         content: [
             {
                 id: 1,
-                name: "PLANTS",
+                name: "BIKES",
                 children: [
                     {
                         content: [
@@ -30,7 +31,7 @@ let options = [
             },
             {
                 id: 8,
-                name: "SEEDS",
+                name: "CARS",
                 children: [
                     {
                         content: [
@@ -115,13 +116,13 @@ let options = [
 ];
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, handleClick] = useState(false);
 
-    const handleSidebarToggle = isOpen => {
-        setIsOpen(isOpen);
-    };
+    // const handleSidebarToggle = isOpen => {
+    //     setIsOpen(isOpen);
+    // };
 
-    const handleClick = itemOptions => {
+    const menuClicked = itemOptions => {
         /* 
             do something with the item you clicked.
             you can also send custom properties of your choice
@@ -134,27 +135,26 @@ const Navbar = () => {
         <>
             <MultilevelSidebar
                 open={isOpen}
-                onToggle={handleSidebarToggle}
+                onToggle={ ()=>handleClick(!isOpen)}
                 options={options}
                 header="SecondSpin"
-                onItemClick={handleClick}
+                onItemClick={menuClicked}
             />
             <div className="headerDiv">
                 <i
-                    className="fa fa-bars menuIcon"
+                    className="bi bi-justify"
                     onClick={() => handleClick(true)}
                     aria-hidden="true"
                 ></i>
 
-                {/* <Link to="/"> */}
-                    <div className="logo">
-                        <img src="./images/logo.png" width="60"
-                        />
-                    </div>
-                {/* </Link> */}
+                <Link to="/">
+                <div className="logo">
+                    <img src="./images/logo.png" width="60"
+                    />
+                </div>
+                </Link>
             </div>
 
-            <i className="bi bi-justify" onClick={() => handleSidebarToggle(true)}></i>
         </>
     );
 };
