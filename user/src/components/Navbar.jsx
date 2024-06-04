@@ -131,7 +131,7 @@ const Navbar = () => {
     };
 
     return (
-        <div>
+        <>
             <MultilevelSidebar
                 open={isOpen}
                 onToggle={handleSidebarToggle}
@@ -155,7 +155,7 @@ const Navbar = () => {
             </div>
 
             <i className="bi bi-justify" onClick={() => handleSidebarToggle(true)}></i>
-        </div>
+        </>
     );
 };
 

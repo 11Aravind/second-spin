@@ -38,7 +38,7 @@ const Home = () => {
             <div className="banner-container">
                 <img src="./images/banner.png" alt="" />
             </div>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" style={{ "marginTop": "40px" }}>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" style={{"margin": "0px 113px", "marginTop": "40px" }}>
                 {
                     categorys.map((category, index) => (
                         <div className="col-6 col-sm-6 col-md-4 col-lg-3" key={index}>
