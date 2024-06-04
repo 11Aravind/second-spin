@@ -1,0 +1,120 @@
+:root {
+    --backgroundColor: #353a47;
+    --textColor: #f9f5ff;
+    --font-family: Outfit, sans-serif !important;
+    --backgroundHover: #090a0d;
+}
+
+body {
+    font-family: var(--font-family);
+}
+
+.multi-level-menu-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 300px;
+    background-color: var(--backgroundColor);
+    overflow: hidden;
+}
+
+.multi-level-menu-wrapper ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.multi-level-menu-wrapper ul li {
+    color: var(--textColor);
+}
+
+.multi-level-menu-wrapper ul li:hover {
+    background-color: var(--backgroundHover);
+    cursor: pointer;
+}
+
+.multi-level-menu-wrapper ul li a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--textColor);
+}
+
+.multi-level-menu-wrapper ul li a .icon {
+    margin-right: 10px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.multi-level-menu-wrapper ul li.hasSubMenu {
+    padding-right: 50px;
+    position: relative;
+}
+
+.multi-level-menu-wrapper ul li.hasSubMenu .trigger {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50px;
+}
+
+.multi-level-menu-wrapper .mainMenu,
+.multi-level-menu-wrapper .subMenu {
+    background-color: var(--backgroundColor);
+}
+
+.multi-level-menu-wrapper .subMenu {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 300px;
+    margin: auto;
+    transition: all ease-in-out 0.5s;
+}
+
+.multi-level-menu-wrapper .subMenu .backTrigger {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--textColor);
+}
+
+.multi-level-menu-wrapper .subMenu .backTrigger:hover {
+    background-color: var(--backgroundHover);
+    cursor: pointer;
+}
+
+.multi-level-menu-wrapper .subMenu .backTrigger .icon {
+    margin-right: 10px;
+}
+
+.multi-level-menu-wrapper .subMenu.active {
+    left: 0;
+}
+
+.menuIcon {
+    font-size: 2rem;
+}
+
+.headerDiv {
+    padding: 2% 4% 0.5% 4%;
+    align-items: center;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}

@@ -1,0 +1,24 @@
+.category{    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-transform: uppercase;
+    border: none;
+}
+.category-name{
+    color: #404040;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: -13px;
+    letter-spacing: -.025em;
+    display: block;
+}
+.category-img{
+    width: 190px;
+    height: 190px;
+}
+.banner-container img{
+    height: 440px;
+    width: 100%;
+}
