@@ -1,0 +1,21 @@
+.newprice{
+    color:var(--primary);
+    font-weight:600;
+}
+.singleRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+ .cart>i{
+    color: var(--text-color);
+    font-size: 19px;
+    padding: 7px;
+ }
+ .cart>i:hover{
+    /* background: lightgray;
+    border-radius: 50%; */
+    background: #d8d4d4;
+    border-radius: 50%;
+    color: white;
+ }
