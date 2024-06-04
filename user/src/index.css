@@ -1,4 +1,17 @@
-.category{    justify-content: center;
+*{
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --primary:#048c04;
+    --text-color:#ffe200
+    /* --primary:red; */
+}
+a{
+    text-decoration: none;
+}
+.category{   
+     justify-content: center;
     align-items: center;
     display: flex;
     text-transform: uppercase;
