@@ -36,6 +36,7 @@
    letter-spacing: -.03em;
 }
 .productdetails-price{
+   display: flex;
    color: #000;
    font-weight: 600;
    font-size: 14px;

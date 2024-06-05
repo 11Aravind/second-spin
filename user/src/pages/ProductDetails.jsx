@@ -1,5 +1,5 @@
 import "./css/productdetails.css"
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 const ProductDetails = () => {
   const id=useParams()
   const product=[
@@ -36,7 +36,9 @@ const ProductDetails = () => {
               product={product}
               onClick={addProduct}
             /> */}
+            <Link to="/cart">
             <button className="btn btn-primary">ADD TO CART</button>
+            </Link>
             {/* {showCart && <Cart callbackShowCart={callbackShowCart} />} */}
           </div>
           <div className="sub-headding">
