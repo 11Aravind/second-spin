@@ -6,12 +6,14 @@ import Products from './pages/Products'
 import ProductDetails from "./pages/ProductDetails"
 import Cart from"./pages/Cart"
 import Login from "./pages/Login"
+import Signup from './pages/Signup'
 function App() {
 
   return (
     <div>
       <Navbar />
       <Routes>
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Products />} />

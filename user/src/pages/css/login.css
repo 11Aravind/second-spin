@@ -1,4 +1,4 @@
-.loginContainer {
+.main-container {
     width: 60%;
     top: 20%;
     height: 63%;
@@ -29,7 +29,7 @@
 .login-img>img{
     width: 100%;
 }
-.txtBox{
+.input-element{
     border: none;
     width: 50%;
     margin: 10px 5px;
