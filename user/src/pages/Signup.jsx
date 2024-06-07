@@ -1,4 +1,5 @@
 import { useState,useRef } from 'react';
+import {httpRequest} from "../api.js"
 const Signup = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const name = useRef("");
@@ -23,7 +24,7 @@ else{
     "username":name.current.value,
     "password":pass,
   }
-  httpRequest("post","",signupData)
+  httpRequest("post","server/user/signup",signupData)
   .then((res)=>console.log(res))
   .catch((err)=>console.log(err));
   console.log(signupData);
@@ -41,7 +42,7 @@ else{
         className="input-element"
         placeholder={focusedInput === name ? '' : placeholder}
         onFocus={() => handleFocus(name)}
-        onBlur={handleBlur}
+        onBlur={()=>setFocusedInput(null)}
       />
     </div>
   );
