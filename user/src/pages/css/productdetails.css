@@ -18,14 +18,18 @@
    width: 100%;
 
 }
-.left-container{
+.left{
    /* width: 30%; */
-   width: 440px;
+   width: 50%;
    float: left;
 }
-.rigt-container{
+   .left>img{
+      width:100%;
+      padding: 27px;
+}
+.rigt{
    /* width: 70%; */
-   width: 750px;
+   width: 50%;
    
 }
 .product-title{

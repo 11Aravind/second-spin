@@ -2,6 +2,7 @@ import "./css/productdetails.css"
 import { Link, useParams } from "react-router-dom";
 const ProductDetails = () => {
   const id=useParams()
+  console.log(id);
   const product=[
     {
       "_id": "66026c09744acd3776cb5b59",
@@ -16,12 +17,12 @@ const ProductDetails = () => {
   }
   ];
   return (
-    <div>
+    <div className="spaceing">
       <div className="productDetails-container">
-        <div className="left-container">
+        <div className="left">
           {product && <img src={ product[0].image} alt="" />}
         </div>
-        <div className="rigt-container">
+        <div className="rigt">
           <div className="product-name">
             {product[0].name}
           </div>
@@ -37,7 +38,7 @@ const ProductDetails = () => {
               onClick={addProduct}
             /> */}
             <Link to="/cart">
-            <button className="btn btn-primary">ADD TO CART</button>
+            <button className="small-btn">ADD TO CART</button>
             </Link>
             {/* {showCart && <Cart callbackShowCart={callbackShowCart} />} */}
           </div>

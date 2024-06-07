@@ -1,5 +1,27 @@
-import "./css/login.css"
+import "./css/login.css";
+import { useRef ,useState } from "react";
 const Login = () => {
+  const name = useRef("");
+  const password = useRef("");
+  const [focusedInput, setFocusedInput] = useState(null);
+  const handleFocus = (inputName) => {
+    setFocusedInput(inputName);
+  };
+
+  const renderInput = (type,name, placeholder, reference) => (
+    <div className="input-container">
+      {focusedInput === name ? <label>{placeholder}</label> : null}
+      <input
+        type={type}
+        name={name}
+        ref={reference}
+        className="input-element"
+        placeholder={focusedInput === name ? '' : placeholder}
+        onFocus={() => handleFocus(name)}
+        onBlur={()=> setFocusedInput(null)}
+      />
+    </div>
+  );
   return (
     <div className="main-container">
       <div className="left-container">
@@ -9,8 +31,8 @@ const Login = () => {
       </div>
       <div className="right-container">
         <h4 className="headding">Login</h4>
-        <input type="text" className="input-element" placeholder="Enter username " />
-        <input type="password" className="input-element" placeholder="Enter password" />
+        {renderInput("text",'username', 'Username', name)}
+        {renderInput("password",'Password', 'Password', password)}
         <button className="flatBtn">Login</button>
       </div>
     </div>
