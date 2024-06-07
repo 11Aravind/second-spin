@@ -17,7 +17,7 @@ export const getUserDetails = async (req, res, next) => {
 
 
 export const signupMiddleware = async (req, res, next) => {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
     let existingEmail;
     try {
         existingEmail = await User.findOne({ email })
@@ -30,7 +30,6 @@ export const signupMiddleware = async (req, res, next) => {
     const hashedPassword = bcrypt.hashSync(password)
 
     const user = new User({
-        name,
         email,
         password: hashedPassword
     });

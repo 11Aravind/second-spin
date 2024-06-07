@@ -31,30 +31,41 @@ app.use(cors())
 // app.use('/', express.static('uploads'));
 
 app.use(express.static('uploads'));
-app.use("/api/user", userRouter);
-app.use("/api/blog", blogRouter);
-app.use("/api/gallery", galleryRouter);
-app.use("/api/category", categoryRouter);
-app.use("/api/product", productRouter);
-app.use("/api/admin", adminRouter);
-app.use("/api/order", orderRouteer);
+app.use("/server/user", userRouter);
+app.use("/server/blog", blogRouter);
+app.use("/server/gallery", galleryRouter);
+app.use("/server/category", categoryRouter);
+app.use("/server/product", productRouter);
+app.use("/server/admin", adminRouter);
+app.use("/server/order", orderRouteer);
 
 
-mongoose.connect('mongodb://localhost:27017/petsworlds', {
+// mongoose.connect('mongodb://localhost:27017/petsworlds', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// }).then(() => {
+//   console.log(`Connected to MongoDB in port  ${PORT}`);
+//   app.listen(PORT);
+// }).catch((error) => {
+//   console.error('Error connecting to MongoDB:', error);
+// });
+
+// mongodb+srv://aravindas247:<password>@cluster0.21ylyi6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+mongoose.connect("mongodb+srv://aravindas247:JK6JJzd4lgT6awpY@cluster0.21ylyi6.mongodb.net/?retryWrites=true&w=majority",{
   useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log(`Connected to MongoDB in port  ${PORT}`);
-  app.listen(PORT);
-}).catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
+  useUnifiedTopology: true,
+  // You can add more options here
+})
+.then(() => {
+  console.log('Connected to MongoDB Atlas');
+})
+.catch((error) => {
+  console.error('Error connecting to MongoDB Atlas:', error);
 });
-
-//app.use("/api/user",router)
-// mongoose.connect("mongodb+srv://aravindas247:JK6JJzd4lgT6awpY@cluster0.21ylyi6.mongodb.net/?retryWrites=true&w=majority")
-// mongoose.connect('mongodb://localhost:27017/myDB', {
+//  {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true
 // },(err)=>console.log(err)).then(()=>app.listen(PORT))
 // .then(()=>console.log(`db connection was success in port ${PORT} `))
 // .catch((err)=>console.log(err));
+app.listen(5001,()=>console.log("the server was running in port 5001"));

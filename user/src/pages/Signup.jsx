@@ -21,7 +21,7 @@ console.log("confirm and pass wird was not matched");
   }
 else{
   const signupData={
-    "username":name.current.value,
+    "email":name.current.value,
     "password":pass,
   }
   httpRequest("post","server/user/signup",signupData)
@@ -57,7 +57,7 @@ else{
       </div>
       <div className="right-container">
         <h4 className="headding">Signup</h4>
-        {renderInput("text",'username', 'Username', name)}
+        {renderInput("text",'Email', 'Email', name)}
         {renderInput("password",'Password', 'Password', password)}
         {renderInput("password",'Confirm Password', 'Confirm Password', confirmpassword)}
         <button className="flatBtn" onClick={handleSignUp}>Signup</button>
