@@ -1,4 +1,5 @@
 import CategoeryCard from "../components/CategoeryCard"
+import CategoryFilter from "../components/CategoryFilter"
 import Products from "./Products"
 const Home = () => {
   
@@ -9,6 +10,7 @@ const Home = () => {
             </div>
            <CategoeryCard/>
            <Products/>
+           <CategoryFilter/>
         </div>
     )
 }

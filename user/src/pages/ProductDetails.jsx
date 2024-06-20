@@ -7,7 +7,7 @@ const ProductDetails = () => {
     {
       "_id": "66026c09744acd3776cb5b59",
       "name": "FOFOS Dog Toys - Woodplay Bone",
-      "image": "https://www.buyautoparts.com/data/sm_images/14-sd1733new.-map1.jpg",
+      "image": "https://ic.carid.com/lumen/items/custom-headlights_6.jpg",
       "description": "Fofos woodplay bone is a dog chew toy that is great for teeth and gums. This toy comes as a set of two toys that can help massage your dog's gums and maintain good oral hygiene. This toy contains real wood and acts as a perfect furniture substitute. bone toys such as this allow your dog to chew, bite, fetch and play while getting the right amount of exercise and also make playtime interactive. This toy is ideal for small-medium dogs (5-20kg) of various breeds such as dachshund, pom, spitz, etc above 1 year of age. This toy is strong but not indestructible and is best suited for pet dogs that have moderate chewing and playing styles. Not recommended for aggressive chewers.",
       "oldPrice": 399,
       "newPrice": 359,

@@ -132,3 +132,34 @@ body {
     font-size: 23px;
 
 }
+.left-navcontainer{
+    display: flex;
+}
+.mobileNavSymbol{
+    font-size: 40px;
+    padding-right: 13px;
+}
+.logo{
+    width: 50%;
+}
+.logo>img{
+    width: 100%;
+}
+.cart-count{
+    position: relative;
+    right: 7px;
+    top: -12px;
+    font-size: 10px;
+    color: white;
+    background: #298015;
+    /* height: 16px; */
+    padding: 3px 4px;
+    border-radius: 50%;
+
+}
+.card.h-100 {
+    border: none;
+}
+.card.h-100:hover{
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+}

@@ -143,8 +143,9 @@ const Navbar = () => {
                 onItemClick={menuClicked}
             />
             <div className="headerDiv">
-                <i
-                    className="bi bi-justify"
+               <div className="left-navcontainer">
+               <i
+                    className="bi bi-justify mobileNavSymbol"
                     onClick={() => handleClick(true)}
                     aria-hidden="true"
                 ></i>
@@ -152,9 +153,10 @@ const Navbar = () => {
                 <Link to="/">
                     <div className="logo">
                         <img src="./images/logo.png" width="60"
-                        />SecondSpin
+                        />
                     </div>
                 </Link>
+               </div>
                 <div className="searchBox">
                     <ReactSearchBox
                         placeholder="Search by Make Model Year,Product Type,Part Number,or Brand..."
@@ -192,7 +194,10 @@ const Navbar = () => {
                 {/* <input className="" id="disabledInput" type="text" placeholder="Select your Vehicle"></input> */}
               <div className="icons">
               <i class="bi bi-person-circle"></i>
-              <i class="bi bi-cart"></i>
+             <Link to="/cart">
+             <i class="bi bi-cart"></i>
+             <small className="cart-count">1</small>
+             </Link>
               </div>
             </div>
 

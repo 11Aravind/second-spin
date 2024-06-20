@@ -1,0 +1,23 @@
+.cart-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+}
+.cart-icon{
+    width: 16%;
+}
+.cart-icon>img{
+width: 100%;
+}
+.keep-shoppingBtn{
+    color: white;
+    background: var(--primary);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+.cart-msg{
+    padding: 13px 0px;
+}

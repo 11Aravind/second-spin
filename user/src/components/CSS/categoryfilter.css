@@ -1,0 +1,6 @@
+.portfolio-block h2.category-title{
+    text-transform: uppercase;
+  }
+  .items .item{
+    display: inline-block;
+  }

@@ -7,6 +7,14 @@
     justify-content: space-around;
     margin-bottom: 0px;
 }
+.bottomNavcontainer>li{
+    color: #111;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 10px;
+}
 a{
 
     text-decoration: none;
