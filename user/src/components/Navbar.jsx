@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import MultilevelSidebar from "react-multilevel-sidebar";
+import ReactSearchBox from "react-search-box";
 import "react-multilevel-sidebar/src/Sidebar.css";
 import "./CSS/navbar.css"
+
 import { Link } from "react-router-dom";
 let options = [
     {
@@ -135,7 +137,7 @@ const Navbar = () => {
         <>
             <MultilevelSidebar
                 open={isOpen}
-                onToggle={ ()=>handleClick(!isOpen)}
+                onToggle={() => handleClick(!isOpen)}
                 options={options}
                 header="SecondSpin"
                 onItemClick={menuClicked}
@@ -148,11 +150,50 @@ const Navbar = () => {
                 ></i>
 
                 <Link to="/">
-                <div className="logo">
-                    <img src="./images/logo.png" width="60"
+                    <div className="logo">
+                        <img src="./images/logo.png" width="60"
+                        />SecondSpin
+                    </div>
+                </Link>
+                <div className="searchBox">
+                    <ReactSearchBox
+                        placeholder="Search by Make Model Year,Product Type,Part Number,or Brand..."
+                        data={[
+                            {
+                                key: "john",
+                                value: "John Doe"
+                            },
+                            {
+                                key: "jane",
+                                value: "Jane Doe"
+                            },
+                            {
+                                key: "mary",
+                                value: "Mary Phillips"
+                            },
+                            {
+                                key: "robert",
+                                value: "Robert"
+                            },
+                            {
+                                key: "karius",
+                                value: "Karius"
+                            }
+                        ]}
+                        onFocus={() => {
+                            console.log("This function is called when is focussed");
+                        }}
+                        onChange={(value) => console.log(value)}
+                        autoFocus
+                        leftIcon={<><i class="bi bi-search"></i></>}
+                        iconBoxSize="48px"
                     />
                 </div>
-                </Link>
+                {/* <input className="" id="disabledInput" type="text" placeholder="Select your Vehicle"></input> */}
+              <div className="icons">
+              <i class="bi bi-person-circle"></i>
+              <i class="bi bi-cart"></i>
+              </div>
             </div>
 
         </>
