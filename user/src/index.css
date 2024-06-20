@@ -35,3 +35,14 @@ a{
     height: 440px;
     width: 100%;
 }
+.spaceing{
+    padding: 22px 61px;
+}
+.small-btn{
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}

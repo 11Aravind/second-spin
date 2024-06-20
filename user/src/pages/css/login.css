@@ -1,0 +1,70 @@
+.main-container {
+    width: 60%;
+    top: 20%;
+    height: 63%;
+    left: 19%;
+    position: absolute;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+}
+
+.left-container {
+    width: 50%;
+}
+
+.right-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: unset;
+}
+
+.login-img {
+    /* width: 50%; */
+}
+
+.login-img>img{
+    width: 100%;
+}
+.input-element{
+    border: none;
+    /* width: 50%; */
+    margin: 10px 5px;
+    padding: 3px 9px;
+    outline: none;
+    border-bottom: 1px solid;
+
+}
+.flatBtn{
+    background-color: var(--primary);
+    border: none;
+    color: white;
+    width: 50%;
+    /* margin-top: 14px; */
+    padding: 4px 0px;
+    border-radius: 4px;
+}
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-size: 12px;
+    color: #333;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
+  .headding{
+    margin-bottom: 33px;
+  }
