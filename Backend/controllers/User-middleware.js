@@ -28,6 +28,7 @@ export const signupMiddleware = async (req, res, next) => {
         return res.status(400).json({ message: "user already exist", status: "failed" })
 
     const hashedPassword = bcrypt.hashSync(password)
+    console.log(hashedPassword);
 
     const user = new User({
         email,

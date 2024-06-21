@@ -6,12 +6,12 @@ const Login = () => {
   const passwordRef = useRef();
   const confirmRef = useRef();
   const [msg, setMessage] = useState(false);
-  // const showHideMessage = (msg) => {
-  //   setMessage(msg);
-  //   setTimeout(() => {
-  //     setMessage("");
-  //   }, 3000);
-  // }
+  const showHideMessage = (msg) => {
+    setMessage(msg);
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  }
   const checkPasswordLength = (e) => {
     const currentValue = e.target.value;
     if (currentValue.length < 6) {
