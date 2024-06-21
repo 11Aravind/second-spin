@@ -42,12 +42,13 @@ const Login = () => {
     const passsword=passwordRef.current.value 
     const signupData={
       "email":email,
-      "passsword":passsword,
+      "password":passsword,
     }
     httpRequest('post', 'api/user/signup', signupData)
     .then((res) => {
-      dispatch(setRoute("/signup"))
-      navigate("/login")
+      // dispatch(setRoute("/signup"))
+      // navigate("/login")
+      console.log("value was inserted successfu;ly");
     })
     .catch((err) =>  {
       showHideMessage("Something went wrong try again")

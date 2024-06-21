@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom"
 import "./css/login.css"
+import {httpRequest} from "../api.js"
 import {useRef,useState} from "react"
 const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [msg, setMessage] = useState(false);
+  const showHideMessage = (msg) => {
+    setMessage(msg);
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  }
   const checkPasswordLength = (e) => {
     const currentValue = e.target.value;
     if (currentValue.length < 6) {
@@ -13,6 +20,24 @@ const Login = () => {
     else {
       setMessage("")
     }
+  }
+  const submitLoginForm=()=>{
+    const email=emailRef.current.value
+    const password=passwordRef.current.value
+    const loginData={
+      "email":email,
+      "password":password
+    }
+    httpRequest('post', 'api/user/login', loginData)
+    .then((res) => {
+      // dispatch(setRoute("/signup"))
+      // navigate("/login")
+      console.log('adich keri vaa');
+    })
+    .catch((err) =>  {
+      showHideMessage("Something went wrong try again")
+    console.log(err);
+    });
   }
   const validateEmail = (e) => {
     const email = e.target.value
@@ -40,7 +65,7 @@ const Login = () => {
       required/>
       <label htmlFor="password">Password</label>
     </div>
-    <button className="login-button">Sign In</button>
+    <button className="login-button" onClick={submitLoginForm}>Sign In</button>
     <Link to="/signup" className="forgot-password">New to Second spin? Create an account</Link>
   </div>  
 </div> 
