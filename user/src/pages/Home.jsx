@@ -9,8 +9,8 @@ const Home = () => {
                 <img src="./images/banner.png" alt="" />
             </div>
            <CategoeryCard/>
-           <Products/>
            <CategoryFilter/>
+           <Products/>
         </div>
     )
 }
