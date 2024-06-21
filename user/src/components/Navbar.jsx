@@ -187,15 +187,15 @@ const Navbar = () => {
                         }}
                         onChange={(value) => console.log(value)}
                         autoFocus
-                        leftIcon={<><i class="bi bi-search"></i></>}
+                        leftIcon={<><i className="bi bi-search"></i></>}
                         iconBoxSize="48px"
                     />
                 </div>
                 {/* <input className="" id="disabledInput" type="text" placeholder="Select your Vehicle"></input> */}
               <div className="icons">
-              <i class="bi bi-person-circle"></i>
+              <i className="bi bi-person-circle"></i>
              <Link to="/cart">
-             <i class="bi bi-cart"></i>
+             <i className="bi bi-cart"></i>
              <small className="cart-count">1</small>
              </Link>
               </div>
