@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import "./CSS/categoryfilter.css"
 function CategoryFilter() {
-  const [visibleBlocks, setVisibleBlocks] = useState([]);
+  const [visibleBlocks, setVisibleBlocks] = useState("");
 
   useEffect(() => {
-    setVisibleBlocks(['all']);
+    setVisibleBlocks('all');
   }, []);
 
   const handleCategoryClick = (e) => {
     const type = e.target.dataset.catSource;
+    console.log(type);
     if (type === 'all') {
-      setVisibleBlocks(['all']);
+      setVisibleBlocks('all');
     } else {
-      setVisibleBlocks([type]);
+      setVisibleBlocks(type);
     }
   };
 
   return (
-    <div>
+    <div className='filter-container'>
       <div className="categories-filter">
-        <button className="btn-cat" data-cat-source="all" onClick={handleCategoryClick}>
-          All
+        <button className={visibleBlocks==="all"?"btn-cat active-link":"btn-cat"} data-cat-source="all" onClick={handleCategoryClick}>
+        Top Categories
         </button>
-        <button className="btn-cat" data-cat-source="cat-1" onClick={handleCategoryClick}>
-          Category 1
-        </button>
-        <button className="btn-cat" data-cat-source="cat-2" onClick={handleCategoryClick}>
-          Category 2
-        </button>
+        <button className={visibleBlocks==="cat-1"?"btn-cat active-link":"btn-cat"} data-cat-source="cat-1" onClick={handleCategoryClick}>
+Parts       
+ </button>
+        <button className={visibleBlocks==="cat-2"?"btn-cat active-link":"btn-cat"} data-cat-source="cat-2" onClick={handleCategoryClick}>
+Wheels &  Tires      </button>
       </div>
       <div className="portfolio-block" id="cat-1" style={{ display: visibleBlocks.includes('all') || visibleBlocks.includes('cat-1')? 'block' : 'none' }}>
         <h2 className="category-title">

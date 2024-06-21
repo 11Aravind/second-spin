@@ -4,3 +4,26 @@
   .items .item{
     display: inline-block;
   }
+  button.btn-cat {
+    background: #fff;
+    border: none;
+    margin: 0px 3px;
+    /* border-bottom: 2px solid #111; */
+    cursor: default;
+    /* text-shadow: 0 0 0 #111; */
+    padding: 6px 8px;
+  }
+  .filter-container{
+    /* margin: 4px 53px; */
+    margin: 40px 113px 0px;
+  }
+  .categories-filter{
+    border-bottom: 1px solid #e1e1e1;
+  }
+  .btn-cat.active-link{
+    border: 1px;
+    border-bottom: 2px solid #111;
+   text-shadow: 0 0 0 #111;
+   cursor: pointer;
+
+  }
