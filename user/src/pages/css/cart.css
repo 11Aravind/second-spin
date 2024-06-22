@@ -31,3 +31,23 @@ img{
 .imgContainer{
     width: 100px;
 }
+.main-cart-container{
+    display: flex;
+    justify-content: space-between;
+}
+.right{
+    width: 30%;
+}
+.left{
+    width: 66%;
+}
+.right-headding{
+    padding: 9px 0px;
+    color: #878787;
+    font-weight: 500;
+    border-bottom: 1px solid #f0f0f0;
+}
+.desc{
+    margin-left: 18px;
+    margin-top: 5px;
+}
