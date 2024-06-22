@@ -3,6 +3,7 @@ import MultilevelSidebar from "react-multilevel-sidebar";
 import ReactSearchBox from "react-search-box";
 import "react-multilevel-sidebar/src/Sidebar.css";
 import "./CSS/navbar.css"
+import { useCart } from "react-use-cart";
 
 import { Link } from "react-router-dom";
 let options = [
@@ -124,6 +125,8 @@ const Navbar = () => {
     //     setIsOpen(isOpen);
     // };
 
+    const { totalItems } = useCart();
+
     const menuClicked = itemOptions => {
         /* 
             do something with the item you clicked.
@@ -196,8 +199,9 @@ const Navbar = () => {
               <i className="bi bi-person-circle"></i>
              <Link to="/cart">
              <i className="bi bi-cart"></i>
-             <small className="cart-count">1</small>
+             <small className="cart-count">{totalItems}</small>
              </Link>
+             {/* <button class="keep-shoppingBtn">Login/Signup</button> */}
               </div>
             </div>
 

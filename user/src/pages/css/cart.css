@@ -21,3 +21,13 @@ width: 100%;
 .cart-msg{
     padding: 13px 0px;
 }
+.cart-row{
+    display: flex;
+    align-items: center;
+}
+img{
+    width: 100%;
+}
+.imgContainer{
+    width: 100px;
+}
