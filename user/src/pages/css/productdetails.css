@@ -44,7 +44,7 @@
    color: #000;
    font-weight: 600;
    font-size: 14px;
-   line-height: 2rem;
+   line-height: 3rem;
 }
 
 
@@ -60,6 +60,7 @@
    line-height: 30px;
    margin: 0 auto;
    text-align: justify;
+   padding: 3px 24px;
 }
 .product-featureCOntainer {
    align-items: center;
