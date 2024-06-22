@@ -1,8 +1,11 @@
+import { useState } from "react";
 import "./css/productdetails.css"
 import { Link, useParams } from "react-router-dom";
 const ProductDetails = () => {
   const id = useParams()
-  console.log(id);
+  const [description,isDescriptionVisible]=useState(true)
+  const [warenty,isWarrantyVisible]=useState(false)
+  // console.log(id);
   const product = [
     {
       "_id": "66026c09744acd3776cb5b59",
@@ -28,8 +31,8 @@ const ProductDetails = () => {
             {product[0].name}
           </div>
           <div className="price productdetails-price">
-            <div className="oldPrice"> ₹ {product && product[0].oldPrice}</div>
             <div className="newprice">₹ {product && product[0].newPrice}</div>
+            <div className="oldPrice"> ₹ {product && product[0].oldPrice}</div>
           </div>
           <div className="addToCart fixedBtn">
             {/* <ButtonComponent
@@ -43,32 +46,21 @@ const ProductDetails = () => {
             </Link>
             {/* {showCart && <Cart callbackShowCart={callbackShowCart} />} */}
           </div>
-          <div className="sub-headding-dropdown">
-            <div>Description</div>
-            <div className="icon"><i class="bi bi-chevron-down"></i></div>
+          <div className="sub-headding-dropdown" onClick={()=>isDescriptionVisible(!description)}>
+            <div >Description</div>
+            <div className="icon">{description?<i className="bi bi-chevron-up"></i>:<i className="bi bi-chevron-down"></i>}</div>
           </div>
           <div className="aboutProductDescription">
-            {product && product[0].description}
+
+            {description && product && product[0].description}
           </div>
-          <div className="sub-headding-dropdown">
-            <div>Warranty</div>
-            <div className="icon"><i class="bi bi-chevron-up"></i></div>
+          <div className="sub-headding-dropdown"  onClick={()=>isWarrantyVisible(!warenty)}>
+            <div >Warranty</div> 
+            <div className="icon">{warenty?<i className="bi bi-chevron-up"></i>:<i className="bi bi-chevron-down"></i>}</div>
           </div>
           <div className="aboutProductDescription">
-            {product && product[0].warranty}
+            {warenty && product && product[0].warranty}
           </div>
-          {/* <div className="product-featureCOntainer">
-            {
-              productFeature.map((feature, index) =>
-                <div className="shipping" key={index}>
-                  <img className="featureImage" src={feature.url} alt="" />
-                  <div className="feature">
-                    {feature.description}
-                  </div>
-                </div>
-              )
-            }
-          </div> */}
         </div>
       </div>
     </div>

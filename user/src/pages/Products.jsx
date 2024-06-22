@@ -71,8 +71,9 @@ const Products = () => {
                         <div className="card-title">{product.name}</div>
                         <div className="cart-footer">
                             <div className="singleRow">
-                                {/* <div className="oldPrice">₹{product.oldPrice}</div> */}
-                                <div className="newprice ">₹{product.newPrice}</div>
+                                <div className="newprice ">₹{product.newPrice}
+                                <div className="oldPrice">₹{product.oldPrice}</div>
+                                </div>
                                 <div className="cart"><i className="bi bi-cart"></i></div>
                             </div>
                         </div>
