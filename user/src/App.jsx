@@ -8,10 +8,12 @@ import Cart from"./pages/Cart"
 import Bottomnavbar from './components/Bottomnavbar'
 import Login from "./pages/Login"
 import Signup from './pages/Signup'
+import Topnavbar from './components/Topnavbar'
 function App() {
 
   return (
     <div>
+      <Topnavbar/>
       <Navbar />
       <Bottomnavbar/>
       <Routes>

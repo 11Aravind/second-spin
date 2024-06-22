@@ -1,0 +1,16 @@
+.top-navbar-container{
+    height: 28px;
+    background-color: var(--primary);
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 6px 32px;
+    font-size: 12px;
+}
+.whyus,.craditials,.email,.ic,.phone{
+    padding: 0 8px;
+}
+.white{
+    color: white;
+}

@@ -1,14 +1,15 @@
 
-import Navbar from "./components/Navbar";
-import {AllRoutes} from "./AllRoutes";
+import Navbar, { Topnavbar } from "./components/Navbar";
+import { AllRoutes } from "./AllRoutes";
 
-const App=()=> {
+const App = () => {
   return (
-  <div className="nav-container">
-  <Navbar/>
-  {/* <Table/> */}
-  <AllRoutes/>
-  </div>
+    <div className="nav-container">
+      <Topnavbar />
+      <Navbar />
+      {/* <Table/> */}
+      <AllRoutes />
+    </div>
 
   );
 }
