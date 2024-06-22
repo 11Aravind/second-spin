@@ -24,6 +24,9 @@ width: 100%;
 .cart-row{
     display: flex;
     align-items: center;
+    margin: 7px 0px;
+    background: #fff;
+    margin-top: 0px;
 }
 img{
     width: 100%;
@@ -34,12 +37,16 @@ img{
 .main-cart-container{
     display: flex;
     justify-content: space-between;
+    padding: 10px 0px;
 }
 .right{
-    width: 30%;
+    background:#fff;
+    width: 33%;
+    padding: 9px 21px;
 }
 .left{
     width: 66%;
+    /* background:#fff; */
 }
 .right-headding{
     padding: 9px 0px;
@@ -50,4 +57,8 @@ img{
 .desc{
     margin-left: 18px;
     margin-top: 5px;
+}
+.bg{
+    background: #f1f3f6;
+    padding: 25px 25px;
 }
