@@ -81,3 +81,6 @@ a {
 .headding {
     padding: 51px 0px;
 }
+.errorMsg{
+    color: red;
+}

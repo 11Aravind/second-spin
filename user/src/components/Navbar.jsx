@@ -114,6 +114,11 @@ let options = [
                     },
                 ],
             },
+            {
+                id:20,
+                name:"Signup/Signin",
+                rout:"/login"
+            },
         ],
     },
 ];

@@ -50,7 +50,7 @@ const Login = () => {
 <div className="login-container">
     {/* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/ICloud_logo.svg/1200px-ICloud_logo.svg.png" alt="iCloud Logo"/> */}
     <h1>Login</h1>
-    <p>{msg}</p>
+    <p className="errorMsg">{msg}</p>
     <div className="form-group">
       <input type="email" id="apple-id" placeholder=" "
       ref={emailRef}
