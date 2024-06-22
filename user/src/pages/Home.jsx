@@ -8,9 +8,12 @@ const Home = () => {
             <div className="banner-container">
                 <img src="./images/banner.png" alt="" />
             </div>
-           <CategoeryCard/>
+            <div className="spacing">
            <CategoryFilter/>
-           <Products/>
+            <h2 className="headding">Top Categorys</h2>
+           <CategoeryCard/>
+           {/* <Products/> */}
+           </div>
         </div>
     )
 }

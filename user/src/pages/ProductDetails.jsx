@@ -1,26 +1,27 @@
 import "./css/productdetails.css"
 import { Link, useParams } from "react-router-dom";
 const ProductDetails = () => {
-  const id=useParams()
+  const id = useParams()
   console.log(id);
-  const product=[
+  const product = [
     {
       "_id": "66026c09744acd3776cb5b59",
-      "name": "FOFOS Dog Toys - Woodplay Bone",
+      "name": "Lumen® - Custom Headlights",
       "image": "https://ic.carid.com/lumen/items/custom-headlights_6.jpg",
-      "description": "Fofos woodplay bone is a dog chew toy that is great for teeth and gums. This toy comes as a set of two toys that can help massage your dog's gums and maintain good oral hygiene. This toy contains real wood and acts as a perfect furniture substitute. bone toys such as this allow your dog to chew, bite, fetch and play while getting the right amount of exercise and also make playtime interactive. This toy is ideal for small-medium dogs (5-20kg) of various breeds such as dachshund, pom, spitz, etc above 1 year of age. This toy is strong but not indestructible and is best suited for pet dogs that have moderate chewing and playing styles. Not recommended for aggressive chewers.",
+      "description": "Custom Headlights by Lumen®. Replace hazy and discolored headlights or give the front of your car or truck a whole new look. Whether you just want to improve your vision or upgrade your vehicle’s appearance, Lumen makes it easy and affordable with these bolt-on headlight assemblies. Don’t drive with dim and dangerous opaque headlights or put up with boring and expensive OEM replacements, when you can get improved illumination and custom style that’s easy to install and easy on your wallet. ",
+      "warranty": "Legally, a vehicle manufacturer cannot void the warranty on a vehicle due to an aftermarket part unless they can prove that the aftermarket part caused or contributed to the failure in the vehicle (per the Magnuson Moss Warranty Act (15 U.S.C. 2302(C)) ",
       "oldPrice": 399,
       "newPrice": 359,
       "status": false,
       "category_id": "66026b1c7e9a53a020885213",
       "__v": 0
-  }
+    }
   ];
   return (
     <div className="spaceing">
       <div className="productDetails-container">
         <div className="left">
-          {product && <img src={ product[0].image} alt="" />}
+          {product && <img src={product[0].image} alt="" />}
         </div>
         <div className="rigt">
           <div className="product-name">
@@ -38,15 +39,23 @@ const ProductDetails = () => {
               onClick={addProduct}
             /> */}
             <Link to="/cart">
-            <button className="small-btn">ADD TO CART</button>
+              <button className="small-btn">ADD TO CART</button>
             </Link>
             {/* {showCart && <Cart callbackShowCart={callbackShowCart} />} */}
           </div>
-          <div className="sub-headding">
-            Description
+          <div className="sub-headding-dropdown">
+            <div>Description</div>
+            <div className="icon"><i class="bi bi-chevron-down"></i></div>
           </div>
           <div className="aboutProductDescription">
             {product && product[0].description}
+          </div>
+          <div className="sub-headding-dropdown">
+            <div>Warranty</div>
+            <div className="icon"><i class="bi bi-chevron-up"></i></div>
+          </div>
+          <div className="aboutProductDescription">
+            {product && product[0].warranty}
           </div>
           {/* <div className="product-featureCOntainer">
             {
