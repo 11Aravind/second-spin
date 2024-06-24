@@ -14,7 +14,7 @@ const Cart = () => {
         <Link to="/"> <button className="keep-shoppingBtn">Keep Shoping</button></Link>
       </div>) : (
         <div className="main-cart-container spacing bg">
-          <div className="left">
+          <div className="cart-left">
             {/* <div className="row"> */}
               {
                 items.map((item, index) => {

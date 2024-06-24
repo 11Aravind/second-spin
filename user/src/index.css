@@ -46,9 +46,9 @@ a {
     width: 100%;
 }
 
-.spaceing {
+/* .spaceing {
     padding: 22px 61px;
-}
+} */
 
 .small-btn {
     background-color: var(--primary);
@@ -74,8 +74,9 @@ a {
 }
 
 .spacing {
-    margin: 0px 113px;
-    margin-top: 40px;
+    /* margin: 0px 113px;
+    margin-top: 40px; */
+    padding: 98px 113px;
 }
 
 .headding {
