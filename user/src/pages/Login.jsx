@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./css/login.css"
 import {httpRequest} from "../api.js"
 import {useRef,useState} from "react"
 const Login = () => {
+  const navigate=useNavigate()
   const emailRef = useRef();
   const passwordRef = useRef();
   const [msg, setMessage] = useState(false);
@@ -30,9 +31,14 @@ const Login = () => {
     }
     httpRequest('post', 'api/user/login', loginData)
     .then((res) => {
+      if(res.status==="failed")
+        {
+          showHideMessage(res.message)
+        }
+        else{
+          navigate("/")
+        }
       // dispatch(setRoute("/signup"))
-      // navigate("/login")
-      console.log('adich keri vaa');
     })
     .catch((err) =>  {
       showHideMessage("Something went wrong try again")
@@ -43,7 +49,7 @@ const Login = () => {
     const email = e.target.value
     // Regular expression pattern for a valid email address
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setMessage(pattern.test(email) ? "" : "Enter valid e-mail");
+    setMessage(pattern.test(email) ? " " : "Enter valid e-mail");
   };
   return (
 <div className="main-container">

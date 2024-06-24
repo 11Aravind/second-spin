@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useRef, useState } from "react"
-import {httpRequest} from "../api.js"
+import { httpRequest } from "../api.js"
 const Login = () => {
+  const navigate=useNavigate()
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmRef = useRef();
@@ -10,7 +11,7 @@ const Login = () => {
     setMessage(msg);
     setTimeout(() => {
       setMessage("");
-    }, 3000);
+    }, 4000);
   }
   const checkPasswordLength = (e) => {
     const currentValue = e.target.value;
@@ -35,32 +36,38 @@ const Login = () => {
     const email = e.target.value
     // Regular expression pattern for a valid email address
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setMessage(pattern.test(email) ? "" : "Enter valid e-mail");
+    setMessage(pattern.test(email) ? " " : "Enter valid e-mail");
   };
-  const signUp=()=>{
-    const email=emailRef.current.value
-    const passsword=passwordRef.current.value 
-    const signupData={
-      "email":email,
-      "password":passsword,
+  const signUp = () => {
+    const email = emailRef.current.value
+    const passsword = passwordRef.current.value
+    const signupData = {
+      "email": email,
+      "password": passsword,
     }
     httpRequest('post', 'api/user/signup', signupData)
-    .then((res) => {
-      // dispatch(setRoute("/signup"))
-      // navigate("/login")
-      console.log("value was inserted successfu;ly");
-    })
-    .catch((err) =>  {
-      showHideMessage("Something went wrong try again")
-    console.log(err);
-    });
+       .then((res) => {
+        // dispatch(setRoute("/signup"))
+        if (res.status === "failed") {
+          showHideMessage("The user was already exist. Please login")
+        }
+        if (res.status === "success") {
+              navigate("/login")
+
+        }
+        console.log("value was inserted successfu;ly");
+      })
+      .catch((err) => {
+        showHideMessage("Something went wrong try again")
+        console.log(err);
+      });
   }
   return (
     <div className="main-container">
       <div className="login-container">
         {/* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/ICloud_logo.svg/1200px-ICloud_logo.svg.png" alt="iCloud Logo"/> */}
         <h1>Signup</h1>
-        <p>{msg}</p>
+        <p className="errorMsg">{msg}</p>
         <div className="form-group">
           <input type="test" id="apple-id" placeholder=" "
             ref={emailRef}
@@ -69,7 +76,7 @@ const Login = () => {
           <label htmlFor="apple-id">Email</label>
         </div>
         <div className="form-group">
-          <input type="email" id="apple-id"
+          <input type="password" id="apple-id"
             placeholder=" "
             ref={passwordRef}
             onChange={checkPasswordLength}
@@ -86,10 +93,10 @@ const Login = () => {
         </div>
         {/* <button className="login-button">Signup</button> */}
         <button type="submit"
-            className={(msg.length === 0 ) ? "login-button" : "login-button disabled"}
-            onClick={signUp} disabled={(msg.length === 0) ? false : true}>
-            Signup
-          </button>
+          className={(msg.length === 0) ? "login-button" : "login-button disabled"}
+          onClick={signUp} disabled={(msg.length === 0) ? false : true}>
+          Signup
+        </button>
         <Link to="/login" className="forgot-password">Already have an account ? Login</Link>
       </div>
     </div>
