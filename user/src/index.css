@@ -73,10 +73,11 @@ a {
     text-transform: uppercase;
 }
 
-.spacing {
+.spaceing,.spacing {
     /* margin: 0px 113px;
     margin-top: 40px; */
     padding: 98px 113px;
+    /* margin: 19px 60px; */
 }
 
 .headding {

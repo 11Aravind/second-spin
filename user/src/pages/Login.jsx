@@ -71,7 +71,11 @@ const Login = () => {
       required/>
       <label htmlFor="password">Password</label>
     </div>
-    <button className="login-button" onClick={submitLoginForm}>Sign In</button>
+    <button 
+    // className="login-button" 
+     className={(msg.length === 0) ? "login-button" : "login-button disabled"}
+    onClick={submitLoginForm}
+    disabled={(msg.length === 0) ? false : true}>Sign In</button>
     <Link to="/signup" className="forgot-password">New to Second spin? Create an account</Link>
   </div>  
 </div> 

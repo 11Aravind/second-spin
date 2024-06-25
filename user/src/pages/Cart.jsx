@@ -4,6 +4,7 @@ import Quantitybtn from "../components/Quantitybtn";
 import { useCart } from "react-use-cart";
 const Cart = () => {
   const { isEmpty, items, cartTotal,totalUniqueItems } = useCart();
+  console.log(items);
   return (
     <>
       {isEmpty ? (<div className="cart-container">

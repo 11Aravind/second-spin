@@ -22,7 +22,7 @@ const Login = () => {
       checkPasswordMatch()
     }
     else {
-      setMessage("")
+      setMessage(" ")
     }
   }
   const checkPasswordMatch = () => {

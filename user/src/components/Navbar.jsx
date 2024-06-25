@@ -160,7 +160,7 @@ const Navbar = () => {
 
                 <Link to="/">
                     <div className="logo">
-                        <img src="./images/logo.png" width="60"
+                        <img src="../images/logo.png" width="60"
                         />
                     </div>
                 </Link>
