@@ -5,8 +5,12 @@ import Order from "./pages/Order.jsx"
 import Blogs from "./pages/Blogs"
 import Addblog from "./pages/Addblog"
 import Gallery from "./pages/Gallery"
+import Notfound from "./pages/Notfound"
+
 import {Categorydetails,AddCategory} from "./pages/Categorydetails"
 import {  Route, Routes } from 'react-router-dom';
+import { Login } from "./pages/Login.jsx"
+import { Signup } from "./pages/Signup.jsx"
 const routerInfo = [
     {
         path:"/",
@@ -43,6 +47,18 @@ const routerInfo = [
     {
         path:"/gallery",
         component:<Gallery />
+    },
+    {
+        path:"/login",
+        component:<Login />
+    },
+    {
+        path:"/signup",
+        component:<Signup />
+    },
+    {
+        path:"*",
+        component:<Notfound />
     },
     
 ];

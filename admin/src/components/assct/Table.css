@@ -27,7 +27,8 @@ td {
 .btn-primary{
     border: none;
     color: white;
-    background: #5e5ee7;
+    /* background: #5e5ee7; */
+    background: var(--primary);
     padding:  4px 6px;
     border-radius: 5px;
 }

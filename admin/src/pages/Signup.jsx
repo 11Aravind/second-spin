@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const Signup=()=>{
     return(
-      <div className="topSpacing">
+      <div className="content-div">
         <div className="formbold-main-wrapper">
         <div className="formbold-form-wrapper">
           <form>

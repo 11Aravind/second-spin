@@ -24,12 +24,14 @@ textarea{
     float: right;
     border: none;
     color: white;
-    background: #5e5ee7;
+    /* background: #5e5ee7; */
+    background-color: var(--primary);
     border-radius: 3px;
     padding: 8px 15px;
 }
 .card-headding {
-    color: #5e5ee7;
+    /* color: #5e5ee7; */
+    color: var(--primary);
     font-size: 19px;
     font-weight: 500;
     text-transform: uppercase;

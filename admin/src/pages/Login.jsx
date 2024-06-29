@@ -2,61 +2,15 @@ import { Link } from "react-router-dom";
 import "./CSS/Login.css"
 export const Login = () => {
   return (
-    <div className="topSpacing">
+    <div className="content-div">
     <div className="formbold-main-wrapper">
       <div className="formbold-form-wrapper">
         <form  method="POST">
           <div className="formbold-form-title">
             <h2 className="">SIGN IN</h2>
-            {/* <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt.
-            </p> */}
           </div>
 
-          {/* <div className="formbold-input-flex">
-            <div>
-              <label htmlFor="firstname" className="formbold-form-label">
-                First name
-              </label>
-              <input
-                type="text"
-                name="firstname"
-                id="firstname"
-                className="formbold-form-input"
-              />
-            </div>
-            <div>
-              <label htmlFor="lastname" className="formbold-form-label"> Last name </label>
-              <input
-                type="text"
-                name="lastname"
-                id="lastname"
-                className="formbold-form-input"
-              />
-            </div>
-          </div>
-
-          <div className="formbold-input-flex">
-            <div>
-              <label htmlFor="email" className="formbold-form-label"> Email </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="formbold-form-input"
-              />
-            </div>
-            <div>
-              <label htmlFor="phone" className="formbold-form-label"> Phone number </label>
-              <input
-                type="text"
-                name="phone"
-                id="phone"
-                className="formbold-form-input"
-              />
-            </div>
-          </div> */}
+         
 
           <div className="formbold-mb-3">
             {/* <label htmlFor="address" className="formbold-form-label">

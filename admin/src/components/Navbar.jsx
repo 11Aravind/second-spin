@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import {changeVisibility} from "../Slice/visibilitySlice"
+import { changeVisibility } from "../Slice/visibilitySlice"
 const Navbar = () => {
     const menuData = [
         {
@@ -23,10 +23,7 @@ const Navbar = () => {
                     menu: 'Product',
                     url: "/productdetails"
                 },
-                {
-                    menu: 'Caretaker',
-                    url: "/caretaking"
-                },
+
                 {
                     menu: 'Order',
                     url: "/orderdetails"
@@ -47,15 +44,15 @@ const Navbar = () => {
     //     isToogleVisibility(!navbarShowOrHide);
     //     console.log(navbarShowOrHide);
     // }
-    const visibility=useSelector((state)=>state.visibility.visibility)
+    const visibility = useSelector((state) => state.visibility.visibility)
 
     return (
         <>
-            <Topnavbar  
+            <Topnavbar
             // navbarShowOrHide={navbarShowOrHide} 
             // navbarCallBack={navbarCallBack}
-            />     
-            <div className={visibility?"content-container show":"hide"}>
+            />
+            <div className={visibility ? "content-container show" : "hide"}>
                 <div className="side-nav-container" >
                     {menuData.map((menuItem, index) => (
                         <div className="menu-container" key={index}>
@@ -73,7 +70,7 @@ const Navbar = () => {
                                 <Link to={menuItem.subMenu.url}>
                                     <div className="submenu" >{menuItem.subMenu.menu}</div>
                                 </Link>
-                                
+
                             )}
                         </div>
 
@@ -85,25 +82,30 @@ const Navbar = () => {
 }
 export default Navbar;
 export const Topnavbar = () => {
-    const dispatch=useDispatch();
-    const visibility=useSelector((state)=>state.visibility.visibility)
-// dispatch(changeVisibility(!visibility))
+    const dispatch = useDispatch();
+    const visibility = useSelector((state) => state.visibility.visibility)
+    // dispatch(changeVisibility(!visibility))
     return (
         <div className="topnav-container">
-           
+
             <div className="top-leftContainer">
-            <div className="logo">
-            <img src="https://img.freepik.com/premium-vector/dog-paw-animal-paws_77417-1636.jpg?w=740" alt="logo" style={{width:"40px"}}/>
+                <div className="logo">
+                    <img src="https://fabrikbrands.com/wp-content/uploads/Car-Logos-With-Wings-11-2048x1280.png" alt="logo" style={{ width: "40px" }} />
+                </div>
+                <div className="closingBtn" onClick={() => dispatch(changeVisibility(!visibility))}>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                </div>
             </div>
-            <div className="closingBtn" onClick={()=>dispatch(changeVisibility(!visibility))}>
-                <div className="bar"></div>
-                <div className="bar"></div>
-                <div className="bar"></div>
-            </div>
-            </div>
-            <div className="admin-name">
-            {/* {navbarShowOrHide} */}
+            {/* <div className="admin-name">
                 Admin
+            </div> */}
+            <div class="dropdown">
+                <button class="dropbtn">Admin</button>
+                <div class="dropdown-content">
+                    <a href="#">Logout</a>
+                </div>
             </div>
         </div>
     );
