@@ -109,13 +109,13 @@ export const AddCategory = () => {
             <div className="table-container">
                 <div className="row " style={{ padding: "37px" }}>
                     <div className="col">
-                        <label htmlFor="maincat">Main Category</label>
+                        <label htmlFor="maincat">Vehicle type</label>
                         <select className="form-select" id="maincat" ref={maincategory} aria-label="Default select example">
                             <option defaultValue="Select" selected>--Select--</option>
-                            <option value="Pet">Pet</option>
-                            <option value="Food">Food</option>
-                            <option value="Accessorys">Accessorys</option>
-                            <option value="Medicine">Medicine</option>
+                            <option value="Pet">Car</option>
+                            <option value="Food">Bike</option>
+                            <option value="Accessorys">Truck</option>
+                            <option value="Medicine">Plain</option>
                         </select>
                     </div>
                     <div className="col">

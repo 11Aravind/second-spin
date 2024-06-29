@@ -147,3 +147,6 @@ a {
   background-color: #fff;
 }
 /* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
+.submenu:hover{
+  background-color: #d3f0cc;
+}

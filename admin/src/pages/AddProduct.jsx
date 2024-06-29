@@ -73,13 +73,18 @@ const AddProduct = () => {
                     </div>
                 </div>
                 <div className="row" style={{ padding: "16px 37px" }}>
-                    <div className="col-4">
-                        <label htmlFor="sub_cat">Old Price</label>
-                        <input type="text" className="form-control" id="sub_cat" ref={oldPrice} />
-                    </div>
+
                     <div className="col-4">
                         <label htmlFor="sub_cat">Price</label>
                         <input type="text" className="form-control" id="sub_cat" ref={newPrice} />
+                    </div>
+                    <div className="col-4">
+                        <label htmlFor="maincat">Product label</label>
+                        <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setCategoryId(e.target.value)}>
+                            <option value="choose_anything" selected>--Select--</option>
+                            <option value="choose_anything" selected>First-hand</option>
+                            <option value="choose_anything" selected>Second-hand</option>
+                        </select>
                     </div>
                     <div className="col-4">
                         <label htmlFor="sub_cat">Image</label>
