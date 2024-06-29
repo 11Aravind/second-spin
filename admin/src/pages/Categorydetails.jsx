@@ -101,6 +101,7 @@ export const AddCategory = () => {
             .catch((error) => console.log(error));
     }
     return (
+        <>
         <div className="content-div">
             <div className="card-header">
                 <div className="card-headding">Add Category</div>
@@ -118,12 +119,21 @@ export const AddCategory = () => {
                             <option value="Medicine">Plain</option>
                         </select>
                     </div>
+                 
                     <div className="col">
-                        <label htmlFor="category">Category</label>
+                        <label htmlFor="category">Year</label>
+                        <input type="text" id="category" ref={category} className="form-control" />
+                    </div>
+                    <div className="col">
+                        <label htmlFor="category">Company</label>
+                        <input type="text" id="category" ref={category} className="form-control" />
+                    </div>
+                    <div className="col">
+                        <label htmlFor="category">Model</label>
                         <input type="text" id="category" ref={category} className="form-control" />
                     </div>
                 </div>
-                <div className="row" style={{ padding: "16px 37px" }}>
+                {/* <div className="row" style={{ padding: "16px 37px" }}>
                     <div className="col">
                         <label htmlFor="sub_cat">Sub category</label>
                         <input type="text" ref={subcategory} className="form-control" id="sub_cat" />
@@ -133,13 +143,73 @@ export const AddCategory = () => {
                         <input type="file" onChange={(e) => setImage(e.target.files[0])} className="form-control" id="image" />
                         <small style={{color:"red"}}>{image===""?"Please select an image":""}</small>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="row" style={{ padding: "16px 37px" }}>
                     <button className="btn btn-primary" onClick={saveCategory}>Save</button>
                 </div>
             </div>
-
         </div>
+        <Subcategory/>
+
+        </>
+    )
+}
+
+
+
+export const Subcategory=()=>{
+    return(
+        <div className="content-div" style={{    "top": "57%"}}> 
+        <div className="card-header">
+            <div className="card-headding">Add Subcategory</div>
+            {/* <div className="errorMessage">{message}</div> */}
+        </div>
+        <div className="table-container">
+            <div className="row " style={{ padding: "37px" }}>
+                <div className="col">
+                    <label htmlFor="category">Subcategory name</label>
+                    <input type="text" id="category"  className="form-control" />
+                </div>
+                <div className="col">
+                    <label htmlFor="category">Image</label>
+                    <input type="file" id="category"  className="form-control" />
+                </div>
+                <div className="col">
+                    <label htmlFor="maincat">Main category</label>
+                    <select className="form-select" id="maincat"  aria-label="Default select example">
+                        <option defaultValue="Select" selected>--Select--</option>
+                        <option value="Pet">Car</option>
+                        <option value="Food">Bike</option>
+                        <option value="Accessorys">Truck</option>
+                        <option value="Medicine">Plain</option>
+                    </select>
+                </div>
+                <div className="col">
+                    <label htmlFor="maincat">Spairparts Type</label>
+                    <select className="form-select" id="maincat"  aria-label="Default select example">
+                        <option defaultValue="Select" selected>--Select--</option>
+                        <option value="Pet">Parts</option>
+                        <option value="Food">Wheels & Tires</option>
+                        <option value="Accessorys">Exterior Accessories</option>
+                        <option value="Medicine">Automotive Lighting</option>
+                        <option value="Medicine">Body Parts</option>
+                        <option value="Medicine">Interior Accessories</option>
+                        <option value="Medicine">Audio & Electronics</option>
+                        <option value="Medicine">Automotive Tools </option>
+                        <option value="Medicine">Specialty Shopes </option>
+                    </select>
+                </div>
+             
+               
+             
+            </div>
+
+            <div className="row" style={{ padding: "16px 37px" }}>
+                <button className="btn btn-primary" >Save</button>
+            </div>
+        </div>
+
+    </div>
     )
 }

@@ -75,8 +75,8 @@ const AddProduct = () => {
                 <div className="row" style={{ padding: "16px 37px" }}>
 
                     <div className="col-4">
-                        <label htmlFor="sub_cat">Price</label>
-                        <input type="text" className="form-control" id="sub_cat" ref={newPrice} />
+                        <label htmlFor="sub_cat">Image</label>
+                        <input type="file" className="form-control" id="sub_cat" onChange={(e) => setImage(e.target.files[0])} />
                     </div>
                     <div className="col-4">
                         <label htmlFor="maincat">Product label</label>
@@ -87,8 +87,8 @@ const AddProduct = () => {
                         </select>
                     </div>
                     <div className="col-4">
-                        <label htmlFor="sub_cat">Image</label>
-                        <input type="file" className="form-control" id="sub_cat" onChange={(e) => setImage(e.target.files[0])} />
+                        <label htmlFor="sub_cat">Price</label>
+                        <input type="text" className="form-control" id="sub_cat" ref={newPrice} />
                     </div>
                 </div>
                 <div className="row" style={{ padding: "16px 37px" }}>

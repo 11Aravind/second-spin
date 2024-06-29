@@ -34,7 +34,7 @@ textarea{
     color: var(--primary);
     font-size: 19px;
     font-weight: 500;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 .errorMessage{
     color: red;
