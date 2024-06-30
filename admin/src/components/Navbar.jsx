@@ -101,9 +101,9 @@ export const Topnavbar = () => {
             {/* <div className="admin-name">
                 Admin
             </div> */}
-            <div class="dropdown">
-                <button class="dropbtn">Admin</button>
-                <div class="dropdown-content">
+            <div className="dropdown">
+                <button className="dropbtn">Admin</button>
+                <div className="dropdown-content">
                     <a href="#">Logout</a>
                 </div>
             </div>

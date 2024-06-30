@@ -52,7 +52,7 @@ export const Categorydetails = () => {
                             categorys.map((category, id) =>
                                 <tr key={id} scope="row">
                                     <td>{category._id}</td>
-                                    <td>{category.mainCategory}</td>
+                                    <td>{category.vehicleType}</td>
                                     <td>{category.category}</td>
                                     <td>{category.subCategory}</td>
                                     <td><img src={`http://localhost:5001/${category.image}`} alt="banner" className="bannerImg" /></td>
@@ -69,10 +69,10 @@ export const Categorydetails = () => {
 }
 // export default Categorydetails;
 export const AddCategory = () => {
-    const maincategory = useRef('');
-    const category = useRef('');
-    const subcategory = useRef('');
-    const [image, setImage] = useState("");
+    const vehicleType = useRef('');
+    const year = useRef('');
+    const model = useRef('');
+    const company = useRef('');
     const [message, setMessage] = useState("");
     const showMessage = (msg) => {
         setMessage(msg);
@@ -81,19 +81,25 @@ export const AddCategory = () => {
         }, 3000);
     }
     const resetValue = () => {
-        maincategory.current.value = "";
-        category.current.value = "";
-        subcategory.current.value = "";
-        setImage("");
+        vehicleType.current.value = "";
+        year.current.value = "";
+        company.current.value = "";
+        model.current.value = "";
+        model.current.value = "";
     }
     const saveCategory = (e) => {
-        const categoryData = new FormData();
-        categoryData.append("mainCategory", maincategory.current.value);
-        categoryData.append("category", category.current.value);
-        categoryData.append("subCategory", subcategory.current.value);
-        categoryData.append("image", image);
-        // console.log(categoryData);
-        httpRequest('post', 'api/category/add', categoryData)
+        const categoryData = {
+            "vechicleType": vehicleType.current.value,
+            "year": year.current.value,
+            "company": company.current.value,
+            "model": model.current.value,
+        }
+        // categoryData.append("vechicleType", vehicleType.current.value);
+        // categoryData.append("year", year.current.value);
+        // categoryData.append("company", company.current.value);
+        // categoryData.append("model", model.current.value);
+        console.log(categoryData);
+        httpRequest('post', 'category/save', categoryData)
             .then((data) => {
                 resetValue();
                 showMessage(data.message);
@@ -111,7 +117,7 @@ export const AddCategory = () => {
                 <div className="row " style={{ padding: "37px" }}>
                     <div className="col">
                         <label htmlFor="maincat">Vehicle type</label>
-                        <select className="form-select" id="maincat" ref={maincategory} aria-label="Default select example">
+                        <select className="form-select" id="maincat" ref={vehicleType} aria-label="Default select example">
                             <option defaultValue="Select" selected>--Select--</option>
                             <option value="Pet">Car</option>
                             <option value="Food">Bike</option>
@@ -122,15 +128,15 @@ export const AddCategory = () => {
                  
                     <div className="col">
                         <label htmlFor="category">Year</label>
-                        <input type="text" id="category" ref={category} className="form-control" />
+                        <input type="text" id="category" ref={year} className="form-control" />
                     </div>
                     <div className="col">
                         <label htmlFor="category">Company</label>
-                        <input type="text" id="category" ref={category} className="form-control" />
+                        <input type="text" id="category" ref={company} className="form-control" />
                     </div>
                     <div className="col">
                         <label htmlFor="category">Model</label>
-                        <input type="text" id="category" ref={category} className="form-control" />
+                        <input type="text" id="category" ref={model} className="form-control" />
                     </div>
                 </div>
                 {/* <div className="row" style={{ padding: "16px 37px" }}>
@@ -159,6 +165,14 @@ export const AddCategory = () => {
 
 
 export const Subcategory=()=>{
+    const [categorys,setCaregory]=useState([])
+    useEffect(()=>{
+        httpRequest('get', 'category/')
+        .then((res)=>{console.log(res)
+        setCaregory(res.payload)})
+        .catch((err)=>console.log(err))
+
+    },[])
     return(
         <div className="content-div" style={{    "top": "57%"}}> 
         <div className="card-header">
@@ -179,10 +193,11 @@ export const Subcategory=()=>{
                     <label htmlFor="maincat">Main category</label>
                     <select className="form-select" id="maincat"  aria-label="Default select example">
                         <option defaultValue="Select" selected>--Select--</option>
-                        <option value="Pet">Car</option>
-                        <option value="Food">Bike</option>
-                        <option value="Accessorys">Truck</option>
-                        <option value="Medicine">Plain</option>
+                       {categorys.map((category,id)=>{
+                        return(
+                            <option>{category.vechicleType },{category.company},{category.model},{category.year}</option>
+                        )
+                       })}
                     </select>
                 </div>
                 <div className="col">

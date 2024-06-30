@@ -11,7 +11,7 @@ app.get("/",(req,res)=>{
     res.send("you are in the home page")
 })
 app.use("/api/user",userRouter);
-app.use("/category/",categoryRouter);
+app.use("/category",categoryRouter);
 app.get("/",(req,res)=>{
     res.send("you are in the home page")
 })
