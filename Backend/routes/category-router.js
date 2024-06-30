@@ -1,4 +1,5 @@
 import express from "express"
+import multer from "multer";
 import Category from "../modules/Category.js"
 import Subcategory from "../modules/Subcategory.js";
 const categoryRoute = express.Router()

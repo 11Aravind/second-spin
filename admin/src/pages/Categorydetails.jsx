@@ -187,7 +187,7 @@ export const Subcategory=()=>{
         }
         console.log(data);
         httpRequest("post","category/subcategory/store",data)
-        .then((res)=>alert("success "))
+        .then((res)=>alert(res.message))
         .catch((err)=>console.log(`failed ${err}`));
        }
     }
