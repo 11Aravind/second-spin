@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { httpRequest } from "../API/api"
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux"
 export const Categorydetails = () => {
     const [categorys, setCategoryDetails] = useState([]);
-    const visibility=useSelector((state)=>state.visibility.visibility)
+    const visibility = useSelector((state) => state.visibility.visibility)
     const deleteCategory = (e) => {
         const category_id = e.target.id;
         const url = `api/category/${category_id}`;
-        httpRequest('delete',url)
-        .then((data) =>{ 
-            setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));
-        });
+        httpRequest('delete', url)
+            .then((data) => {
+                setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));
+            });
     }
     useEffect(() => {
         httpRequest('get', "api/category").then((data) => {
@@ -27,7 +27,7 @@ export const Categorydetails = () => {
     }, []);
     const tableHeadding = [{ th: "#id" }, { th: "Main category" }, { th: "Category" }, { th: "subCategory" }, { th: "image" }, { th: "Action" },];
     return (
-        <div className={visibility?"flat-container":"content-div"}>
+        <div className={visibility ? "flat-container" : "content-div"}>
             <div className="card-header">
                 <div className="card-headding">Category</div>
                 {/* <div className="errorMessage">{alertMessage}</div> */}
@@ -104,38 +104,38 @@ export const AddCategory = () => {
     }
     return (
         <>
-        <div className="content-div">
-            <div className="card-header">
-                <div className="card-headding">Add Category</div>
-                <div className="errorMessage">{message}</div>
-            </div>
-            <div className="table-container">
-                <div className="row " style={{ padding: "37px" }}>
-                    <div className="col">
-                        <label htmlFor="maincat">Vehicle type</label>
-                        <select className="form-select" id="maincat" ref={vehicleType} aria-label="Default select example">
-                            <option defaultValue="Select" selected>--Select--</option>
-                            <option value="Pet">Car</option>
-                            <option value="Food">Bike</option>
-                            <option value="Accessorys">Truck</option>
-                            <option value="Medicine">Plain</option>
-                        </select>
-                    </div>
-                 
-                    <div className="col">
-                        <label htmlFor="category">Year</label>
-                        <input type="text" id="category" ref={year} className="form-control" />
-                    </div>
-                    <div className="col">
-                        <label htmlFor="category">Company</label>
-                        <input type="text" id="category" ref={company} className="form-control" />
-                    </div>
-                    <div className="col">
-                        <label htmlFor="category">Model</label>
-                        <input type="text" id="category" ref={model} className="form-control" />
-                    </div>
+            <div className="content-div">
+                <div className="card-header">
+                    <div className="card-headding">Add Category</div>
+                    <div className="errorMessage">{message}</div>
                 </div>
-                {/* <div className="row" style={{ padding: "16px 37px" }}>
+                <div className="table-container">
+                    <div className="row " style={{ padding: "37px" }}>
+                        <div className="col">
+                            <label htmlFor="maincat">Vehicle type</label>
+                            <select className="form-select" id="maincat" ref={vehicleType} aria-label="Default select example">
+                                <option defaultValue="Select" selected>--Select--</option>
+                                <option value="Pet">Car</option>
+                                <option value="Food">Bike</option>
+                                <option value="Accessorys">Truck</option>
+                                <option value="Medicine">Plain</option>
+                            </select>
+                        </div>
+
+                        <div className="col">
+                            <label htmlFor="category">Year</label>
+                            <input type="text" id="category" ref={year} className="form-control" />
+                        </div>
+                        <div className="col">
+                            <label htmlFor="category">Company</label>
+                            <input type="text" id="category" ref={company} className="form-control" />
+                        </div>
+                        <div className="col">
+                            <label htmlFor="category">Model</label>
+                            <input type="text" id="category" ref={model} className="form-control" />
+                        </div>
+                    </div>
+                    {/* <div className="row" style={{ padding: "16px 37px" }}>
                     <div className="col">
                         <label htmlFor="sub_cat">Sub category</label>
                         <input type="text" ref={subcategory} className="form-control" id="sub_cat" />
@@ -147,12 +147,12 @@ export const AddCategory = () => {
                     </div>
                 </div> */}
 
-                <div className="row" style={{ padding: "16px 37px" }}>
-                    <button className="btn btn-primary" onClick={saveCategory}>Save</button>
+                    <div className="row" style={{ padding: "16px 37px" }}>
+                        <button className="btn btn-primary" onClick={saveCategory}>Save</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <Subcategory/>
+            <Subcategory />
 
         </>
     )
@@ -160,89 +160,89 @@ export const AddCategory = () => {
 
 
 
-export const Subcategory=()=>{
-   const Subcat_name=useRef("")
-   const [image,setImage]=useState("")
-   const category_id=useRef("")
-   const spairPatsType=useRef("")
-   const [drp,setDrp]=useState("")
+export const Subcategory = () => {
+    const Subcat_name = useRef("")
+    const [image, setImage] = useState("")
+    const category_id = useRef("")
+    const spairPatsType = useRef("")
     const [categorys,setCaregory]=useState([])
-    useEffect(()=>{
+    useEffect(() => {
         httpRequest('get', 'category/')
-        .then((res)=>{console.log(res)
-        setCaregory(res.payload)})
-        .catch((err)=>console.log(err))
+            .then((res) => {
+                console.log(res)
+                setCaregory(res.payload)
+            })
+            .catch((err) => console.log(err))
 
-    },[])
-    const saveSubcategory=()=>{
-        if(image===""){
+    }, [])
+    const saveSubcategory = () => {
+        if (image === "") {
             alert("Select any image for sub category")
         }
-       else{
-        const data={
-            "Subcat_name":Subcat_name.current.value,
-            "image":"hi",
-            "category_id":category_id.current.value,
-            "spairPatsType":spairPatsType.current.value,
+        else {
+            const data = new FormData();
+            data.append("Subcat_name", Subcat_name.current.value);
+            data.append("image", image);
+            data.append("category_id", category_id.current.value);
+            data.append("spairPatsType", spairPatsType.current.value);
+            console.log(data);
+            httpRequest("post", "category/subcategory/store", data)
+                .then((res) => alert(res.message))
+                .catch((err) => console.log(`failed ${err}`));
         }
-        console.log(data);
-        httpRequest("post","category/subcategory/store",data)
-        .then((res)=>alert(res.message))
-        .catch((err)=>console.log(`failed ${err}`));
-       }
     }
-    return(
-        <div className="content-div" style={{    "top": "57%"}}> 
-        <div className="card-header">
-            <div className="card-headding">Add Subcategory</div>
-            {/* <div className="errorMessage">{message}</div> */}
-        </div>
-        <div className="table-container">
-            <div className="row " style={{ padding: "37px" }}>
-                <div className="col">
-                    <label htmlFor="category">Subcategory name</label>
-                    <input type="text" id="category" ref={Subcat_name}  className="form-control" />
+    return (
+        <div className="content-div" style={{ "top": "57%" }}>
+            <div className="card-header">
+                <div className="card-headding">Add Subcategory</div>
+                {/* <div className="errorMessage">{message}</div> */}
+            </div>
+            <div className="table-container">
+                <div className="row " style={{ padding: "37px" }}>
+                    <div className="col">
+                        <label htmlFor="category">Subcategory name</label>
+                        <input type="text" id="category" ref={Subcat_name} className="form-control" />
+                    </div>
+                    <div className="col">
+                        <label htmlFor="category">Image</label>
+                        <input type="file" id="category" onChange={(e) => setImage(e.target.files[0])} className="form-control" />
+                    </div>
+                    <div className="col">
+                        <label htmlFor="maincat">Main category</label>
+                        <select className="form-select" id="maincat" aria-label="Default select example" ref={category_id}>
+                            <option defaultValue="Select" selected>--Select--</option>
+                            {categorys.map((category, id) => {
+                                return (
+                                    <option key={id} value={category._id}>{category.vechicleType},{category.company},{category.model},{category.year}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                    <div className="col">
+                        <label htmlFor="maincat">Spairparts Type</label>
+                        <select className="form-select" id="maincat" aria-label="Default select example" ref={spairPatsType}>
+                            <option defaultValue="Select" selected>--Select--</option>
+                            <option value="Parts">Parts</option>
+                            <option value="Wheels">Wheels</option>
+                            <option value="Exterior">Exterior</option>
+                            <option value="Lighting">Lighting</option>
+                            <option value="Body Parts">Body Parts</option>
+                            <option value="Interior">Interior</option>
+                            <option value="Audio & Electronics">Audio & Electronics</option>
+                            <option value="Automotive Tools">Automotive Tools </option>
+                            <option value="Specialty">Specialty </option>
+                        </select>
+                    </div>
+
+
+
                 </div>
-                <div className="col">
-                    <label htmlFor="category">Image</label>
-                    <input type="file" id="category" onChange={(e)=>setImage(e.target.files[0])}  className="form-control" />
+
+                <div className="row" style={{ padding: "16px 37px" }}>
+                    <button className="btn btn-primary" onClick={saveSubcategory} >Save</button>
                 </div>
-                <div className="col">
-                    <label htmlFor="maincat">Main category</label>
-                    <select className="form-select" id="maincat"  aria-label="Default select example" ref={category_id}>
-                        <option defaultValue="Select" selected>--Select--</option>
-                       {categorys.map((category,id)=>{
-                        return(
-                            <option value={category._id}>{category.vechicleType },{category.company},{category.model},{category.year}</option>
-                        )
-                       })}
-                    </select>
-                </div>
-                <div className="col">
-                    <label htmlFor="maincat">Spairparts Type</label>
-                    <select className="form-select" id="maincat"  aria-label="Default select example" ref={spairPatsType}>
-                        <option defaultValue="Select" selected>--Select--</option>
-                        <option value="Parts">Parts</option>
-                        <option value="Wheels">Wheels</option>
-                        <option value="Exterior">Exterior</option>
-                        <option value="Lighting">Lighting</option>
-                        <option value="Body Parts">Body Parts</option>
-                        <option value="Interior">Interior</option>
-                        <option value="Audio & Electronics">Audio & Electronics</option>
-                        <option value="Automotive Tools">Automotive Tools </option>
-                        <option value="Specialty">Specialty </option>
-                    </select>
-                </div>
-             
-               
-             
             </div>
 
-            <div className="row" style={{ padding: "16px 37px" }}>
-                <button className="btn btn-primary" onClick={saveSubcategory} >Save</button>
-            </div>
         </div>
-
-    </div>
     )
 }

@@ -1,5 +1,6 @@
 import express from "express"
 import multer from "multer";
+import upload from "../middlewares/mutler-middleware.js";
 import Category from "../modules/Category.js"
 import Subcategory from "../modules/Subcategory.js";
 const categoryRoute = express.Router()
@@ -33,8 +34,10 @@ categoryRoute.post("/save", async (req, res) => {
         res.status(401).json({ "message": `some thing went wrong ${err}`, "status": "failed" })
     }
 });
-categoryRoute.post("/subcategory/store", async (req, res) => {
-    const { Subcat_name, image, category_id, spairPatsType } = req.body;
+categoryRoute.post("/subcategory/store", upload.single("image"),async (req, res) => {
+    const { Subcat_name, category_id, spairPatsType } = req.body;
+       const image = req.file.filename;
+
     const data = new Subcategory({
         Subcat_name,
         image,
