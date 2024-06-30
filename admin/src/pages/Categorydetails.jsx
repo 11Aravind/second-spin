@@ -94,10 +94,6 @@ export const AddCategory = () => {
             "company": company.current.value,
             "model": model.current.value,
         }
-        // categoryData.append("vechicleType", vehicleType.current.value);
-        // categoryData.append("year", year.current.value);
-        // categoryData.append("company", company.current.value);
-        // categoryData.append("model", model.current.value);
         console.log(categoryData);
         httpRequest('post', 'category/save', categoryData)
             .then((data) => {
@@ -165,6 +161,11 @@ export const AddCategory = () => {
 
 
 export const Subcategory=()=>{
+   const Subcat_name=useRef("")
+   const [image,setImage]=useState("")
+   const category_id=useRef("")
+   const spairPatsType=useRef("")
+   const [drp,setDrp]=useState("")
     const [categorys,setCaregory]=useState([])
     useEffect(()=>{
         httpRequest('get', 'category/')
@@ -173,6 +174,23 @@ export const Subcategory=()=>{
         .catch((err)=>console.log(err))
 
     },[])
+    const saveSubcategory=()=>{
+        if(image===""){
+            alert("Select any image for sub category")
+        }
+       else{
+        const data={
+            "Subcat_name":Subcat_name.current.value,
+            "image":"hi",
+            "category_id":category_id.current.value,
+            "spairPatsType":spairPatsType.current.value,
+        }
+        console.log(data);
+        httpRequest("post","category/subcategory/store",data)
+        .then((res)=>alert("success "))
+        .catch((err)=>console.log(`failed ${err}`));
+       }
+    }
     return(
         <div className="content-div" style={{    "top": "57%"}}> 
         <div className="card-header">
@@ -183,36 +201,36 @@ export const Subcategory=()=>{
             <div className="row " style={{ padding: "37px" }}>
                 <div className="col">
                     <label htmlFor="category">Subcategory name</label>
-                    <input type="text" id="category"  className="form-control" />
+                    <input type="text" id="category" ref={Subcat_name}  className="form-control" />
                 </div>
                 <div className="col">
                     <label htmlFor="category">Image</label>
-                    <input type="file" id="category"  className="form-control" />
+                    <input type="file" id="category" onChange={(e)=>setImage(e.target.files[0])}  className="form-control" />
                 </div>
                 <div className="col">
                     <label htmlFor="maincat">Main category</label>
-                    <select className="form-select" id="maincat"  aria-label="Default select example">
+                    <select className="form-select" id="maincat"  aria-label="Default select example" ref={category_id}>
                         <option defaultValue="Select" selected>--Select--</option>
                        {categorys.map((category,id)=>{
                         return(
-                            <option>{category.vechicleType },{category.company},{category.model},{category.year}</option>
+                            <option value={category._id}>{category.vechicleType },{category.company},{category.model},{category.year}</option>
                         )
                        })}
                     </select>
                 </div>
                 <div className="col">
                     <label htmlFor="maincat">Spairparts Type</label>
-                    <select className="form-select" id="maincat"  aria-label="Default select example">
+                    <select className="form-select" id="maincat"  aria-label="Default select example" ref={spairPatsType}>
                         <option defaultValue="Select" selected>--Select--</option>
-                        <option value="Pet">Parts</option>
-                        <option value="Food">Wheels & Tires</option>
-                        <option value="Accessorys">Exterior Accessories</option>
-                        <option value="Medicine">Automotive Lighting</option>
-                        <option value="Medicine">Body Parts</option>
-                        <option value="Medicine">Interior Accessories</option>
-                        <option value="Medicine">Audio & Electronics</option>
-                        <option value="Medicine">Automotive Tools </option>
-                        <option value="Medicine">Specialty Shopes </option>
+                        <option value="Parts">Parts</option>
+                        <option value="Wheels">Wheels</option>
+                        <option value="Exterior">Exterior</option>
+                        <option value="Lighting">Lighting</option>
+                        <option value="Body Parts">Body Parts</option>
+                        <option value="Interior">Interior</option>
+                        <option value="Audio & Electronics">Audio & Electronics</option>
+                        <option value="Automotive Tools">Automotive Tools </option>
+                        <option value="Specialty">Specialty </option>
                     </select>
                 </div>
              
@@ -221,7 +239,7 @@ export const Subcategory=()=>{
             </div>
 
             <div className="row" style={{ padding: "16px 37px" }}>
-                <button className="btn btn-primary" >Save</button>
+                <button className="btn btn-primary" onClick={saveSubcategory} >Save</button>
             </div>
         </div>
 
