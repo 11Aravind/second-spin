@@ -28,7 +28,7 @@ export const Checkout = () => {
     const userId = onCheckOut();
     axios.get(`http://localhost:5001/api/address?userId=${userId}`)
       .then((response) => {
-        console.log("Full Response Data:", response.data); // Log entire response data for debugging
+        // console.log("Full Response Data:", response.data); // Log entire response data for debugging
         // Access addressList from the correct nested structure
         const addressList = response.data.data && response.data.data.addressList;
         if (Array.isArray(addressList)) {
@@ -53,83 +53,34 @@ export const Checkout = () => {
     const product = items.map(({ _id, price, quantity }) => {
       return { _id, quantity };
     });
-    const body = {
-      amount,
-      currency,
-      receipt: receiptId,
-      userId: userId,
-      addressId: addressId,
-      items: product,
-      // totalamount: cartTotal,
-      razorpayOrderId: "",
-      status: paymentMode === "cod" ? "success" : "pending",
-      paymentMode: paymentMode,
-      order_message: "",
-    };
+    // const body = {
+    //   amount,
+    //   currency,
+    //   receipt: receiptId,
+    //   userId: userId,
+    //   addressId: addressId,
+    //   items: product,
+    //   razorpayOrderId: "",
+    //   status: paymentMode === "cod" ? "success" : "pending",
+    //   paymentMode: paymentMode,
+    //   order_message: "",
+    // };
     if (paymentMode === "cod") {
-      console.log(body);
-      axios.post("http://localhost:5001/api/order/cod", body)
-        .then((res) => {
-          if (res.status === "success")
+      axios.post("http://localhost:5001/api/order/cod", body).then((res) => {
+          console.log(res.data.status);
+          if (res.data.status === "success")
             navigate("/Orderplaced")
         })
         .catch((err) => console.log(err));
       // cod
     } else {
-      try {
-        const order = await httpRequest("POST", "api/order/checkout", body);
-        console.log(order);
-        var options = {
-          key: "rzp_test_u5nxL1KN1AKLE0", // Enter the Key ID generated from the Dashboard
-          amount,
-          currency,
-          name: "PetPulse Hub",
-          description: "Test Transaction",
-          image: "https://static.freshtohome.com/images/logo/2021/logo-medium.png",
-          order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-          handler: async function (response) {
-            const body = {
-              ...response,
-            };
-            // check here the cod or online payment
+      let response = await axios.post('http://localhost:5001/api/order/checkout');
 
-            try {
-              const jsonRes = await httpRequest("POST", "api/order/validate", body);
-              // console.log("validation status:",jsonRes); // validation response
-              if (jsonRes.msg === 'success')
-                navigate("/Orderplaced")
-            } catch (error) {
-              console.error("Validation request failed:", error);
-            }
-
-          },
-          prefill: {
-            //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-            name: "Web Dev Matrix", //your customer's name
-            email: "webdevmatrix@example.com",
-            contact: "9000000099", //Provide the customer's phone number for better conversion rates
-          },
-          notes: {
-            address: "Razorpay Corporate Office",
-          },
-          theme: {
-            color: "#0fa8db",
-          },
-        };
-        var rzp1 = new window.Razorpay(options);
-        rzp1.on("payment.failed", function (response) {
-          alert(response.error.code);
-          alert(response.error.description);
-          alert(response.error.source);
-          alert(response.error.step);
-          alert(response.error.reason);
-          alert(response.error.metadata.order_id);
-          alert(response.error.metadata.payment_id);
-        });
-        rzp1.open();
-      } catch (error) {
-        console.error("Order creation failed:", error);
-      }
+      if(response && response.status === 200 ){
+  
+        window.location.href = response.data.url
+        
+        console.log(response.data)}
     }
     // e.preventDefault();
   };
