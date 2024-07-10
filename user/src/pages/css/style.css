@@ -1,0 +1,235 @@
+.checkOutBtn {
+    background: var(--primary);
+    border: none;
+    /* padding: 2px 9px; */
+    /* font-size: 13px; */
+    line-height: 37px;
+    /* font-weight: bold; */
+    width: 100%;
+    color: #fff;
+    /* border-radius: 10px; */
+    margin-top: 30px;
+
+}
+.smallBtn{
+    color: white;
+    background: var(--primary);
+    border: none;
+    padding: 7px 16px;
+    border-radius: 18px;
+    font-size: 13px;
+    line-height: 25px;
+}
+.bigButton{
+    width: 100%;
+    border-radius: 19px;
+    padding: 5px 9px;
+    color: #fff;
+    background: var(--primary);
+    border: none;
+    font-size: 13px;
+    line-height: 30px;
+    font-weight: bold;
+}
+.disabled{
+    background: #f4b0a4;
+}
+.addAddressBtn{
+    color: var(--primary);
+    background-color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 12px 21px;
+}
+.cancelBtn{
+    background-color: #838080;
+  }
+.cashOnDelivery{
+    background: #fff;
+    border: 1px solid var(--primary);
+    padding: 6px 18px;
+    color: var(--primary);
+}
+.onlinePayment{
+    background: var(--primary);
+    padding: 6px 18px;
+    color: #fff;
+}
+.radioPaymentLabels{
+    font-size: 13px;
+    padding: 0px 8px;
+}
+* {
+    margin: 0;
+    ;
+    padding: 0;
+    ;
+    font-family: Montserrat;
+  }
+  
+  :root {
+    /* --primary:#3c8031; */
+    /* --primary:#f48424; */
+    --primary: #EE6043;
+    --color: white;
+    --projectedColor: #7755A2;
+  }
+  
+  .main-headding {
+    font-weight: 600;
+    font-size: 25px;
+    padding: 17px 11px;
+    text-align: center;
+  }
+  .headding-margin{
+      margin: 41px 0px;
+  
+  }
+  .headding {
+  
+    /* text-align: center; 
+    font-size: 35px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.3em;
+    font-family: Montserrat; */
+    text-align: center;
+    font-size: 35px;
+    font-weight: 500;
+    text-transform: capitalize;
+    line-height: 1.3em;
+    /* margin: 41px 0px; */
+    font-family: Montserrat;
+  }
+  
+  
+  .sub-headding {
+    font-weight: 600;
+    font-style: normal;
+    padding: 7px 0px;
+    font-size: 18px;
+    line-height: 4.5rem;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .subHeadding {
+    font-weight: 600;
+    font-size: 23px;
+    /* padding: 10px 6px; */
+    line-height: 5rem;
+  }
+  
+  .filterContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .topSpacing {
+    /* padding: 0px 49px; */
+    padding: 0px 68px;
+    /* padding: 0px 136px; */
+  }
+  
+  .subNavBar {
+    background-color: blueviolet;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  img {
+    width: 100%;
+  }
+  
+  /* style.css */
+  .collection-title {
+    margin: 1.75rem 0 0rem 33px;
+    line-height: 1.3;
+    color: #1d1d1d;
+    /* font-family: Montserrat,sans-serif; */
+    font-size: 2.55rem;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 0px;
+    font-weight: 500;
+    /* line-height: 2rem; */
+    color: white;
+    background-color: var(--primary);
+    margin: 0px 107px;
+    border-radius: 3px;
+  }
+  
+  .headdingSpace {
+    line-height: 47px;
+  }
+  
+  .topNavBar {
+    height: 28px;
+    background: var(--primary);
+  }
+  
+  
+  
+  /* filter code  */
+  
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .filter {
+    width: 35%;
+    padding: 10px 0px;
+  
+  }
+  
+  .search {
+    width: 35%;
+    padding: 10px 0px;
+  
+  }
+  .card.h-100{
+    border: none;
+  }
+  .shadowbox:hover{
+    box-shadow: 0 3px 16px 0 rgba(0, 0, 0, .11);
+  }
+  
+  @media (max-width:768px) {
+    .topSpacing {
+      padding: 0px 8px;
+    }
+  
+    .headding {
+      font-size: 21px;
+    }
+  
+    .headdingSpace {
+      font-size: 18px;
+    }
+  
+    .filter-container {
+      flex-direction: column;
+    }
+  
+    .filter {
+      width: 100%;
+      padding: 10px 0px;
+    }
+  
+    .search {
+      width: 100%;
+      ;
+      padding: 10px 0px;
+    }
+  }
