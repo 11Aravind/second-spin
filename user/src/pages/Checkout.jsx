@@ -1,43 +1,47 @@
 import ButtonComponent from "../components/ButtonComponent";
 import { useEffect, useRef, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useCart } from "react-use-cart";
 // import { httpRequest } from "../API/api";
-// import { fetchAndStoreAddress } from "../Slice/addressSlice"
+import { fetchAndStoreAddress } from "../Slice/addressSlice"
 import "./css/style.css";
 import "./css/OrderConfirmation.css";
 import Address from "../components/Address"
 import Notfound from "../pages/Notfound"
+import axios from "axios";
 export const Checkout = () => {
 //   const navigate = useNavigate()
-//   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const { isEmpty, items, cartTotal } = useCart();
   const [addressId, changeAddressid] = useState(false);
   const [paymentMode, setPaymentMode] = useState('cod');
   const [isAddressVisible, setAddressVisible] = useState(false);
-  const addressList=[]
-//   const addressList = useSelector((state) => state.address.addressList)
+  const addressList = useSelector((state) => state.address.addressList)
   const userId = JSON.parse(localStorage.getItem("userId"));
   const onCheckOut = () => {
     const userId = JSON.parse(localStorage.getItem("userId"));
     userId === null && navigate("/login");
     return userId;
   };
-//   useEffect(() => {
-//     const userId = onCheckOut();
-//     httpRequest('get', `api/user/getAddress?userId=${userId}`)
-//       .then((response) => {
-//         if (response.data.length === 0)
-//           dispatch(fetchAndStoreAddress([]))
-//         else
-//          {
-//           dispatch(fetchAndStoreAddress(response.data.addressList))
-//           console.log(response.data.addressList);
-//          }
-//       })
-//       .catch((err) => console.log(err));
-//   }, [dispatch])
+  useEffect(() => {
+    const userId = onCheckOut();
+    axios.get(`http://localhost:5001/api/address?userId=${userId}`)
+      .then((response) => {
+        console.log("Full Response Data:", response.data); // Log entire response data for debugging
+        // Access addressList from the correct nested structure
+        const addressList = response.data.data && response.data.data.addressList;
+        if (Array.isArray(addressList)) {
+          dispatch(fetchAndStoreAddress(addressList));
+          console.log("Address List:", addressList); // Log the address list
+        } else {
+          dispatch(fetchAndStoreAddress([]));
+          console.log("Address List is empty or undefined.");
+        }
+      })
+      .catch((err) => console.error("Error fetching address:", err));
+  }, [dispatch]);
+
   const changeAddressVisibility = () => {
     setAddressVisible(!isAddressVisible)
   }

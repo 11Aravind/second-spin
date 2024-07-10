@@ -1,5 +1,6 @@
 // import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import axios from "axios"
 // import {httpRequest} from "../API/api"
 import { useNavigate } from "react-router";
 // import {fetchAndStoreAddress} from "../Slice/addressSlice"
@@ -35,7 +36,7 @@ const Address = ({ changeAddressVisibility }) => {
         "order_id": null,
       }
       // const dispatch=useDispatch();
-      httpRequest('post', "api/user/address", addressData)
+      axios.post("http://localhost:5001/api/address/store", addressData)
         .then((res) => {
           console.log(res)
           // addressList.push(res.data);
