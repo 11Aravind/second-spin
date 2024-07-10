@@ -45,7 +45,7 @@ const Cart = () => {
               <div> ₹ {cartTotal}</div>
             </div>
             <div className="main-cart-container">
-              <button className="keep-shoppingBtn" style={{"width": "100%"}}>Checkout</button>
+             <Link to="/checkout"> <button className="keep-shoppingBtn" style={{"width": "100%"}}>Checkout</button></Link>
             </div>
           </div>
         </div>
