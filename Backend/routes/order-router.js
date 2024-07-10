@@ -35,7 +35,7 @@ orderRoute.post("/checkout", async (req, res) => {
             mode: 'payment',
             success_url: 'http://localhost:3000/success',
             cancel_url: 'http://localhost:3000/cancel',
-            customer_email: 'demo@gmail.com'
+            // customer_email: 'demo@gmail.com'
 
         })
     }
