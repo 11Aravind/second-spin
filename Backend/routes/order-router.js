@@ -9,7 +9,7 @@ const orderRoute = express.Router()
 // orderRoute.post("/checkout",storeOrder);
 
 orderRoute.post("/checkout", async (req, res) => {
-
+const {amount,currency,receipt,userId,addressId,items,razorpayOrderId,status,paymentMode,order_message}=req.body;
     const product = await stripe.products.create({
         name: "T-Shirt"
     });
@@ -18,7 +18,7 @@ orderRoute.post("/checkout", async (req, res) => {
     if (product) {
         var price = await stripe.prices.create({
             product: `${product.id}`,
-            unit_amount: 100 * 100,
+            unit_amount:amount,
             currency: 'inr',
         });
     }

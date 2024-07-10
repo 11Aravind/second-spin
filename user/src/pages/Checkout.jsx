@@ -53,18 +53,18 @@ export const Checkout = () => {
     const product = items.map(({ _id, price, quantity }) => {
       return { _id, quantity };
     });
-    // const body = {
-    //   amount,
-    //   currency,
-    //   receipt: receiptId,
-    //   userId: userId,
-    //   addressId: addressId,
-    //   items: product,
-    //   razorpayOrderId: "",
-    //   status: paymentMode === "cod" ? "success" : "pending",
-    //   paymentMode: paymentMode,
-    //   order_message: "",
-    // };
+    const body = {
+      amount,
+      currency,
+      receipt: receiptId,
+      userId: userId,
+      addressId: addressId,
+      items: product,
+      razorpayOrderId: "",
+      status: paymentMode === "cod" ? "success" : "pending",
+      paymentMode: paymentMode,
+      order_message: "",
+    };
     if (paymentMode === "cod") {
       axios.post("http://localhost:5001/api/order/cod", body).then((res) => {
           console.log(res.data.status);
@@ -74,7 +74,7 @@ export const Checkout = () => {
         .catch((err) => console.log(err));
       // cod
     } else {
-      let response = await axios.post('http://localhost:5001/api/order/checkout');
+      let response = await axios.post('http://localhost:5001/api/order/checkout',body);
 
       if(response && response.status === 200 ){
   
