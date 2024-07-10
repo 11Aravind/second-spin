@@ -3,15 +3,15 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useCart } from "react-use-cart";
+import axios from "axios";
 // import { httpRequest } from "../API/api";
 import { fetchAndStoreAddress } from "../Slice/addressSlice"
 import "./css/style.css";
 import "./css/OrderConfirmation.css";
 import Address from "../components/Address"
 import Notfound from "../pages/Notfound"
-import axios from "axios";
 export const Checkout = () => {
-//   const navigate = useNavigate()
+    const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isEmpty, items, cartTotal } = useCart();
   const [addressId, changeAddressid] = useState(false);
@@ -33,10 +33,8 @@ export const Checkout = () => {
         const addressList = response.data.data && response.data.data.addressList;
         if (Array.isArray(addressList)) {
           dispatch(fetchAndStoreAddress(addressList));
-          console.log("Address List:", addressList); // Log the address list
         } else {
           dispatch(fetchAndStoreAddress([]));
-          console.log("Address List is empty or undefined.");
         }
       })
       .catch((err) => console.error("Error fetching address:", err));
@@ -46,7 +44,7 @@ export const Checkout = () => {
     setAddressVisible(!isAddressVisible)
   }
 
-//payment section
+  //payment section
   const amount = cartTotal * 100;
   const currency = "INR";
   const receiptId = "qwsaq1";
@@ -69,7 +67,8 @@ export const Checkout = () => {
       order_message: "",
     };
     if (paymentMode === "cod") {
-      httpRequest("POST", "api/order/cod", body)
+      console.log(body);
+      axios.post("http://localhost:5001/api/order/cod", body)
         .then((res) => {
           if (res.status === "success")
             navigate("/Orderplaced")
@@ -97,7 +96,7 @@ export const Checkout = () => {
             try {
               const jsonRes = await httpRequest("POST", "api/order/validate", body);
               // console.log("validation status:",jsonRes); // validation response
-              if(jsonRes.msg==='success')
+              if (jsonRes.msg === 'success')
                 navigate("/Orderplaced")
             } catch (error) {
               console.error("Validation request failed:", error);
@@ -143,88 +142,88 @@ export const Checkout = () => {
   //     });
   //   }
   // };
-// const handleRemoveAddress=(addressId)=>{
-//   console.log(addressId);
-//   httpRequest('delete',`api/address/${addressId}`)
-//   .then((res)=>console.log(res))
-//   .catch((err)=>console.log(err))
-// }
+  // const handleRemoveAddress=(addressId)=>{
+  //   console.log(addressId);
+  //   httpRequest('delete',`api/address/${addressId}`)
+  //   .then((res)=>console.log(res))
+  //   .catch((err)=>console.log(err))
+  // }
   return (
-    isEmpty ?<Notfound/>:
-    <div className="container  col-10">
-      <h5 className="headdingSpace">DELIVERY ADDRESS</h5>
-      {addressList.length !== 0 && (
-        addressList.map((address, key) => {
-          return (
-            <div className="form-check" key={key} onClick={() => changeAddressid(address._id)}>
-              <input className="radioBtn" type="radio" name="flexRadioDefault" id={`address_${key}`} />
-              <label className="form-check-label" htmlFor={`address_${key}`}>
-                <b>{address.name}</b> {address.address}
-              </label>
-              <div className="remove" id={address._id}
-              //  onClick={e=>handleRemoveAddress(address._id)}
-               >
-                <i className="bi bi-trash3"></i>
+    isEmpty ? <Notfound /> :
+      <div className="container  col-10">
+        <h5 className="headdingSpace">DELIVERY ADDRESS</h5>
+        {addressList.length !== 0 && (
+          addressList.map((address, key) => {
+            return (
+              <div className="form-check" key={key} onClick={() => changeAddressid(address._id)}>
+                <input className="radioBtn" type="radio" name="flexRadioDefault" id={`address_${key}`} />
+                <label className="form-check-label" htmlFor={`address_${key}`}>
+                  <b>{address.name}</b> {address.address}
+                </label>
+                <div className="remove" id={address._id}
+                //  onClick={e=>handleRemoveAddress(address._id)}
+                >
+                  <i className="bi bi-trash3"></i>
+                </div>
               </div>
-            </div>
-          )
-        })
-      )}
+            )
+          })
+        )}
 
-      <div className="col-12 ">
-        <button className="addAddressBtn headdingSpace " onClick={() => setAddressVisible(!isAddressVisible)} style={{"border":"none"}}>+ Add Address</button>
-        {isAddressVisible && <Address changeAddressVisibility={changeAddressVisibility} />}
-      </div>
-      <h5 className="headdingSpace">ORDER SUMMARY</h5>
-      {
-        items.map((item, index) => {
-          return (
-            <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
-              <div className="col-3" style={{ width: "100px" }}>
-                <img src="http://localhost:5001/1711434149628-1_f687340b-634e-41eb-a20d-975a29606913.webp" alt="" />
+        <div className="col-12 ">
+          <button className="addAddressBtn headdingSpace " onClick={() => setAddressVisible(!isAddressVisible)} style={{ "border": "none" }}>+ Add Address</button>
+          {isAddressVisible && <Address changeAddressVisibility={changeAddressVisibility} />}
+        </div>
+        <h5 className="headdingSpace">ORDER SUMMARY</h5>
+        {
+          items.map((item, index) => {
+            return (
+              <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
+                <div className="col-3" style={{ width: "100px" }}>
+                  <img src="http://localhost:5001/1711434149628-1_f687340b-634e-41eb-a20d-975a29606913.webp" alt="" />
+                </div>
+                <div className="col-3" style={{ fontSize: "13px" }}>{item.name}</div>
+                <div className="col-3" >{item.newPrice}</div>
+                <div className="col-3" >{item.quantity}</div>
               </div>
-              <div className="col-3" style={{ fontSize: "13px" }}>{item.name}</div>
-              <div className="col-3" >{item.newPrice}</div>
-              <div className="col-3" >{item.quantity}</div>
-            </div>
-          )
-        })
-      }
-      <div className="col-12 row">
-        <div className="col-6">Totel Amount</div>
-        <div className="col-6"><b>₹{cartTotal}</b></div>
-      </div>
-      <h5 className="headdingSpace">PAYMENT</h5>
-      <div className="col-12 row">
-        <div className="col-6">
-          <input type="radio"
-            className="cashOnDelivery"
-            name="paymentMode"
-            id="cash"
-            checked={paymentMode == "cod"}
-            onClick={() => setPaymentMode("cod")}
-          />
-          <label htmlFor="cash" className="radioPaymentLabels">Cash on Delivery</label>
+            )
+          })
+        }
+        <div className="col-12 row">
+          <div className="col-6">Totel Amount</div>
+          <div className="col-6"><b>₹{cartTotal}</b></div>
         </div>
-        <div className="col-6">
-          <input type="radio"
-            className="cashOnDelivery"
-            name="paymentMoed"
-            id="online"
-            checked={paymentMode == "online"}
-            onClick={() => setPaymentMode("online")}
-          />
-          <label htmlFor="online" className="radioPaymentLabels">Online Payment</label>
+        <h5 className="headdingSpace">PAYMENT</h5>
+        <div className="col-12 row">
+          <div className="col-6">
+            <input type="radio"
+              className="cashOnDelivery"
+              name="paymentMode"
+              id="cash"
+              checked={paymentMode == "cod"}
+              onClick={() => setPaymentMode("cod")}
+            />
+            <label htmlFor="cash" className="radioPaymentLabels">Cash on Delivery</label>
+          </div>
+          <div className="col-6">
+            <input type="radio"
+              className="cashOnDelivery"
+              name="paymentMoed"
+              id="online"
+              checked={paymentMode == "online"}
+              onClick={() => setPaymentMode("online")}
+            />
+            <label htmlFor="online" className="radioPaymentLabels">Online Payment</label>
+          </div>
         </div>
+        <ButtonComponent
+          text="Confirm"
+          classs={addressId == false ? "addbtn checkOutBtn disabled" : "addbtn checkOutBtn"}
+          orderConfirmation={true}
+          onClick={paymentHandler}
+          disableValue={addressId == false ? true : false}
+        />
       </div>
-      <ButtonComponent
-        text="Confirm"
-        classs={addressId == false ? "addbtn checkOutBtn disabled" : "addbtn checkOutBtn"}
-        orderConfirmation={true}
-        onClick={paymentHandler}
-        disableValue={addressId == false ? true : false}
-      />
-    </div>
   );
 };
 
