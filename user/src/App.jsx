@@ -9,6 +9,8 @@ import Bottomnavbar from './components/Bottomnavbar'
 import Login from "./pages/Login"
 import Signup from './pages/Signup'
 import Topnavbar from './components/Topnavbar'
+import Notfound from './pages/Notfound'
+import { Checkout } from './pages/Checkout'
 function App() {
 
   return (
@@ -17,12 +19,15 @@ function App() {
       <Navbar />
       <Bottomnavbar/>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
         <Route path="/product" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="cart" element={<Cart />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="*" element={<Notfound />} />
+
       </Routes>
 
     </div>
