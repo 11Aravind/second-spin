@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios"
+import {fetchAndStoreAddress} from "../Slice/addressSlice"
 // import {httpRequest} from "../API/api"
 import { useNavigate } from "react-router";
-// import {fetchAndStoreAddress} from "../Slice/addressSlice"
 const Address = ({ changeAddressVisibility }) => {
   const dispatch=useDispatch();
   //   const navigate = useNavigate()
@@ -17,7 +17,7 @@ const Address = ({ changeAddressVisibility }) => {
     const addressList=[]
     // const addressList = useSelector((state) => state.address.addressList)
     const userId = JSON.parse(localStorage.getItem("userId"));
-    console.log(userId);
+    // console.log(userId);
 
     const onCheckOut = () => {
       userId === null && navigate("/login") ;
@@ -41,7 +41,7 @@ const Address = ({ changeAddressVisibility }) => {
           console.log(res)
           // addressList.push(res.data);
           const newAdddress=[...addressList,res.data]
-          console.log(newAdddress);
+          // console.log(newAdddress);
           dispatch(fetchAndStoreAddress(newAdddress))
           // const addressList = useSelector((state) => state.address.addressList);
           // dispatch(fetchAndStoreAddress(addressList));

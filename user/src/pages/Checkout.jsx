@@ -31,6 +31,7 @@ export const Checkout = () => {
         // console.log("Full Response Data:", response.data); // Log entire response data for debugging
         // Access addressList from the correct nested structure
         const addressList = response.data.data && response.data.data.addressList;
+        console.log()
         if (Array.isArray(addressList)) {
           dispatch(fetchAndStoreAddress(addressList));
         } else {
