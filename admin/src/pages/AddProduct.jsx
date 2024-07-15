@@ -7,6 +7,7 @@ const AddProduct = () => {
     const Description = useRef('');
     const [image, setImage] = useState('');
     const [categoryId, setCategoryId] = useState('');
+    const [setLabel, setProductLabel] = useState('');
     const [categoryList, setCategoryList] = useState([]);
     const [message, setMessage] = useState("");
     const showMessage = (msg) => {
@@ -15,8 +16,9 @@ const AddProduct = () => {
     }
     useEffect(() => {
         httpRequest('get', "api/category").then((data) => {
-            if (data && Array.isArray(data.categoryDetails)) {
-                setCategoryList(data.categoryDetails);
+            if (data && Array.isArray(data.payload)) {
+                setCategoryList(data.payload);
+                console.log(data.payload)
             } else {
                 console.error("Fetched data does not contain 'categoryDetails' array:", data);
             }
@@ -36,7 +38,7 @@ const AddProduct = () => {
         productDetails.append('name', prodcutName.current.value);
         productDetails.append('image', image);
         productDetails.append('description', Description.current.value);
-        productDetails.append('oldPrice', oldPrice.current.value);
+        productDetails.append('oldPrice', setLabel);
         productDetails.append('newPrice', newPrice.current.value);
         productDetails.append('status', 0);
         productDetails.append('category_id', categoryId);
@@ -62,11 +64,11 @@ const AddProduct = () => {
                     </div>
                     <div className="col">
                         <label htmlFor="maincat">Category</label>
-                        <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setCategoryId(e.target.value)}>
-                            <option value="choose_anything" selected>--Select--</option>
+                        <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setCategoryId(e.target.id)}>
+                            <option  selected>--Select--</option>
                             {
                                 categoryList.map((category, index) => {
-                                    return <option value={category._id} key={index}>{category.mainCategory},{category.category},{category.subCategory}</option>
+                                    return <option value={category._id} key={index}>{category.vechicleType},{category.category},{category.company}</option>
                                 })
                             }
                         </select>
@@ -80,10 +82,10 @@ const AddProduct = () => {
                     </div>
                     <div className="col-4">
                         <label htmlFor="maincat">Product label</label>
-                        <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setCategoryId(e.target.value)}>
+                        <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setProductLabel(e.target.value)}>
                             <option value="choose_anything" selected>--Select--</option>
-                            <option value="choose_anything" selected>First-hand</option>
-                            <option value="choose_anything" selected>Second-hand</option>
+                            <option value="firstHand" selected>First-hand</option>
+                            <option value="secondHand" selected>Second-hand</option>
                         </select>
                     </div>
                     <div className="col-4">
