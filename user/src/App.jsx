@@ -11,6 +11,8 @@ import Signup from './pages/Signup'
 import Topnavbar from './components/Topnavbar'
 import Notfound from './pages/Notfound'
 import { Checkout } from './pages/Checkout'
+import Orderplaced from './pages/Orderplaced'
+import Orders from './pages/Orders'
 function App() {
 
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orderplaced" element={<Orderplaced />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="*" element={<Notfound />} />
 
       </Routes>

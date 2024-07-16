@@ -14,6 +14,7 @@ export const Checkout = () => {
     const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isEmpty, items, cartTotal } = useCart();
+  console.log(items);
   const [addressId, changeAddressid] = useState(false);
   const [paymentMode, setPaymentMode] = useState('cod');
   const [isAddressVisible, setAddressVisible] = useState(false);
@@ -70,7 +71,7 @@ export const Checkout = () => {
       axios.post("http://localhost:5001/api/order/cod", body).then((res) => {
           console.log(res.data.status);
           if (res.data.status === "success")
-            navigate("/Orderplaced")
+            navigate("/orderplaced")
         })
         .catch((err) => console.log(err));
       // cod

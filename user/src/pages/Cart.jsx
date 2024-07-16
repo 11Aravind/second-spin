@@ -4,7 +4,6 @@ import Quantitybtn from "../components/Quantitybtn";
 import { useCart } from "react-use-cart";
 const Cart = () => {
   const { isEmpty, items, cartTotal,totalUniqueItems } = useCart();
-  console.log(items);
   return (
     <>
       {isEmpty ? (<div className="cart-container">
@@ -36,10 +35,10 @@ const Cart = () => {
           </div>
           <div className="right">
             <div className="right-headding"> PRICE DETAILS</div>
-            <div className="main-cart-container">
+            {/* <div className="main-cart-container">
               <div>Price ({totalUniqueItems} item)</div>
               <div>  ₹2,999</div>
-            </div>
+            </div> */}
             <div className="main-cart-container">
               <div>Total Amount</div>
               <div> ₹ {cartTotal}</div>
