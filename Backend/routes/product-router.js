@@ -14,14 +14,15 @@ router.get('/',async (req, res, next) => {
       return res.status(500).json({ message: "Product was empty" })
     return res.status(200).json({productDetails})
  } );
-router.post('/save',upload.single('image'),async (req, res, next) => {
-    const { name, description, category_id, oldPrice, newPrice, status } = req.body;
+router.post('/save',upload.single("image"),async (req, res, next) => {
+    const { name, description,productLabel, category_id, oldPrice, newPrice, status } = req.body;
     const image = req.file.filename;
     // const image = req.file.path.replace('uploads/','');
     const productData = new Product({
       name,
       image,
       description,
+      productLabel,
       oldPrice,
       newPrice,
       status,
