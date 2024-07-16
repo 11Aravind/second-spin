@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { httpRequest } from "../API/api"
+import axios from 'axios'
 const AddProduct = () => {
     const prodcutName = useRef('');
     const oldPrice = useRef('');
@@ -7,7 +8,7 @@ const AddProduct = () => {
     const Description = useRef('');
     const [image, setImage] = useState('');
     const [categoryId, setCategoryId] = useState('');
-    const [setLabel, setProductLabel] = useState('');
+    const [productLabel, setProductLabel] = useState('');
     const [categoryList, setCategoryList] = useState([]);
     const [message, setMessage] = useState("");
     const showMessage = (msg) => {
@@ -18,7 +19,7 @@ const AddProduct = () => {
         httpRequest('get', "api/category").then((data) => {
             if (data && Array.isArray(data.payload)) {
                 setCategoryList(data.payload);
-                console.log(data.payload)
+                // console.log(data.payload)
             } else {
                 console.error("Fetched data does not contain 'categoryDetails' array:", data);
             }
@@ -38,15 +39,16 @@ const AddProduct = () => {
         productDetails.append('name', prodcutName.current.value);
         productDetails.append('image', image);
         productDetails.append('description', Description.current.value);
-        productDetails.append('oldPrice', setLabel);
+        productDetails.append('productLabel', productLabel);
+        productDetails.append('oldPrice', 1000);
         productDetails.append('newPrice', newPrice.current.value);
         productDetails.append('status', 0);
         productDetails.append('category_id', categoryId);
-        console.log(productDetails);
-        httpRequest('post', 'api/product/save', productDetails)
+        axios.post('http://localhost:5001/api/product/save', productDetails)
             .then((response) => {
                 showMessage(response.message);
-                resetValues();
+                console.log(response);
+                // resetValues();
             })
             .catch((err) => console.log(err));
     }
@@ -64,8 +66,8 @@ const AddProduct = () => {
                     </div>
                     <div className="col">
                         <label htmlFor="maincat">Category</label>
-                        <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setCategoryId(e.target.id)}>
-                            <option  selected>--Select--</option>
+                        <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setCategoryId(e.target.value)}>
+                            <option selected>--Select--</option>
                             {
                                 categoryList.map((category, index) => {
                                     return <option value={category._id} key={index}>{category.vechicleType},{category.category},{category.company}</option>
@@ -99,8 +101,6 @@ const AddProduct = () => {
                         <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" ref={Description}></textarea>
                     </div>
                 </div>
-
-
                 <div className="row" style={{ padding: "16px 37px" }}>
                     <button className="btn btn-primary" onClick={saveProduct}>Save</button>
                 </div>
