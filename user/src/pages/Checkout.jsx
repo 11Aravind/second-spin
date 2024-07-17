@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useCart } from "react-use-cart";
+import {loadStripe} from '@stripe/stripe-js';
 import axios from "axios";
 // import { httpRequest } from "../API/api";
 import { fetchAndStoreAddress } from "../Slice/addressSlice"
@@ -14,7 +15,7 @@ export const Checkout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isEmpty, items, cartTotal } = useCart();
-  console.log(items[0]);
+  // console.log(items[0]);
   const [addressId, changeAddressid] = useState(false);
   const [paymentMode, setPaymentMode] = useState('cod');
   const [isAddressVisible, setAddressVisible] = useState(false);
@@ -59,20 +60,26 @@ export const Checkout = () => {
     // const product = items.map(({ _id, price, quantity }) => {
     //   return { _id, quantity };
     // });
-    const body = {
+    const result = items.map(item => {
+      const { name, image } = item[0];
+      const { itemTotal, price, quantity } = item;
+      return { name, image, itemTotal, price, quantity };
+    });
+    // console.log(result);
+    const cartData = {
       amount,
       currency,
       receipt: receiptId,
       userId: userId,
       addressId: addressId,
-      items: items,
+      items: result,
       razorpayOrderId: "",
       status: paymentMode === "cod" ? "success" : "pending",
       paymentMode: paymentMode,
       order_message: "",
     };
     if (paymentMode === "cod") {
-      axios.post("http://localhost:5001/api/order/cod", body).then((res) => {
+      axios.post("http://localhost:5001/api/order/cod", cartData).then((res) => {
         console.log(res.data.status);
         if (res.data.status === "success")
           navigate("/orderplaced")
@@ -80,14 +87,36 @@ export const Checkout = () => {
         .catch((err) => console.log(err));
       // cod
     } else {
-      let response = await axios.post('http://localhost:5001/api/order/checkout', body);
-
-      if (response && response.status === 200) {
-
-        window.location.href = response.data.url
-
-        console.log(response.data)
+      const stripe = await loadStripe("pk_test_51KQwUGSDqjJiCnelf5rSP7Ga4kB70od6fYzekLUc0ACE478XmSV1ttQNw5XIjrFJWjtJdYP0m1DfuSZl3NF6P52W00VWFwRASz");
+      const body = {
+        products: cartData
       }
+      const headers = {
+        "Content-Type": "application/json"
+      }
+      const response = await fetch("http://localhost:5001/api/order/checkout", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body)
+      });
+      const session = await response.json();
+
+      const result = stripe.redirectToCheckout({
+        sessionId: session.id
+      });
+
+      if (result.error) {
+        console.log(result.error);
+      }
+
+      // let response = await axios.post('http://localhost:5001/api/order/checkout', body);
+
+      // if (response && response.status === 200) {
+
+      //   window.location.href = response.data.url
+
+      //   console.log(response.data)
+      // }
     }
     // e.preventDefault();
   };
@@ -121,19 +150,19 @@ export const Checkout = () => {
         </div>
         <h5 className="headdingSpace">ORDER SUMMARY</h5>
         {
-        items.map((item, index) => {
-          return (
-            <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
-              <div className="col-3" style={{ width: "100px" }}>
-                <img src={`http://localhost:5001/${item[0].image}`} alt="img" />
+          items.map((item, index) => {
+            return (
+              <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
+                <div className="col-3" style={{ width: "100px" }}>
+                  <img src={`http://localhost:5001/${item[0].image}`} alt="img" />
+                </div>
+                <div className="col-3" style={{ fontSize: "13px" }}>{item[0].name}</div>
+                <div className="col-3" >{item.newPrice}</div>
+                <div className="col-3" >{item.quantity}</div>
               </div>
-              <div className="col-3" style={{ fontSize: "13px" }}>{item[0].name}</div>
-              <div className="col-3" >{item.newPrice}</div>
-              <div className="col-3" >{item.quantity}</div>
-            </div>
-          )
-        })
-      }
+            )
+          })
+        }
         <div className="col-12 row">
           <div className="col-6">Totel Amount</div>
           <div className="col-6"><b>₹{cartTotal}</b></div>
