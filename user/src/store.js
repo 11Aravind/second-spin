@@ -1,8 +1,12 @@
-import {configureStore } from "@reduxjs/toolkit"
-
+import { configureStore } from "@reduxjs/toolkit"
+import productSlice from "./Slice/productSlice"
 import addressSlice from "./Slice/addressSlice"
-export const store=configureStore({
-    reducer:{
-             address:addressSlice,// sliceName: sliceFile
+import categorySlice from "./Slice/categorySlice"
+export const store = configureStore({
+    reducer: {
+        categorys: categorySlice,
+        products: productSlice,
+        address: addressSlice,// sliceName: sliceFile
+
     },
 })
