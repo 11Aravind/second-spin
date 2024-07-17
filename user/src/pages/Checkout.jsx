@@ -14,6 +14,7 @@ export const Checkout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isEmpty, items, cartTotal } = useCart();
+  console.log(items[0]);
   const [addressId, changeAddressid] = useState(false);
   const [paymentMode, setPaymentMode] = useState('cod');
   const [isAddressVisible, setAddressVisible] = useState(false);
@@ -42,7 +43,7 @@ export const Checkout = () => {
         }
       })
       .catch((err) => console.error("Error fetching address:", err));
-  }, [dispatch,addressList]);
+  }, [dispatch]);
 
 
   const changeAddressVisibility = () => {
@@ -124,9 +125,9 @@ export const Checkout = () => {
           return (
             <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
               <div className="col-3" style={{ width: "100px" }}>
-                <img src={`http://localhost:5001/${item.image}`} alt="" />
+                <img src={`http://localhost:5001/${item[0].image}`} alt="img" />
               </div>
-              <div className="col-3" style={{ fontSize: "13px" }}>{item.name}</div>
+              <div className="col-3" style={{ fontSize: "13px" }}>{item[0].name}</div>
               <div className="col-3" >{item.newPrice}</div>
               <div className="col-3" >{item.quantity}</div>
             </div>

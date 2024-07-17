@@ -18,9 +18,9 @@ const ButtonComponent = ({
             if (onClick) onClick();
           } else {
             let tmpProduct = JSON.parse(JSON.stringify(product));
-            tmpProduct.id = product._id;
-            tmpProduct.price = product.newPrice;
-            // console.log(tmpProduct);
+            tmpProduct.id = product[0]._id;
+            tmpProduct.price = product[0].newPrice;
+            console.log(tmpProduct);
             addItem(tmpProduct, 1);
             if (onClick) onClick();
           }

@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import { useSelector } from "react-redux"
 // import products from "./data.json"
+import ButtonComponent from "../components/ButtonComponent"
 const ProductDetails = () => {
 
   const [description, isDescriptionVisible] = useState(true)
@@ -14,15 +15,15 @@ const ProductDetails = () => {
   console.log(product);
   // console.log(id);
   // console.log(product);
-  const { addItem, items } = useCart()
-  const addToCart = () => {
-    let tmpProduct = JSON.parse(JSON.stringify(product));
-    console.log(tmpProduct);
-    tmpProduct.id = product[0]._id;
-    tmpProduct.price = product[0].newPrice;
-    addItem(tmpProduct, 1);
-    console.log(items);
-  }
+  // const { addItem, items } = useCart()
+  // const addToCart = () => {
+  //   let tmpProduct = JSON.parse(JSON.stringify(product));
+  //   console.log(tmpProduct);
+  //   tmpProduct.id = product[0]._id;
+  //   tmpProduct.price = product[0].newPrice;
+  //   addItem(tmpProduct, 1);
+  //   console.log(items);
+  // }
   return (
     <div className="spaceing">
       <div className="productDetails-container">
@@ -31,21 +32,21 @@ const ProductDetails = () => {
         </div>
         <div className="rigt">
           <div className="product-name">
-            {product[0].name}
+            {product && product[0].name}
           </div>
           <div className="price productdetails-price">
             <div className="newprice">₹ {product && product[0].newPrice}</div>
             <div className="oldPrice"> ₹ {product && product[0].oldPrice}</div>
           </div>
           <div className="addToCart fixedBtn">
-            {/* <ButtonComponent
+           
+            <Link to="/cart">
+              {/* <button className="small-btn" onClick={addToCart}>ADD TO CART</button> */}
+               <ButtonComponent
               text="ADD TO CART"
               classs="addbtn smallBtn checkOut"
               product={product}
-              onClick={addProduct}
-            /> */}
-            <Link to="/cart">
-              <button className="small-btn" onClick={addToCart}>ADD TO CART</button>
+            />
             </Link>
             {/* {showCart && <Cart callbackShowCart={callbackShowCart} />} */}
           </div>
