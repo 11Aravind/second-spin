@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { httpRequest } from "../API/api"
 import { useSelector } from "react-redux"
+import axios from "axios"
 export const Categorydetails = () => {
     const [categorys, setCategoryDetails] = useState([]);
     const visibility = useSelector((state) => state.visibility.visibility)
@@ -70,35 +71,37 @@ export const Categorydetails = () => {
 // export default Categorydetails;
 export const AddCategory = () => {
     const vehicleType = useRef('');
-    const year = useRef('');
-    const model = useRef('');
-    const company = useRef('');
+    const spairPatsType = useRef("")
+    const [image, setImage] = useState("")
+    const nameRef = useRef('');
     const [message, setMessage] = useState("");
     const showMessage = (msg) => {
         setMessage(msg);
         setTimeout(() => {
             setMessage("")
-        }, 3000);
+        }, 4000);
     }
     const resetValue = () => {
         vehicleType.current.value = "";
-        year.current.value = "";
-        company.current.value = "";
-        model.current.value = "";
-        model.current.value = "";
+        spairPatsType.current.value = "";
+        nameRef.current.value = "";
     }
     const saveCategory = (e) => {
-        const categoryData = {
-            "vechicleType": vehicleType.current.value,
-            "year": year.current.value,
-            "company": company.current.value,
-            "model": model.current.value,
-        }
-        console.log(categoryData);
-        httpRequest('post', 'api/category/save', categoryData)
-            .then((data) => {
+        // const categoryData = {
+        //     "vechicleType": vehicleType.current.value,
+        //     "year": year.current.value,
+        //     "company": company.current.value,
+        //     "model": model.current.value,
+        // }
+        const categoryData = new FormData()
+        categoryData.append("vechicle", vehicleType.current.value)
+        categoryData.append("spairPatsType", spairPatsType.current.value)
+        categoryData.append("image", image)
+        categoryData.append("partsName", nameRef.current.value)
+        axios.post('http://localhost:5001/api/category/save', categoryData)
+            .then((res) => {
+                showMessage(res.data.message);
                 resetValue();
-                showMessage(data.message);
             })
             .catch((error) => console.log(error));
     }
@@ -122,17 +125,32 @@ export const AddCategory = () => {
                             </select>
                         </div>
 
-                        <div className="col">
+                        {/* <div className="col">
                             <label htmlFor="category">Year</label>
                             <input type="text" id="category" ref={year} className="form-control" />
+                        </div> */}
+                        <div className="col">
+                            <label htmlFor="maincat">Spairparts Type</label>
+                            <select className="form-select" id="maincat" aria-label="Default select example" ref={spairPatsType}>
+                                <option defaultValue="Select" selected>--Select--</option>
+                                <option value="Parts">Parts</option>
+                                <option value="Wheels">Wheels</option>
+                                <option value="Exterior">Exterior</option>
+                                <option value="Lighting">Lighting</option>
+                                <option value="Body Parts">Body Parts</option>
+                                <option value="Interior">Interior</option>
+                                <option value="Audio & Electronics">Audio & Electronics</option>
+                                <option value="Automotive Tools">Automotive Tools </option>
+                                <option value="Specialty">Specialty </option>
+                            </select>
                         </div>
                         <div className="col">
-                            <label htmlFor="category">Company</label>
-                            <input type="text" id="category" ref={company} className="form-control" />
+                            <label htmlFor="category">Image</label>
+                            <input type="file" id="category" onChange={(e) => setImage(e.target.files[0])} className="form-control" />
                         </div>
                         <div className="col">
-                            <label htmlFor="category">Model</label>
-                            <input type="text" id="category" ref={model} className="form-control" />
+                            <label htmlFor="category">Parts Name</label>
+                            <input type="text" id="category" ref={nameRef} className="form-control" />
                         </div>
                     </div>
                     {/* <div className="row" style={{ padding: "16px 37px" }}>
@@ -161,15 +179,15 @@ export const AddCategory = () => {
 
 
 export const Subcategory = () => {
+    const mainCategory = useRef("")
     const Subcat_name = useRef("")
     const [image, setImage] = useState("")
-    const category_id = useRef("")
-    const spairPatsType = useRef("")
-    const [categorys,setCaregory]=useState([])
+    // const descriptionRef=useRef("")
+    const [categorys, setCaregory] = useState([])
     useEffect(() => {
         httpRequest('get', 'api/category/')
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 setCaregory(res.payload)
             })
             .catch((err) => console.log(err))
@@ -181,13 +199,11 @@ export const Subcategory = () => {
         }
         else {
             const data = new FormData();
+            data.append("category_id", mainCategory.current.value);
             data.append("Subcat_name", Subcat_name.current.value);
             data.append("image", image);
-            data.append("category_id", category_id.current.value);
-            data.append("spairPatsType", spairPatsType.current.value);
-            console.log(data);
-            httpRequest("post", "category/subcategory/store", data)
-                .then((res) => alert(res.message))
+            axios.post("http://localhost:5001/api/category/subcategory/store", data)
+                .then((res) => alert(res.data.message))
                 .catch((err) => console.log(`failed ${err}`));
         }
     }
@@ -200,6 +216,17 @@ export const Subcategory = () => {
             <div className="table-container">
                 <div className="row " style={{ padding: "37px" }}>
                     <div className="col">
+                        <label htmlFor="maincat">Main category</label>
+                        <select className="form-select" id="maincat" aria-label="Default select example" ref={mainCategory}>
+                            <option defaultValue="Select" selected>--Select--</option>
+                            {categorys.map((category, id) => {
+                                return (
+                                    <option key={id} value={category._id}>{category.vechicle},{category.spairPatsType},{category.partsName}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                    <div className="col">
                         <label htmlFor="category">Subcategory name</label>
                         <input type="text" id="category" ref={Subcat_name} className="form-control" />
                     </div>
@@ -207,35 +234,10 @@ export const Subcategory = () => {
                         <label htmlFor="category">Image</label>
                         <input type="file" id="category" onChange={(e) => setImage(e.target.files[0])} className="form-control" />
                     </div>
-                    <div className="col">
-                        <label htmlFor="maincat">Main category</label>
-                        <select className="form-select" id="maincat" aria-label="Default select example" ref={category_id}>
-                            <option defaultValue="Select" selected>--Select--</option>
-                            {categorys.map((category, id) => {
-                                return (
-                                    <option key={id} value={category._id}>{category.vechicleType},{category.company},{category.model},{category.year}</option>
-                                )
-                            })}
-                        </select>
-                    </div>
-                    <div className="col">
-                        <label htmlFor="maincat">Spairparts Type</label>
-                        <select className="form-select" id="maincat" aria-label="Default select example" ref={spairPatsType}>
-                            <option defaultValue="Select" selected>--Select--</option>
-                            <option value="Parts">Parts</option>
-                            <option value="Wheels">Wheels</option>
-                            <option value="Exterior">Exterior</option>
-                            <option value="Lighting">Lighting</option>
-                            <option value="Body Parts">Body Parts</option>
-                            <option value="Interior">Interior</option>
-                            <option value="Audio & Electronics">Audio & Electronics</option>
-                            <option value="Automotive Tools">Automotive Tools </option>
-                            <option value="Specialty">Specialty </option>
-                        </select>
-                    </div>
-
-
-
+                    {/* <div className="col">
+                        <label htmlFor="category">Description</label>
+                        <input type="text" id="category" ref={descriptionRef} className="form-control" />
+                    </div> */}
                 </div>
 
                 <div className="row" style={{ padding: "16px 37px" }}>

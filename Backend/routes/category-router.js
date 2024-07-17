@@ -13,16 +13,16 @@ categoryRoute.get("/", async (req, res) => {
         res.send(err)
     }
 });
-categoryRoute.post("/save", async (req, res) => {
-    const { vechicleType, year, company, model } = req.body;
+categoryRoute.post("/save",upload.single("image"), async (req, res) => {
+    const { vechicle, spairPatsType, partsName } = req.body;
+    const image = req.file.filename;
     let flag;
-
     try {
         const data = new Category({
-            vechicleType,
-            year,
-            company,
-            model
+            vechicle,
+            spairPatsType,
+            image,
+            partsName
         })
         // console.log(data)
         flag = await data.save()
@@ -35,14 +35,13 @@ categoryRoute.post("/save", async (req, res) => {
     }
 });
 categoryRoute.post("/subcategory/store", upload.single("image"),async (req, res) => {
-    const { Subcat_name, category_id, spairPatsType } = req.body;
+    const { category_id, Subcat_name } = req.body;
        const image = req.file.filename;
 
     const data = new Subcategory({
+        category_id,
         Subcat_name,
         image,
-        category_id,
-        spairPatsType
     })
     let flag;
     try {
