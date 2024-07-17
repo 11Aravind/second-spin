@@ -40,7 +40,7 @@ const AddProduct = () => {
         productDetails.append('image', image);
         productDetails.append('description', Description.current.value);
         productDetails.append('productLabel', productLabel);
-        productDetails.append('oldPrice', 1000);
+        productDetails.append('oldPrice', oldPrice.current.value);
         productDetails.append('newPrice', newPrice.current.value);
         productDetails.append('status', 0);
         productDetails.append('category_id', categoryId);
@@ -78,11 +78,11 @@ const AddProduct = () => {
                 </div>
                 <div className="row" style={{ padding: "16px 37px" }}>
 
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="sub_cat">Image</label>
                         <input type="file" className="form-control" id="sub_cat" onChange={(e) => setImage(e.target.files[0])} />
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="maincat">Product label</label>
                         <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setProductLabel(e.target.value)}>
                             <option value="choose_anything" selected>--Select--</option>
@@ -90,7 +90,11 @@ const AddProduct = () => {
                             <option value="secondHand" selected>Second-hand</option>
                         </select>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
+                        <label htmlFor="sub_cat">Old Price</label>
+                        <input type="text" className="form-control" id="sub_cat" ref={oldPrice} />
+                    </div>
+                    <div className="col-3">
                         <label htmlFor="sub_cat">Price</label>
                         <input type="text" className="form-control" id="sub_cat" ref={newPrice} />
                     </div>

@@ -95,7 +95,7 @@ export const AddCategory = () => {
             "model": model.current.value,
         }
         console.log(categoryData);
-        httpRequest('post', 'category/save', categoryData)
+        httpRequest('post', 'api/category/save', categoryData)
             .then((data) => {
                 resetValue();
                 showMessage(data.message);
@@ -167,7 +167,7 @@ export const Subcategory = () => {
     const spairPatsType = useRef("")
     const [categorys,setCaregory]=useState([])
     useEffect(() => {
-        httpRequest('get', 'category/')
+        httpRequest('get', 'api/category/')
             .then((res) => {
                 console.log(res)
                 setCaregory(res.payload)

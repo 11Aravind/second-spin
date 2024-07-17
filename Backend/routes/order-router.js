@@ -10,10 +10,12 @@ const orderRoute = express.Router()
 
 orderRoute.post("/checkout", async (req, res) => {
 const {amount,currency,receipt,userId,addressId,items,razorpayOrderId,status,paymentMode,order_message}=req.body;
-    const product = await stripe.products.create({
-        name: "T-Shirt"
-    });
 
+
+    const product = await stripe.products.create({
+        name: "T-Shirt",
+        userId:userId
+    });
 
     if (product) {
         var price = await stripe.prices.create({

@@ -52,16 +52,16 @@ export const Checkout = () => {
   const receiptId = "qwsaq1";
 
   const paymentHandler = async (e) => {
-    const product = items.map(({ _id, price, quantity }) => {
-      return { _id, quantity };
-    });
+    // const product = items.map(({ _id, price, quantity }) => {
+    //   return { _id, quantity };
+    // });
     const body = {
       amount,
       currency,
       receipt: receiptId,
       userId: userId,
       addressId: addressId,
-      items: product,
+      items: items,
       razorpayOrderId: "",
       status: paymentMode === "cod" ? "success" : "pending",
       paymentMode: paymentMode,
@@ -88,19 +88,6 @@ export const Checkout = () => {
   };
 
 
-  // let completeOrder = () => {
-  //   if (!isEmpty) {
-  //     const product = items.map(({ _id, price, quantity }) => {
-  //       return { _id, quantity };
-  //     });
-  //   }
-  // };
-  // const handleRemoveAddress=(addressId)=>{
-  //   console.log(addressId);
-  //   httpRequest('delete',`api/address/${addressId}`)
-  //   .then((res)=>console.log(res))
-  //   .catch((err)=>console.log(err))
-  // }
   return (
     isEmpty ? <Notfound /> :
       <div className="container  col-10">
