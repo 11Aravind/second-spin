@@ -31,7 +31,15 @@ const productSchema = new Schema({
   category_id:{
     type:Schema.Types.ObjectId,
     ref:"Category"
+  },
+  subCategory_id:{
+    type:Schema.Types.ObjectId,
+    ref:"Subcategory"
+  },
+  suitedVechicleName:{
+    type:String
   }
+
 
 })
 export default mongoose.model("Product", productSchema); 

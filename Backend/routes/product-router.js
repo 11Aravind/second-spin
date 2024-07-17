@@ -15,7 +15,7 @@ router.get('/',async (req, res, next) => {
     return res.status(200).json({productDetails})
  } );
 router.post('/save',upload.single("image"),async (req, res, next) => {
-    const { name, description,productLabel, category_id, oldPrice, newPrice, status } = req.body;
+    const { name, description,productLabel, oldPrice, newPrice, status,category_id,subCategory_id,suitedVechicleName} = req.body;
     const image = req.file.filename;
     // const image = req.file.path.replace('uploads/','');
     const productData = new Product({
@@ -27,6 +27,8 @@ router.post('/save',upload.single("image"),async (req, res, next) => {
       newPrice,
       status,
       category_id,
+      subCategory_id,
+      suitedVechicleName
     });
     try {
       await productData.save();

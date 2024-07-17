@@ -13,6 +13,15 @@ categoryRoute.get("/", async (req, res) => {
         res.send(err)
     }
 });
+categoryRoute.get("/subcategory", async (req, res) => {
+    let categoryData;
+    try {
+        categoryData = await Subcategory.find();
+        res.status(200).json({ "message": "success", "status": "success", "payload": categoryData })
+    } catch (err) {
+        res.send(err)
+    }
+});
 categoryRoute.post("/save",upload.single("image"), async (req, res) => {
     const { vechicle, spairPatsType, partsName } = req.body;
     const image = req.file.filename;
