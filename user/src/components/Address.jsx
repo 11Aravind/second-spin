@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import axios from "axios"
 import {fetchAndStoreAddress} from "../Slice/addressSlice"
 // import {httpRequest} from "../API/api"
 import { useNavigate } from "react-router";
 const Address = ({ changeAddressVisibility }) => {
   const dispatch=useDispatch();
-  //   const navigate = useNavigate()
+    const navigate = useNavigate()
     const name = useRef("")
     const mobile = useRef("")
     const pincode = useRef("")
@@ -14,8 +14,7 @@ const Address = ({ changeAddressVisibility }) => {
     const address = useRef("")
     const city = useRef("")
     const state = useRef("")
-    const addressList=[]
-    // const addressList = useSelector((state) => state.address.addressList)
+    const addressList = useSelector((state) => state.address.addressList)
     const userId = JSON.parse(localStorage.getItem("userId"));
     // console.log(userId);
 
@@ -27,6 +26,40 @@ const Address = ({ changeAddressVisibility }) => {
       const userId = onCheckOut();
       userId === null && navigate("/login")
     }, [userId])
+    // useEffect(() => {
+    //   const fetchAddress = () => {
+    //     return new Promise((resolve, reject) => {
+    //       const userId = onCheckOut(); // Ensure this function is defined and returns the correct userId
+  
+    //       axios.get(`http://localhost:5001/api/address?userId=${userId}`)
+    //         .then((response) => {
+    //           // Log entire response data for debugging
+    //           console.log("Full Response Data:", response.data);
+  
+    //           // Access addressList from the correct nested structure
+    //           const addressList = response.data.data && response.data.data.addressList;
+  
+    //           if (Array.isArray(addressList)) {
+    //             resolve(addressList);
+    //           } else {
+    //             resolve([]);
+    //           }
+    //         })
+    //         .catch((err) => {
+    //           console.error("Error fetching address:", err);
+    //           reject(err);
+    //         });
+    //     });
+    //   };
+  
+    //   fetchAddress()
+    //     .then((addressList) => {
+    //       dispatch(fetchAndStoreAddress(addressList));
+    //     })
+    //     .catch((err) => {
+    //       console.error("Error dispatching address:", err);
+    //     });
+    // }, [dispatch]);
     const saveAddress = () => {
       const addressData = {
         "userId": userId,

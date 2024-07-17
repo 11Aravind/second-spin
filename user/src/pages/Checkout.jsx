@@ -11,10 +11,9 @@ import "./css/OrderConfirmation.css";
 import Address from "../components/Address"
 import Notfound from "../pages/Notfound"
 export const Checkout = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isEmpty, items, cartTotal } = useCart();
-  console.log(items);
   const [addressId, changeAddressid] = useState(false);
   const [paymentMode, setPaymentMode] = useState('cod');
   const [isAddressVisible, setAddressVisible] = useState(false);
@@ -29,18 +28,22 @@ export const Checkout = () => {
     const userId = onCheckOut();
     axios.get(`http://localhost:5001/api/address?userId=${userId}`)
       .then((response) => {
-        // console.log("Full Response Data:", response.data); // Log entire response data for debugging
-        // Access addressList from the correct nested structure
-        const addressList = response.data.data && response.data.data.addressList;
-        console.log()
-        if (Array.isArray(addressList)) {
-          dispatch(fetchAndStoreAddress(addressList));
-        } else {
-          dispatch(fetchAndStoreAddress([]));
+        // const addressList = response.data.data && response.data.data.addressList;
+        // console.log(response)
+        // if (Array.isArray(addressList)) {
+        //   dispatch(fetchAndStoreAddress(addressList));
+        // } else {
+        //   dispatch(fetchAndStoreAddress([]));
+        // }
+        if (response.data.data.addressList.length === 0)
+          dispatch(fetchAndStoreAddress([]))
+        else {
+          dispatch(fetchAndStoreAddress(response.data.data.addressList))
         }
       })
       .catch((err) => console.error("Error fetching address:", err));
-  }, [dispatch]);
+  }, [dispatch,addressList]);
+
 
   const changeAddressVisibility = () => {
     setAddressVisible(!isAddressVisible)
@@ -69,20 +72,21 @@ export const Checkout = () => {
     };
     if (paymentMode === "cod") {
       axios.post("http://localhost:5001/api/order/cod", body).then((res) => {
-          console.log(res.data.status);
-          if (res.data.status === "success")
-            navigate("/orderplaced")
-        })
+        console.log(res.data.status);
+        if (res.data.status === "success")
+          navigate("/orderplaced")
+      })
         .catch((err) => console.log(err));
       // cod
     } else {
-      let response = await axios.post('http://localhost:5001/api/order/checkout',body);
+      let response = await axios.post('http://localhost:5001/api/order/checkout', body);
 
-      if(response && response.status === 200 ){
-  
+      if (response && response.status === 200) {
+
         window.location.href = response.data.url
-        
-        console.log(response.data)}
+
+        console.log(response.data)
+      }
     }
     // e.preventDefault();
   };
@@ -116,19 +120,19 @@ export const Checkout = () => {
         </div>
         <h5 className="headdingSpace">ORDER SUMMARY</h5>
         {
-          items.map((item, index) => {
-            return (
-              <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
-                <div className="col-3" style={{ width: "100px" }}>
-                  <img src="http://localhost:5001/1711434149628-1_f687340b-634e-41eb-a20d-975a29606913.webp" alt="" />
-                </div>
-                <div className="col-3" style={{ fontSize: "13px" }}>{item.name}</div>
-                <div className="col-3" >{item.newPrice}</div>
-                <div className="col-3" >{item.quantity}</div>
+        items.map((item, index) => {
+          return (
+            <div className="col-12 row" style={{ marginBottom: "10px" }} key={index}>
+              <div className="col-3" style={{ width: "100px" }}>
+                <img src={`http://localhost:5001/${item.image}`} alt="" />
               </div>
-            )
-          })
-        }
+              <div className="col-3" style={{ fontSize: "13px" }}>{item.name}</div>
+              <div className="col-3" >{item.newPrice}</div>
+              <div className="col-3" >{item.quantity}</div>
+            </div>
+          )
+        })
+      }
         <div className="col-12 row">
           <div className="col-6">Totel Amount</div>
           <div className="col-6"><b>₹{cartTotal}</b></div>
