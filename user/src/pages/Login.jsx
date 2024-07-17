@@ -31,11 +31,14 @@ const Login = () => {
     }
     httpRequest('post', 'api/user/login', loginData)
     .then((res) => {
+      console.log(res);
       if(res.status==="failed")
         {
+          
           showHideMessage(res.message)
         }
         else{
+          const id = localStorage.setItem("userId", JSON.stringify(res.user_id));
           navigate("/")
         }
       // dispatch(setRoute("/signup"))

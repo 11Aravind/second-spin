@@ -1,7 +1,11 @@
 import "./css/product.css"
 import {Link} from "react-router-dom"
-import products from "./data.json"
+import { useSelector } from "react-redux"
+
+// import products from "./data.json"
+
 const Products = () => {
+    const products=useSelector(state=>state.products.productList);
   return (
     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" style={{"margin": "40px 33px 0px"}}>
     {products.map((product, index) => (
@@ -9,10 +13,10 @@ const Products = () => {
             <Link to={`/product/${product._id}`} className="card-link">
                 <div className="card h-100">
                     <div className="img-container">
-                        <img src={product.image} className="card-img-top product-image" alt="..." />
+                        <img src={`http://localhost:5001/${product.image}`} className="card-img-top product-image" alt="..." />
                     </div>
                     <div className="card-body">
-                        <div className="card-title">{product.name}</div>
+                        <div className="card-title name">{product.name}</div>
                         <div className="cart-footer">
                             <div className="singleRow">
                                 <div className="newprice ">₹{product.newPrice}

@@ -20,10 +20,16 @@ const Cart = () => {
                 items.map((item, index) => {
                   return (
                     <div className="cart-row" key={index}>
-                      <div className="imgContainer"><img src={item[0].image} alt="img" /></div>
-                      <div className="desc">{item[0].name} -
-                      ₹ {item.price}
-                        <Quantitybtn item={item} />
+                      <div className="imgContainer">
+                        {/* <img src={item[0].image} alt="img" /> */}
+                        <img src={`http://localhost:5001/${item[0].image}`} alt="" />
+                        </div>
+                      <div className="desc">
+                        <div className="name">{item[0].name} </div>
+                <div className="onerow">
+                <div className="price">  ₹ {item.price}</div>
+                <Quantitybtn item={item} />
+                </div>
                       </div>
 
                     </div>

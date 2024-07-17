@@ -2,13 +2,16 @@ import { useState } from "react";
 import "./css/productdetails.css"
 import { Link, useParams } from "react-router-dom";
 import { useCart } from "react-use-cart";
-import products from "./data.json"
+import { useSelector } from "react-redux"
+// import products from "./data.json"
 const ProductDetails = () => {
 
   const [description, isDescriptionVisible] = useState(true)
   const [warenty, isWarrantyVisible] = useState(false)
   const { id } = useParams();
+  const products=useSelector(state=>state.products.productList);
   const product = products.filter((item) => item._id === id);
+  console.log(product);
   // console.log(id);
   // console.log(product);
   const { addItem, items } = useCart()
@@ -24,7 +27,7 @@ const ProductDetails = () => {
     <div className="spaceing">
       <div className="productDetails-container">
         <div className="left">
-          {product && <img src={product[0].image} alt="" />}
+          {product && <img src={`http://localhost:5001/${product[0].image}`} alt="" />}
         </div>
         <div className="rigt">
           <div className="product-name">
@@ -54,10 +57,10 @@ const ProductDetails = () => {
 
             {description && product && product[0].description}
           </div>
-          <div className="sub-headding-dropdown" onClick={() => isWarrantyVisible(!warenty)}>
+          {/* <div className="sub-headding-dropdown" onClick={() => isWarrantyVisible(!warenty)}>
             <div >Warranty</div>
             <div className="icon">{warenty ? <i className="bi bi-chevron-up"></i> : <i className="bi bi-chevron-down"></i>}</div>
-          </div>
+          </div> */}
           <div className="aboutProductDescription">
             {warenty && product && product[0].warranty}
           </div>

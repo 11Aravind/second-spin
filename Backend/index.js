@@ -10,6 +10,7 @@ const app=express()
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(cors())
+app.use(express.static('uploads'));
 app.get("/",(req,res)=>{res.send("you are in the home page")})
 app.use("/api/user",userRouter);
 app.use("/api/address",addressRouter);
