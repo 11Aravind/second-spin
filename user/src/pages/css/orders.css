@@ -66,23 +66,34 @@ width: 100%;
 .main{
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    gap: 19px;
+    .left-filter{
+        width: 80%;
+        border: 1px solid #dbdbdb;
+        padding: 25px 32px;
+    }
+    .right-order{
+        width: 80%;
+    }
+}
+.pding{
+    padding: 12px 4px;
 }
 .filter-ul{
     list-style: none;
     margin-bottom: 0;
     padding-left: 0;
+    display: flex;
+    gap: 20px;
+    /* justify-content: center; */
+    align-items: center;
 }
 .checkbox{
     margin-right: 8px;
 }
-.left-filter{
-    width: 20%;
-    border: 1px solid #dbdbdb;
-    padding: 25px 32px;
-}
-.right-order{
-    width: 79%;
-}
+
+
 .flag-conatiner{
     display: flex;
     justify-content: center;

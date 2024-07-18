@@ -1,42 +1,56 @@
 import { useEffect, useState } from "react";
 // import { httpRequest } from "../API/api";
-// import { httpRequest } from "../API/api";
+// import { httpRequest } from "../api";
+import axios from "axios"
 import "./css/orders.css"
 import { useSelector } from "react-redux"
 const Orders = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
   const products = useSelector((state) => state.products.productList);
-  const imgPath = useSelector(state => state.common.imagePath);
-  const addressArray = useSelector(state => state.address.addressList);
+  const imgPath = useSelector((state) => state.common.imagePath);
+  const addressArray = useSelector((state) => state.address.addressList);
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
-  const [selectedRow,setSelectedRow]=useState(null);
-  const toggleAddress=(id)=>{
-    setSelectedRow(selectedRow===id ? null : id);
+  const [loading, setLoading] = useState(true);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const toggleAddress = (id) => {
+    setSelectedRow(selectedRow === id ? null : id);
   }
+
   useEffect(() => {
-    httpRequest('get', `api/order?userId=${userId}`)
+    axios.get(`http://localhost:5001/api/order/?userId=${userId}`)
       .then((res) => {
-        let orders = res.data;
+        let orders = res.data.data;
+        // console.log(res.data.data);
         const ordersWithProductNames = orders.map((order) => {
           const itemsWithProductNames = order.items.map((item) => {
-            const product = products.find((product) => product._id === item._id);
-            return { ...item, "name": product.name, image: product.image, description: product.description, oldPrice: product.oldPrice };
+            const product = products.find((product) => product._id === item.id);
+            return { ...item, 
+              name: product.name, 
+              image: product.image, 
+              description: product.description, 
+              newPrice: product.newPrice 
+            };
           });
           return { ...order, items: itemsWithProductNames };
         });
         setOrders(ordersWithProductNames);
-        setLoading(false); // Mark loading as false after data is fetched
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false); // Ensure loading is set to false on error
+        setLoading(false);
       });
   }, [userId, products]);
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading indicator
+    return <div>Loading...</div>;
   }
+
+  const getAddressById = (addressId) => {
+    return addressArray.find(address => address._id === addressId);
+  }
+
 
   return (
     <div className="container">
@@ -45,12 +59,11 @@ const Orders = () => {
       ) : (
        <div className="main">
         <div className="left-filter">
-          <div className="mediumfont">Filters</div>
           <ul className="filter-ul">
+          <div className="mediumfont">Filters   :     </div>
             <li><div><input type="checkbox" className="checkbox" />On the way</div></li>
             <li><div><input type="checkbox" className="checkbox" />Delivered</div></li>
             <li><div><input type="checkbox" className="checkbox" />Cancelled</div></li>
-            
           </ul>
 
         </div>
@@ -68,13 +81,15 @@ const Orders = () => {
                       </div>
                       <div className="order-description">
                         <p>{item.name}</p>
+                        <p>  <b>₹</b>{item.newPrice}  <b>Qnty-</b>{item.quantity} </p>
+                       
                         {/* Quantity: {item.quantity}<br />
                         Payment Mode: {order.paymentMode}, Date: {order.dateOfOrder}<br />
                         Address: {address ? address.address : 'Address not found'} */}
                       </div>
-                      <div className="mediumfont">
-                      ₹{item.quantity}
-                      </div>
+                      {/* <div className="mediumfont">
+                    <br />
+                      </div> */}
                       <div className="cancel-order">
                         {/* <button className="cancelBtn" id={order._id}>cancel</button> */}
                        <div className="flag-conatiner"> 

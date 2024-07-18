@@ -19,6 +19,7 @@ import Notfound from './pages/Notfound'
 import { Checkout } from './pages/Checkout'
 import Orderplaced from './pages/Orderplaced'
 import Orders from './pages/Orders'
+import Profile from './pages/Profile'
 
 
 
@@ -68,8 +69,8 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orderplaced" element={<Orderplaced />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Notfound />} />
-
       </Routes>
 
     </div>

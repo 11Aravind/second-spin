@@ -28,10 +28,10 @@ const Navbar = () => {
                     menu: 'Order',
                     url: "/orderdetails"
                 },
-                {
-                    menu: 'Blog',
-                    url: "/blogs"
-                },
+                // {
+                //     menu: 'Blog',
+                //     url: "/blogs"
+                // },
                 {
                     menu: 'Gallery',
                     url: "/gallery"

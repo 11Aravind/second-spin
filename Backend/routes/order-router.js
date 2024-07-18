@@ -4,9 +4,21 @@ import Stripe from 'stripe';
 // const stripe = require("stripe")("sk_test_51KQwUGSDqjJiCnel8Ob1iTjmIMYUL9rYTogF8wpaqepJ0NBLfuwd0SsVNXltGyhvZAueB3nWvYu4k1wHSObOKaVy00Fepgbu2O");
 const stripe = new Stripe("sk_test_51KQwUGSDqjJiCnel8Ob1iTjmIMYUL9rYTogF8wpaqepJ0NBLfuwd0SsVNXltGyhvZAueB3nWvYu4k1wHSObOKaVy00Fepgbu2O");
 const orderRoute = express.Router()
-// orderRoute.get("/",getOrder);
 // orderRoute.get("/all",getAllOrder);
 // orderRoute.post("/checkout",storeOrder);
+orderRoute.get("/",async (req, res) => {
+    let orderDetails;
+    const { userId } = req.query;
+    try {
+        orderDetails = await Order.find({userId})
+    } catch (error) {
+        console.log(error);
+    }
+    if (orderDetails.length !== 0)
+        res.status(200).json({ status: "success", message: "", data: orderDetails })
+    else
+        res.status(400).json({ status: "success", messgae: "order was empty", data: orderDetails })
+});
 
 orderRoute.post("/checkout", async (req, res) => {
 const { amount, currency, receipt, userId, addressId, items, razorpayOrderId, status, paymentMode, order_message } = req.body;
