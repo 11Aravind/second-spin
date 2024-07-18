@@ -161,7 +161,7 @@ const Navbar = () => {
 
                     <Link to="/">
                         <div className="logo">
-                            <img src="../images/logo.png" width="60"
+                            <img src="../images/logo3ai.png" width="60"
                             />
                         </div>
                     </Link>
@@ -203,7 +203,9 @@ const Navbar = () => {
 
                 {/* <input className="" id="disabledInput" type="text" placeholder="Select your Vehicle"></input> */}
           {     userId && (<div className="icons">
+            <Link to="/profile">
                     <i className="bi bi-person-circle"></i>
+                    </Link>
                     <Link to="/cart">
                         <i className="bi bi-cart"></i>
                         <small className="cart-count">{totalItems}</small>

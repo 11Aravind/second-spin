@@ -1,6 +1,7 @@
 .top-navbar-container{
     height: 28px;
-    background-color: var(--primary);
+    background: linear-gradient(45deg, #c338fc, #ff00ff);
+    /* background-color: var(--primary); */
     color: #fff;
     display: flex;
     justify-content: space-around;

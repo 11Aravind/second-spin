@@ -16,7 +16,9 @@
 a {
     text-decoration: none;
 }
-
+.error-message{
+    color: red;
+}
 .category {
     justify-content: center;
     align-items: center;

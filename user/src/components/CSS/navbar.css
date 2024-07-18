@@ -134,13 +134,15 @@ body {
 }
 .left-navcontainer{
     display: flex;
-}
+    justify-content: center;
+    align-items: center;}
 .mobileNavSymbol{
     font-size: 40px;
     padding-right: 13px;
 }
 .logo{
-    width: 50%;
+    /* width: 50%; */
+    width: 74px;
 }
 .logo>img{
     width: 100%;
@@ -151,7 +153,10 @@ body {
     top: -12px;
     font-size: 10px;
     color: white;
-    background: #298015;
+    background: linear-gradient(45deg, #c338fc, #ff00ff);
+    /* background: #298015; */
+    
+
     /* height: 16px; */
     padding: 3px 4px;
     border-radius: 50%;
