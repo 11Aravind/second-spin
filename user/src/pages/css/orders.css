@@ -79,6 +79,7 @@ width: 100%;
 }
 .pding{
     padding: 12px 4px;
+    cursor: pointer;
 }
 .filter-ul{
     list-style: none;

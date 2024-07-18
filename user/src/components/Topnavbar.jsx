@@ -1,6 +1,8 @@
 import "./CSS/Topnavbar.css"
 import {Link} from "react-router-dom"
 const Topnavbar = () => {
+  const userId = JSON.parse(localStorage.getItem("userId"));
+
   return (
     <div className="top-navbar-container">
         <div className="nav-left">       
@@ -9,9 +11,9 @@ const Topnavbar = () => {
         </div>
         <div className="nav-right">
         <span className="certificate">
-        Certificates</span> |<span className="whyus">Why us</span> | <span className="craditials">
-            <Link to="/login" className="white">login / signup</Link>
-        </span>
+        Certificates</span> |<span className="whyus">Why us</span> 
+          {!userId && (<>| <span className="craditials"> <Link to="/login" className="white">login / signup</Link>  </span></>)}
+      
         </div>
     </div>
   )

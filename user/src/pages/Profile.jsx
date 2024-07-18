@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+const userId = JSON.parse(localStorage.getItem("userId"));
 const Profile = () => {
 	const [isEnabled,setEnabled]=useState(false)
 	return (
@@ -31,9 +31,12 @@ const Profile = () => {
 										<span className="text-secondary"><i className="bi bi-chevron-right"></i></span>
 									</li>
 
+									{userId ? <li className=" pding d-flex justify-content-between align-items-center flex-wrap" >
+										<h6 className="mb-0 d-flex" style={{"gap": "12px"}} onClick={()=>localStorage.removeItem("userId")}><i className="bi bi-power" style={{"color":"red"}}></i>Logout</h6>
+									</li>:
 									<li className=" pding d-flex justify-content-between align-items-center flex-wrap">
-										<h6 className="mb-0"><i className="bi bi-power"></i>Logout</h6>
-									</li>
+									<h6 className="mb-0" ><Link to="/login">login / signup</Link> </h6></li>
+									}
 								</ul>
 							</div>
 						</div>

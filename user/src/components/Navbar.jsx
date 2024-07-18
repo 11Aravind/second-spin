@@ -115,9 +115,9 @@ let options = [
                 ],
             },
             {
-                id:20,
-                name:"Signup/Signin",
-                rout:"/login"
+                id: 20,
+                name: "Signup/Signin",
+                rout: "/login"
             },
         ],
     },
@@ -125,6 +125,7 @@ let options = [
 
 const Navbar = () => {
     const [isOpen, handleClick] = useState(false);
+    const userId = JSON.parse(localStorage.getItem("userId"));
 
     // const handleSidebarToggle = isOpen => {
     //     setIsOpen(isOpen);
@@ -151,20 +152,20 @@ const Navbar = () => {
                 onItemClick={menuClicked}
             />
             <div className="headerDiv">
-               <div className="left-navcontainer">
-               <i
-                    className="bi bi-justify mobileNavSymbol"
-                    onClick={() => handleClick(true)}
-                    aria-hidden="true"
-                ></i>
+                <div className="left-navcontainer">
+                    <i
+                        className="bi bi-justify mobileNavSymbol"
+                        onClick={() => handleClick(true)}
+                        aria-hidden="true"
+                    ></i>
 
-                <Link to="/">
-                    <div className="logo">
-                        <img src="../images/logo.png" width="60"
-                        />
-                    </div>
-                </Link>
-               </div>
+                    <Link to="/">
+                        <div className="logo">
+                            <img src="../images/logo.png" width="60"
+                            />
+                        </div>
+                    </Link>
+                </div>
                 <div className="searchBox">
                     <ReactSearchBox
                         placeholder="Search by Make Model Year,Product Type,Part Number,or Brand..."
@@ -199,15 +200,16 @@ const Navbar = () => {
                         iconBoxSize="48px"
                     />
                 </div>
+
                 {/* <input className="" id="disabledInput" type="text" placeholder="Select your Vehicle"></input> */}
-              <div className="icons">
-              <i className="bi bi-person-circle"></i>
-             <Link to="/cart">
-             <i className="bi bi-cart"></i>
-             <small className="cart-count">{totalItems}</small>
-             </Link>
-             {/* <button class="keep-shoppingBtn">Login/Signup</button> */}
-              </div>
+          {     userId && (<div className="icons">
+                    <i className="bi bi-person-circle"></i>
+                    <Link to="/cart">
+                        <i className="bi bi-cart"></i>
+                        <small className="cart-count">{totalItems}</small>
+                    </Link>
+                    {/* <button class="keep-shoppingBtn">Login/Signup</button> */}
+                </div>)}
             </div>
 
         </>
