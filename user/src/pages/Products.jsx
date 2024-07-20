@@ -1,9 +1,7 @@
 import "./css/product.css"
 import {Link} from "react-router-dom"
 import { useSelector } from "react-redux"
-
 // import products from "./data.json"
-
 const Products = () => {
     const products=useSelector(state=>state.products.productList);
   return (

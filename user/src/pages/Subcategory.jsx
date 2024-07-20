@@ -22,15 +22,16 @@ const Subcategory = () => {
             {
                 subCategorys.length !== 0 ? <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" >
                     {
-                        subCategorys.map((category, index) => (
+                        subCategorys.map((subCat, index) => (
                             <div className="col-6 col-sm-6 col-md-4 col-lg-2" key={index}>
-                                {/* <Link to={`/productdetails/${product._id}`} className="card-link"> */}
+                                <Link to={`/testproduct/${subCat._id}`} className="card-link">
                                 <div className="card h-100 category">
                                     <div className="img-container category-img">
-                                        <img src={`http://localhost:5001/${category.image}`} className="card-img-top product-image" alt="..." />
+                                        <img src={`http://localhost:5001/${subCat.image}`} className="card-img-top product-image" alt="img" />
                                     </div>
-                                    <div className="category-name">{category.Subcat_name}</div>
+                                    <div className="category-name">{subCat.Subcat_name}</div>
                                 </div>
+                                </Link>
                             </div>
                         ))
                     }
