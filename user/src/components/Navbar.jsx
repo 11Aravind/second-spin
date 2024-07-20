@@ -144,20 +144,20 @@ const Navbar = () => {
 
     return (
         <>
-            <MultilevelSidebar
+            {/* <MultilevelSidebar
                 open={isOpen}
                 onToggle={() => handleClick(!isOpen)}
                 options={options}
                 header="SecondSpin"
                 onItemClick={menuClicked}
-            />
+            /> */}
             <div className="headerDiv">
                 <div className="left-navcontainer">
-                    <i
+                    {/* <i
                         className="bi bi-justify mobileNavSymbol"
                         onClick={() => handleClick(true)}
                         aria-hidden="true"
-                    ></i>
+                    ></i> */}
 
                     <Link to="/">
                         <div className="logo">

@@ -93,7 +93,9 @@ width: 100%;
 .checkbox{
     margin-right: 8px;
 }
-
+.space{
+    margin-top: 45px;
+}
 
 .flag-conatiner{
     display: flex;

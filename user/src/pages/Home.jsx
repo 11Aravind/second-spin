@@ -11,7 +11,7 @@ const Home = () => {
             <div className="spacing">
            <CategoryFilter/>
             <h2 className="headding">Top Categorys</h2>
-           <CategoeryCard/>
+           {/* <CategoeryCard/> */}
            {/* <Products/> */}
            </div>
         </div>

@@ -20,8 +20,8 @@ import { Checkout } from './pages/Checkout'
 import Orderplaced from './pages/Orderplaced'
 import Orders from './pages/Orders'
 import Profile from './pages/Profile'
-
-
+import Parts from './pages/Parts'
+import Subcategory from './pages/Subcategory'
 
 function App() {
   const dispatch=useDispatch();
@@ -64,11 +64,13 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product" element={<Products />} />
+        <Route path="/parts" element={<Parts />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orderplaced" element={<Orderplaced />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/subcategory/:id" element={<Subcategory />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Notfound />} />
       </Routes>

@@ -12,7 +12,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const products=useSelector(state=>state.products.productList);
   const product = products.filter((item) => item._id === id);
-  console.log(product);
+  // console.log(product);
   // console.log(id);
   // console.log(product);
   // const { addItem, items } = useCart()
