@@ -66,13 +66,11 @@
     color: #fff;
     border-radius: 4px;
     padding: 6px 0px;
-    background-color: var(--primary);
+    background:linear-gradient(45deg, #c338fc, #ff00ff);
     width: 100%;
     /* transition: background 0.3s; */
   }
-  .login-button:hover {
-    /* background: linear-gradient(135deg, #005bb5, #003f8a); */
-  }
+
   .forgot-password {
     margin-top: 20px;
     color: #007aff;

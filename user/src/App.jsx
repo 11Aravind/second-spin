@@ -1,13 +1,12 @@
 import './App.css'
 import {httpRequest} from "./api"
-
 import { useEffect } from 'react'
 import { useSelector,useDispatch } from "react-redux"
 import {fetchAndStoreCategory} from "./Slice/categorySlice"
 import {fetchAndStore} from "./Slice/productSlice"
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes,useLocation } from "react-router-dom"
 import Products from './pages/Products'
 import Product from './pages/Product'
 import ProductDetails from "./pages/ProductDetails"
@@ -26,6 +25,8 @@ import Subcategory from './pages/Subcategory'
 
 function App() {
   const dispatch=useDispatch();
+  const noCommonComponents = ['/login', '/signup'];
+  const location = useLocation();
   useEffect(() => {
     // Fetching categories
     httpRequest('get', 'api/category')
@@ -57,9 +58,13 @@ function App() {
 
   return (
     <div>
-      <Topnavbar/>
-      <Navbar />
-      <Bottomnavbar/>
+       {!noCommonComponents.includes(location.pathname) && (
+        <>
+          <Topnavbar />
+          <Navbar />
+          <Bottomnavbar />
+        </>
+      )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
