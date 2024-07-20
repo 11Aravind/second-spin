@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import CategoeryCard from "../components/CategoeryCard"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
+
 const Subcategory = () => {
     const { id } = useParams();
     console.log(id);
