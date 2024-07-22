@@ -52,7 +52,7 @@ export const Checkout = () => {
   }
 
   //payment section
-  const amount = cartTotal * 100;
+  const amount = cartTotal ;
   const currency = "INR";
   const receiptId = "qwsaq1";
 

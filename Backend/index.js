@@ -6,9 +6,12 @@ import addressRouter from "./routes/address-router.js"
 import orderRouter from "./routes/order-router.js"
 import productRouter from "./routes/product-router.js"
 import cors from "cors";
+import  bodyParser from 'body-parser';
 const app=express()
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
+app.use(bodyParser.json());
 app.use(cors())
 app.use(express.static('uploads'));
 app.get("/",(req,res)=>{res.send("you are in the home page")})

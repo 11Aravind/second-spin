@@ -21,11 +21,10 @@ orderRoute.get("/",async (req, res) => {
 });
 
 orderRoute.post("/checkout", async (req, res) => {
-const { amount, currency, receipt, userId, addressId, items, razorpayOrderId, status, paymentMode, order_message } = req.body;
-const {products} = req.body;
-// console.log(products.items);
+    const {products} = req.body;
+const { amount, currency, receipt, userId, addressId, items, razorpayOrderId, status, paymentMode, order_message } = products;
+console.log(amount);
 const baseURL = 'http://localhost:5173/';
-
     const lineItems = products.items.map((product)=>({
         price_data:{
             currency:"inr",
@@ -46,7 +45,7 @@ const baseURL = 'http://localhost:5173/';
         success_url:"http://localhost:5173/Orderplaced",
         cancel_url:"http://localhost:3000/cancel",
     });
-
+console.log(session.id);
     res.json({id:session.id})
 
     // const product = await stripe.products.create({
