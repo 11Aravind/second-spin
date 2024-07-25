@@ -22,7 +22,7 @@ const Order = new Schema({
         type: Number,
         required: true
     },
-    razorpayOrderId: {
+   stripOrderId: {
         type: String,
         required: true
     },

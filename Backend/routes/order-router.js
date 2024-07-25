@@ -90,7 +90,7 @@ orderRoute.post("/cod", async (req, res) => {
         addressId,
         items,
         totelamount: amount,
-        razorpayOrderId: 0,
+        stripOrderId: 0,
         dateOfOrder: date,
         status: "success",
         paymentMode,
