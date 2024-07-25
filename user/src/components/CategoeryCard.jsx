@@ -38,7 +38,7 @@ const CategoryCard = ({categorys}) => {
     return (
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4" > 
             {
-                categorys.map((category, index) => (
+              categorys.length===0?"Category and product was currently not added":  categorys.map((category, index) => (
                     <div className="col-6 col-sm-6 col-md-4 col-lg-2" key={index}>
                         <Link to={`/subcategory/${category._id}`} className="card-link">
                         <div className="card h-100 category">

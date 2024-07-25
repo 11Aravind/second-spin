@@ -137,10 +137,10 @@ export const AddCategory = () => {
                                 <option value="Wheels">Wheels</option>
                                 <option value="Exterior">Exterior</option>
                                 <option value="Lighting">Lighting</option>
-                                <option value="Body Parts">Body Parts</option>
+                                <option value="BodyParts">Body Parts</option>
                                 <option value="Interior">Interior</option>
-                                <option value="Audio & Electronics">Audio & Electronics</option>
-                                <option value="Automotive Tools">Automotive Tools </option>
+                                <option value="Audio&Electronics">Audio & Electronics</option>
+                                <option value="AutomotiveTools">Automotive Tools </option>
                                 <option value="Specialty">Specialty </option>
                             </select>
                         </div>

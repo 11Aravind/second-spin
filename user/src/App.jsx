@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import { Route, Routes,useLocation } from "react-router-dom"
 import Products from './pages/Products'
 import Product from './pages/Product'
+import Category from "./pages/Category"
 import ProductDetails from "./pages/ProductDetails"
 import Cart from"./pages/Cart"
 import Bottomnavbar from './components/Bottomnavbar'
@@ -20,7 +21,6 @@ import { Checkout } from './pages/Checkout'
 import Orderplaced from './pages/Orderplaced'
 import Orders from './pages/Orders'
 import Profile from './pages/Profile'
-import Parts from './pages/Parts'
 import Subcategory from './pages/Subcategory'
 
 function App() {
@@ -71,7 +71,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/product" element={<Products />} />
         <Route path="/testproduct/:id" element={<Product />} />
-        <Route path="/parts" element={<Parts />} />
+        <Route exact path="/category/:cat" element={<Category/>} />
+        {/* <Route path="/parts" element={<Parts />} />
+        <Route path="/wheels" element={<Wheels />} /> */}
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
