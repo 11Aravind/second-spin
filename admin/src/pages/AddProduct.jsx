@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from 'axios'
 const AddProduct = () => {
   const prodcutName = useRef('');
@@ -14,10 +17,10 @@ const AddProduct = () => {
   const [mergedData, setMergedData] = useState([]);
 
   const [message, setMessage] = useState("");
-  const showMessage = (msg) => {
-    setMessage(msg);
-    setTimeout(() => setMessage(""), 3000)
-  }
+  // const showMessage = (msg) => {
+  //   setMessage(msg);
+  //   setTimeout(() => setMessage(""), 3000)
+  // }
   const validateForm = () => {
     let isValid = true;
     const newErrors = { ...errors };
@@ -57,7 +60,7 @@ const AddProduct = () => {
       isValid = false;
     }
 
-    if (productLabel === "") {
+    if (productLabel === "--Select--") {
       newErrors.productLabel = "Please select a product label";
       isValid = false;
     }
@@ -156,8 +159,8 @@ const AddProduct = () => {
       productDetails.append('suitedVechicleName', suitedVehicleRef.current.value);
       axios.post('http://localhost:5001/api/product/save', productDetails)
         .then((response) => {
-          showMessage(response.data.message);
-          alert(response.data.message)
+       response.data.status=="success"? toast.success(response.data.message):  toast.error(response.data.message)
+
           console.log(response);
           resetValues();
         })
@@ -166,6 +169,7 @@ const AddProduct = () => {
   }
   return (
     <div className="content-div">
+      <ToastContainer />
       <div className="card-header">
         <div className="card-headding">Add Product </div>
         <div className="errorMessage">{message}</div>
@@ -207,9 +211,9 @@ const AddProduct = () => {
           <div className="col-3">
             <label htmlFor="maincat">Product label</label>
             <select className="form-select" id="maincat" aria-label="Default select example" onClick={(e) => setProductLabel(e.target.value)}>
-              <option value="choose_anything" selected>--Select--</option>
-              <option value="firstHand" selected>First-hand</option>
-              <option value="secondHand" selected>Second-hand</option>
+              <option value="choose_anything" >--Select--</option>
+              <option value="firstHand" >First-hand</option>
+              <option value="secondHand" >Second-hand</option>
             </select>
             <small style={{ color: "red" }}>{errors.productLabel}</small>
 
