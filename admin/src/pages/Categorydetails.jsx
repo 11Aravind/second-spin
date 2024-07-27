@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 import { httpRequest } from "../API/api"
 import { useSelector } from "react-redux"
@@ -69,104 +71,131 @@ export const Categorydetails = () => {
     );
 }
 // export default Categorydetails;
+
+
 // export const AddCategory = () => {
-//     const vehicleType = useRef('');
-//     const spairPatsType = useRef("")
-//     const [image, setImage] = useState("")
-//     const nameRef = useRef('');
-//     const [message, setMessage] = useState("");
-//     const showMessage = (msg) => {
-//         setMessage(msg);
-//         setTimeout(() => {
-//             setMessage("")
-//         }, 4000);
-//     }
-//     const resetValue = () => {
-//         vehicleType.current.value = "";
-//         spairPatsType.current.value = "";
-//         nameRef.current.value = "";
-//     }
-//     const saveCategory = (e) => {
-     
-//         const categoryData = new FormData()
-//         categoryData.append("vechicle", vehicleType.current.value)
-//         categoryData.append("spairPatsType", spairPatsType.current.value)
-//         categoryData.append("image", image)
-//         categoryData.append("partsName", nameRef.current.value)
-//         axios.post('http://localhost:5001/api/category/save', categoryData)
-//             .then((res) => {
-//                 showMessage(res.data.message);
-//                 resetValue();
-//             })
-//             .catch((error) => console.log(error));
-//     }
-//     return (
-//         <>
-//             {/* <div className="content-div">
-//                 <div className="card-header">
-//                     <div className="card-headding">Add Category</div>
-//                     <div className="errorMessage">{message}</div>
-//                 </div>
-//                 <div className="table-container">
-//                     <div className="row " style={{ padding: "37px" }}>
-//                         <div className="col">
-//                             <label htmlFor="maincat">Vehicle type</label>
-//                             <select className="form-select" id="maincat" ref={vehicleType} aria-label="Default select example">
-//                                 <option defaultValue="Select" selected>--Select--</option>
-//                                 <option value="Pet">Car</option>
-//                                 <option value="Food">Bike</option>
-//                                 <option value="Accessorys">Truck</option>
-//                                 <option value="Medicine">Plain</option>
-//                             </select>
-//                         </div>
+//   const vehicleTypeRef = useRef(null);
+//   const spairPatsTypeRef = useRef(null);
+//   const nameRef = useRef(null);
+//   const imageRef = useRef(null);
 
-                       
-//                         <div className="col">
-//                             <label htmlFor="maincat">Spairparts Type</label>
-//                             <select className="form-select" id="maincat" aria-label="Default select example" ref={spairPatsType}>
-//                                 <option defaultValue="Select" selected>--Select--</option>
-//                                 <option value="Parts">Parts</option>
-//                                 <option value="Wheels">Wheels</option>
-//                                 <option value="Exterior">Exterior</option>
-//                                 <option value="Lighting">Lighting</option>
-//                                 <option value="BodyParts">Body Parts</option>
-//                                 <option value="Interior">Interior</option>
-//                                 <option value="Audio&Electronics">Audio & Electronics</option>
-//                                 <option value="AutomotiveTools">Automotive Tools </option>
-//                                 <option value="Specialty">Specialty </option>
-//                             </select>
-//                         </div>
-//                         <div className="col">
-//                             <label htmlFor="category">Image</label>
-//                             <input type="file" id="category" onChange={(e) => setImage(e.target.files[0])} className="form-control" />
-//                         </div>
-//                         <div className="col">
-//                             <label htmlFor="category">Parts Name</label>
-//                             <input type="text" id="category" ref={nameRef} className="form-control" />
-//                         </div>
-//                     </div>
-//                     {/* <div className="row" style={{ padding: "16px 37px" }}>
-//                     <div className="col">
-//                         <label htmlFor="sub_cat">Sub category</label>
-//                         <input type="text" ref={subcategory} className="form-control" id="sub_cat" />
-//                     </div>
-//                     <div className="col">
-//                         <label htmlFor="image">Image</label>
-//                         <input type="file" onChange={(e) => setImage(e.target.files[0])} className="form-control" id="image" />
-//                         <small style={{color:"red"}}>{image===""?"Please select an image":""}</small>
-//                     </div>
-//                 </div> 
+//   const [message, setMessage] = useState('');
+//   const [errors, setErrors] = useState({
+//     vehicleType: '',
+//     spairPatsType: '',
+//     name: '',
+//     image: '',
+//   });
 
-//                     <div className="row" style={{ padding: "16px 37px" }}>
-//                         <button className="btn btn-primary" onClick={saveCategory}>Save</button>
-//                     </div>
-//                 </div>
-//             </div> */}
-//             <Subcategory />
+//   // const [image, setImage] = useState('');
 
-//         </>
-//     )
-// }
+//   const saveCategory = () => {
+//     const vehicleType = vehicleTypeRef.current.value;
+//     const spairPatsType = spairPatsTypeRef.current.value;
+//     const name = nameRef.current.value;
+//     const imageFile = imageRef.current.files[0];
+//   const categoryData = new FormData()
+//   categoryData.append("vechicle", vehicleType)
+//   categoryData.append("spairPatsType", spairPatsType)
+//   categoryData.append("image", imageFile)
+//   categoryData.append("partsName", name)
+//   axios.post('http://localhost:5001/api/category/save', categoryData)
+//       .then((response) => {
+//         response.data.status=="success"? toast.success(response.data.message):  toast.error(response.data.message)
+//         resetValue();
+//       })
+//       .catch((error) => console.log(error));
+
+
+//   };
+
+//   // const handleImageChange = (e) => {
+//   //   setImage(e.target.files[0]);
+//   // };
+
+//   return (
+//    <> <div className="content-div">
+//     <ToastContainer />
+//    <div className="card-header">
+//      <div className="card-headding">Add Category</div>
+//      <div className="errorMessage">{message}</div>
+//    </div>
+//    <div className="table-container">
+//      <div className="row" style={{ padding: "37px" }}>
+//        <div className="col">
+//          <label htmlFor="maincat">Vehicle type</label>
+//          <select
+//            className="form-select"
+//            id="maincat"
+//            ref={vehicleTypeRef}
+//            aria-label="Default select example"
+//          >
+//            <option defaultValue="Select" selected>--Select--</option>
+//            <option value="Pet">Car</option>
+//            <option value="Food">Bike</option>
+//            <option value="Accessorys">Truck</option>
+//            <option value="Medicine">Plain</option>
+//          </select>
+//          <small style={{ color: "red" }}>{errors.vehicleType}</small>
+//        </div>
+
+//        <div className="col">
+//          <label htmlFor="maincat">Spairparts Type</label>
+//          <select
+//            className="form-select"
+//            id="maincat"
+//            aria-label="Default select example"
+//            ref={spairPatsTypeRef}
+//          >
+//            <option defaultValue="Select" selected>--Select--</option>
+//            <option value="Parts">Parts</option>
+//            <option value="Wheels">Wheels</option>
+//            <option value="Exterior">Exterior</option>
+//            <option value="Lighting">Lighting</option>
+//            <option value="BodyParts">Body Parts</option>
+//            <option value="Interior">Interior</option>
+//            <option value="Audio&Electronics">Audio & Electronics</option>
+//            <option value="AutomotiveTools">Automotive Tools </option>
+//            <option value="Specialty">Specialty </option>
+//          </select>
+//          <small style={{ color: "red" }}>{errors.spairPatsType}</small>
+//        </div>
+
+//        <div className="col">
+//          <label htmlFor="category">Image</label>
+//          <input
+//            type="file"
+//            id="category"
+//           //  onChange={handleImageChange}
+//            ref={imageRef}
+//            className="form-control"
+//          />
+//          <small style={{ color: "red" }}>{errors.image}</small>
+//        </div>
+
+//        <div className="col">
+//          <label htmlFor="category">Parts Name</label>
+//          <input
+//            type="text"
+//            id="category"
+//            ref={nameRef}
+//            className="form-control"
+//          />
+//          <small style={{ color: "red" }}>{errors.name}</small>
+//        </div>
+//      </div>
+
+//      <div className="row" style={{ padding: "16px 37px" }}>
+//        <button className="btn btn-primary" onClick={saveCategory}>
+//          Save
+//        </button>
+//      </div>
+//    </div>
+//    </div>
+//    <Subcategory/>
+//    </>
+//       )
+//    }
 
 export const AddCategory = () => {
   const vehicleTypeRef = useRef(null);
@@ -182,193 +211,287 @@ export const AddCategory = () => {
     image: '',
   });
 
-  const [image, setImage] = useState('');
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      vehicleType: '',
+      spairPatsType: '',
+      name: '',
+      image: '',
+    };
+
+    if (vehicleTypeRef.current.value==="--Select--") {
+      newErrors.vehicleType = 'Vehicle type is required';
+      isValid = false;
+    }
+    if (spairPatsTypeRef.current.value ==="--Select--") {
+      newErrors.spairPatsType = 'Spairparts type is required';
+      isValid = false;
+    }
+    if (!nameRef.current.value) {
+      newErrors.name = 'Name is required';
+      isValid = false;
+    }
+    if (!imageRef.current.files[0]) {
+      newErrors.image = 'Image is required';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const saveCategory = () => {
-    const vehicleType = vehicleTypeRef.current.value;
-    const spairPatsType = spairPatsTypeRef.current.value;
-    const name = nameRef.current.value;
-    const imageFile = imageRef.current.files[0];
-
-    if (vehicleType==="--Select--") {
-      setErrors((prevErrors) => ({ ...prevErrors, vehicleType: 'Please select a vehicle type' }));
-    }
-    if (spairPatsType==="--Select--") {
-      setErrors((prevErrors) => ({ ...prevErrors, spairPatsType: 'Please select a spair parts type' }));
-    }
-    if (!name) {
-      setErrors((prevErrors) => ({ ...prevErrors, name: 'Please enter a parts name' }));
-    }
-    if (!imageFile) {
-      setErrors((prevErrors) => ({ ...prevErrors, image: 'Please select an image' }));
-    }
-    setTimeout(() => {
+    if (!validateForm()) {
+      setTimeout(() => {
         setErrors({
           vehicleType: '',
           spairPatsType: '',
           name: '',
           image: '',
         });
-      }, 2000);
+      }, 3000);
+      return;
+    }
+
+    const vehicleType = vehicleTypeRef.current.value;
+    const spairPatsType = spairPatsTypeRef.current.value;
+    const name = nameRef.current.value;
+    const imageFile = imageRef.current.files[0];
+    
+    const categoryData = new FormData();
+    categoryData.append('vechicle', vehicleType);
+    categoryData.append('spairPatsType', spairPatsType);
+    categoryData.append('image', imageFile);
+    categoryData.append('partsName', name);
+    
+    axios.post('http://localhost:5001/api/category/save', categoryData)
+      .then((response) => {
+        response.data.status === 'success' ? toast.success(response.data.message) : toast.error(response.data.message);
+        resetValue();
+      })
+      .catch((error) => console.log(error));
   };
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const resetValue = () => {
+    vehicleTypeRef.current.value = '';
+    spairPatsTypeRef.current.value = '';
+    nameRef.current.value = '';
+    imageRef.current.value = '';
   };
 
   return (
-   <> <div className="content-div">
-   <div className="card-header">
-     <div className="card-headding">Add Category</div>
-     <div className="errorMessage">{message}</div>
-   </div>
-   <div className="table-container">
-     <div className="row" style={{ padding: "37px" }}>
-       <div className="col">
-         <label htmlFor="maincat">Vehicle type</label>
-         <select
-           className="form-select"
-           id="maincat"
-           ref={vehicleTypeRef}
-           aria-label="Default select example"
-         >
-           <option defaultValue="Select" selected>--Select--</option>
-           <option value="Pet">Car</option>
-           <option value="Food">Bike</option>
-           <option value="Accessorys">Truck</option>
-           <option value="Medicine">Plain</option>
-         </select>
-         <small style={{ color: "red" }}>{errors.vehicleType}</small>
-       </div>
+    <>
+      <div className="content-div">
+        <ToastContainer />
+        <div className="card-header">
+          <div className="card-headding">Add Category</div>
+          <div className="errorMessage">{message}</div>
+        </div>
+        <div className="table-container">
+          <div className="row" style={{ padding: '37px' }}>
+            <div className="col">
+              <label htmlFor="maincat">Vehicle type</label>
+              <select
+                className="form-select"
+                id="maincat"
+                ref={vehicleTypeRef}
+                aria-label="Default select example"
+              >
+                <option defaultValue="Select" selected>--Select--</option>
+                <option value="Car">Car</option>
+                <option value="Bike">Bike</option>
+                <option value="Truck">Truck</option>
+                <option value="Plain">Plain</option>
+              </select>
+              <small style={{ color: 'red' }}>{errors.vehicleType}</small>
+            </div>
 
-       <div className="col">
-         <label htmlFor="maincat">Spairparts Type</label>
-         <select
-           className="form-select"
-           id="maincat"
-           aria-label="Default select example"
-           ref={spairPatsTypeRef}
-         >
-           <option defaultValue="Select" selected>--Select--</option>
-           <option value="Parts">Parts</option>
-           <option value="Wheels">Wheels</option>
-           <option value="Exterior">Exterior</option>
-           <option value="Lighting">Lighting</option>
-           <option value="BodyParts">Body Parts</option>
-           <option value="Interior">Interior</option>
-           <option value="Audio&Electronics">Audio & Electronics</option>
-           <option value="AutomotiveTools">Automotive Tools </option>
-           <option value="Specialty">Specialty </option>
-         </select>
-         <small style={{ color: "red" }}>{errors.spairPatsType}</small>
-       </div>
+            <div className="col">
+              <label htmlFor="maincat">Spairparts Type</label>
+              <select
+                className="form-select"
+                id="maincat"
+                aria-label="Default select example"
+                ref={spairPatsTypeRef}
+              >
+                <option defaultValue="Select" selected>--Select--</option>
+                <option value="Parts">Parts</option>
+                <option value="Wheels">Wheels</option>
+                <option value="Exterior">Exterior</option>
+                <option value="Lighting">Lighting</option>
+                <option value="BodyParts">Body Parts</option>
+                <option value="Interior">Interior</option>
+                <option value="Audio&Electronics">Audio & Electronics</option>
+                <option value="AutomotiveTools">Automotive Tools </option>
+                <option value="Specialty">Specialty </option>
+              </select>
+              <small style={{ color: 'red' }}>{errors.spairPatsType}</small>
+            </div>
 
-       <div className="col">
-         <label htmlFor="category">Image</label>
-         <input
-           type="file"
-           id="category"
-           onChange={handleImageChange}
-           ref={imageRef}
-           className="form-control"
-         />
-         <small style={{ color: "red" }}>{errors.image}</small>
-       </div>
+            <div className="col">
+              <label htmlFor="category">Image</label>
+              <input
+                type="file"
+                id="category"
+                ref={imageRef}
+                className="form-control"
+              />
+              <small style={{ color: 'red' }}>{errors.image}</small>
+            </div>
 
-       <div className="col">
-         <label htmlFor="category">Parts Name</label>
-         <input
-           type="text"
-           id="category"
-           ref={nameRef}
-           className="form-control"
-         />
-         <small style={{ color: "red" }}>{errors.name}</small>
-       </div>
-     </div>
+            <div className="col">
+              <label htmlFor="category">Parts Name</label>
+              <input
+                type="text"
+                id="category"
+                ref={nameRef}
+                className="form-control"
+              />
+              <small style={{ color: 'red' }}>{errors.name}</small>
+            </div>
+          </div>
 
-     <div className="row" style={{ padding: "16px 37px" }}>
-       <button className="btn btn-primary" onClick={saveCategory}>
-         Save
-       </button>
-     </div>
-   </div>
-   </div>
-   <Subcategory/>
-   </>
-      )
-   }
+          <div className="row" style={{ padding: '16px 37px' }}>
+            <button className="btn btn-primary" onClick={saveCategory}>
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+      <Subcategory/>
+    </>
+  );
+};
+
+export default AddCategory;
+
+
 
 // export const Subcategory = () => {
-//     const mainCategory = useRef("")
-//     const Subcat_name = useRef("")
-//     const [image, setImage] = useState("")
-//     // const descriptionRef=useRef("")
-//     const [categorys, setCaregory] = useState([])
-//     useEffect(() => {
-//         httpRequest('get', 'api/category/')
-//             .then((res) => {
-//                 // console.log(res)
-//                 setCaregory(res.payload)
-//             })
-//             .catch((err) => console.log(err))
+//   const mainCategory = useRef("");
+//   const Subcat_name = useRef("");
+//   const [image, setImage] = useState("");
+//   const [errors, setErrors] = useState({
+//     mainCategory: "",
+//     Subcat_name: "",
+//     image: "",
+//   });
 
-//     }, [])
-//     const saveSubcategory = () => {
-//         if (image === "") {
-//             alert("Select any image for sub category")
-//         }
-//         else {
-//             const data = new FormData();
-//             data.append("category_id", mainCategory.current.value);
-//             data.append("Subcat_name", Subcat_name.current.value);
-//             data.append("image", image);
-//             axios.post("http://localhost:5001/api/category/subcategory/store", data)
-//                 .then((res) => alert(res.data.message))
-//                 .catch((err) => console.log(`failed ${err}`));
-//         }
+//   const [categorys, setCaregory] = useState([]);
+
+//   useEffect(() => {
+//     axios.get("http://localhost:5001/api/category/")
+//       .then((res) => {
+//         setCaregory(res.data.payload);
+//       })
+//       .catch((err) => console.log(err));
+//   }, []);
+
+//   const saveSubcategory = () => {
+//     let isValid = true;
+//     const newErrors = {
+//       mainCategory: "",
+//       Subcat_name: "",
+//       image: "",
+//     };
+
+//     if (mainCategory.current.value === "--Select--") {
+//       newErrors.mainCategory = "Please select a main category";
+//       isValid = false;
 //     }
-//     return (
-//         <div className="content-div" style={{ "top": "57%" }}>
-//             <div className="card-header">
-//                 <div className="card-headding">Add Subcategory</div>
-//                 {/* <div className="errorMessage">{message}</div> */}
-//             </div>
-//             <div className="table-container">
-//                 <div className="row " style={{ padding: "37px" }}>
-//                     <div className="col">
-//                         <label htmlFor="maincat">Main category</label>
-//                         <select className="form-select" id="maincat" aria-label="Default select example" ref={mainCategory}>
-//                             <option defaultValue="Select" selected>--Select--</option>
-//                             {categorys.map((category, id) => {
-//                                 return (
-//                                     <option key={id} value={category._id}>{category.vechicle},{category.spairPatsType},{category.partsName}</option>
-//                                 )
-//                             })}
-//                         </select>
-//                     </div>
-//                     <div className="col">
-//                         <label htmlFor="category">Subcategory name</label>
-//                         <input type="text" id="category" ref={Subcat_name} className="form-control" />
-//                     </div>
-//                     <div className="col">
-//                         <label htmlFor="category">Image</label>
-//                         <input type="file" id="category" onChange={(e) => setImage(e.target.files[0])} className="form-control" />
-//                     </div>
-//                     {/* <div className="col">
-//                         <label htmlFor="category">Description</label>
-//                         <input type="text" id="category" ref={descriptionRef} className="form-control" />
-//                     </div> */}
-//                 </div>
 
-//                 <div className="row" style={{ padding: "16px 37px" }}>
-//                     <button className="btn btn-primary" onClick={saveSubcategory} >Save</button>
-//                 </div>
-//             </div>
+//     if (!Subcat_name.current.value) {
+//       newErrors.Subcat_name = "Please enter a subcategory name";
+//       isValid = false;
+//     }
 
+//     if (!image) {
+//       newErrors.image = "Please select an image";
+//       isValid = false;
+//     }
+
+//     setErrors(newErrors);
+
+//     if (!isValid) {
+//       setTimeout(() => {
+//         setErrors({
+//           mainCategory: "",
+//           Subcat_name: "",
+//           image: "",
+//         });
+//       }, 3000);
+//       return;
+//     }
+
+//     const data = new FormData();
+//     data.append("category_id", mainCategory.current.value);
+//     data.append("Subcat_name", Subcat_name.current.value);
+//     data.append("image", image);
+
+//     axios
+//       .post("http://localhost:5001/api/category/subcategory/store", data)
+//       .then((res) => res.data.status === "success" ? toast.success(res.data.message) : toast.error(res.data.message))
+//       .catch((err) => console.log(`failed ${err}`));
+//   };
+
+//   return (
+//     <div className="content-div" style={{ top: "57%" }}>
+//       <ToastContainer />
+//       <div className="card-header">
+//         <div className="card-heading">Add Subcategory</div>
+//       </div>
+//       <div className="table-container">
+//         <div className="row" style={{ padding: "37px" }}>
+//           <div className="col">
+//             <label htmlFor="maincat">Main category</label>
+//             <select
+//               className="form-select"
+//               id="maincat"
+//               aria-label="Default select example"
+//               ref={mainCategory}
+//             >
+//               <option defaultValue="Select" selected>--Select--</option>
+//               {categorys.map((category, id) => (
+//                 <option key={id} value={category._id}>
+//                   {category.vechicle}, {category.spairPatsType}, {category.partsName}
+//                 </option>
+//               ))}
+//             </select>
+//             <small style={{ color: "red" }}>{errors.mainCategory}</small>
+//           </div>
+//           <div className="col">
+//             <label htmlFor="category">Subcategory name</label>
+//             <input
+//               type="text"
+//               id="category"
+//               ref={Subcat_name}
+//               className="form-control"
+//             />
+//             <small style={{ color: "red" }}>{errors.Subcat_name}</small>
+//           </div>
+//           <div className="col">
+//             <label htmlFor="category">Image</label>
+//             <input
+//               type="file"
+//               id="category"
+//               onChange={(e) => setImage(e.target.files[0])}
+//               className="form-control"
+//             />
+//             <small style={{ color: "red" }}>{errors.image}</small>
+//           </div>
 //         </div>
-//     )
-// }
+//         <div className="row" style={{ padding: "16px 37px" }}>
+//           <button className="btn btn-primary" onClick={saveSubcategory}>
+//             Save
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
 export const Subcategory = () => {
   const mainCategory = useRef("");
   const Subcat_name = useRef("");
@@ -380,52 +503,88 @@ export const Subcategory = () => {
   });
 
   const [categorys, setCaregory] = useState([]);
+
   useEffect(() => {
-    httpRequest("get", "api/category/")
+    axios.get("http://localhost:5001/api/category/")
       .then((res) => {
-        setCaregory(res.payload);
+        setCaregory(res.data.payload);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  const resetValue = () => {
+    mainCategory.current.value = "--Select--";
+    Subcat_name.current.value = "";
+    setImage("");
+    setErrors({
+      mainCategory: "",
+      Subcat_name: "",
+      image: "",
+    });
+  };
+
   const saveSubcategory = () => {
     let isValid = true;
+    const newErrors = {
+      mainCategory: "",
+      Subcat_name: "",
+      image: "",
+    };
 
     if (mainCategory.current.value === "--Select--") {
-      setErrors((prevErrors) => ({ ...prevErrors, mainCategory: "Please select a main category" }));
+      newErrors.mainCategory = "Please select a main category";
       isValid = false;
     }
 
     if (!Subcat_name.current.value) {
-      setErrors((prevErrors) => ({ ...prevErrors, Subcat_name: "Please enter a subcategory name" }));
+      newErrors.Subcat_name = "Please enter a subcategory name";
       isValid = false;
     }
 
     if (!image) {
-      setErrors((prevErrors) => ({ ...prevErrors, image: "Please select an image" }));
+      newErrors.image = "Please select an image";
       isValid = false;
     }
 
-    if (isValid) {
-      const data = new FormData();
-      data.append("category_id", mainCategory.current.value);
-      data.append("Subcat_name", Subcat_name.current.value);
-      data.append("image", image);
-      axios
-        .post("http://localhost:5001/api/category/subcategory/store", data)
-        .then((res) => alert(res.data.message))
-        .catch((err) => console.log(`failed ${err}`));
+    setErrors(newErrors);
+
+    if (!isValid) {
+      setTimeout(() => {
+        setErrors({
+          mainCategory: "",
+          Subcat_name: "",
+          image: "",
+        });
+      }, 3000);
+      return;
     }
+
+    const data = new FormData();
+    data.append("category_id", mainCategory.current.value);
+    data.append("Subcat_name", Subcat_name.current.value);
+    data.append("image", image);
+
+    axios
+      .post("http://localhost:5001/api/category/subcategory/store", data)
+      .then((res) => {
+        if (res.data.status === "success") {
+          toast.success(res.data.message);
+          resetValue();
+        } else {
+          toast.error(res.data.message);
+        }
+      })
+      .catch((err) => console.log(`failed ${err}`));
   };
 
   return (
     <div className="content-div" style={{ top: "57%" }}>
+      <ToastContainer />
       <div className="card-header">
-        <div className="card-headding">Add Subcategory</div>
-        {/* <div className="errorMessage">{message}</div> */}
+        <div className="card-heading">Add Subcategory</div>
       </div>
       <div className="table-container">
-        <div className="row " style={{ padding: "37px" }}>
+        <div className="row" style={{ padding: "37px" }}>
           <div className="col">
             <label htmlFor="maincat">Main category</label>
             <select
@@ -435,13 +594,11 @@ export const Subcategory = () => {
               ref={mainCategory}
             >
               <option defaultValue="Select" selected>--Select--</option>
-              {categorys.map((category, id) => {
-                return (
-                  <option key={id} value={category._id}>
-                    {category.vechicle},{category.spairPatsType},{category.partsName}
-                  </option>
-                );
-              })}
+              {categorys.map((category, id) => (
+                <option key={id} value={category._id}>
+                  {category.vechicle}, {category.spairPatsType}, {category.partsName}
+                </option>
+              ))}
             </select>
             <small style={{ color: "red" }}>{errors.mainCategory}</small>
           </div>
@@ -465,17 +622,7 @@ export const Subcategory = () => {
             />
             <small style={{ color: "red" }}>{errors.image}</small>
           </div>
-          {/* <div className="col">
-            <label htmlFor="category">Description</label>
-            <input
-              type="text"
-              id="category"
-              ref={descriptionRef}
-              className="form-control"
-            />
-          </div> */}
         </div>
-
         <div className="row" style={{ padding: "16px 37px" }}>
           <button className="btn btn-primary" onClick={saveSubcategory}>
             Save
