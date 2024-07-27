@@ -1,17 +1,19 @@
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home"
-import Product from "./pages/Product.jsx"
+import { Categorydetails, AddCategory } from "./pages/Categorydetails"
+import { Route, Routes, useLocation } from "react-router-dom"
 import AddProduct from "./pages/AddProduct.jsx"
+import { Signup } from "./pages/Signup.jsx"
+import Product from "./pages/Product.jsx"
+import { Login } from "./pages/Login.jsx"
+import Navbar from "./components/Navbar";
+import { useNavigate } from "react-router-dom";
+
 import Order from "./pages/Order.jsx"
-import Blogs from "./pages/Blogs"
 import Addblog from "./pages/Addblog"
 import Gallery from "./pages/Gallery"
 import Notfound from "./pages/Notfound"
-
-import {Categorydetails,AddCategory} from "./pages/Categorydetails"
-import { Login } from "./pages/Login.jsx"
-import { Signup } from "./pages/Signup.jsx"
-import { Route, Routes,useLocation } from "react-router-dom"
+import Home from "./pages/Home"
+import Blogs from "./pages/Blogs"
+import auth from "./auth.js"
 const routerInfo = [
   { path: "/", component: <Home /> },
   { path: "/productdetails", component: <Product /> },
@@ -26,32 +28,60 @@ const routerInfo = [
   { path: "/signup", component: <Signup /> },
   { path: "*", component: <Notfound /> },
 ];
+const PrivateRoute = ({ children }) => {
+  const userId = auth.onCheckOut();
+  const navigate=useNavigate();
+  if (!userId) {
+    return navigate("/login");
+  }
+
+  return children;
+}; 
 const App = () => {
   const noCommonComponents = ['/login'];
   const location = useLocation();
 
+
   return (
+    // <div className="nav-container">
+    //   {!noCommonComponents.includes(location.pathname) && (
+    //     <Navbar />
+    //   )}
+    //   <Routes>
+    //     {
+    //       routerInfo.map((eachRoute, id) => {
+    //         return (
+    //           <Route key={id} path={eachRoute.path} element={eachRoute.component}
+    //           />
+    //         );
+    //       })
+    //     }
+    //   </Routes>
+    // </div>
     <div className="nav-container">
-         {!noCommonComponents.includes(location.pathname) && (
-         <Navbar />
-      )}
-      <Routes>
-      {
-        // Iterate over each route information object
-        routerInfo.map((eachRoute, id) => {
-          // For each route, return a Route component
+    {!noCommonComponents.includes(location.pathname) && <Navbar />}
+    <Routes>
+      {routerInfo.map((eachRoute, id) => {
+        if (eachRoute.path !== '/login') {
           return (
-            <Route 
-              key={id} // Unique key for each Route
-              path={eachRoute.path} // URL path for the Route
-              element={eachRoute.component} // Component to render for the Route
+            <Route
+              key={id}
+              path={eachRoute.path}
+              element={
+                <PrivateRoute>
+                  {eachRoute.component}
+                </PrivateRoute>
+              }
             />
           );
-        })
-      }
-    </Routes>
-    </div>
+        }
 
+        return (
+          <Route key={id} path={eachRoute.path} element={eachRoute.component} />
+        );
+      })}
+    </Routes>
+  </div>
   );
 }
 
