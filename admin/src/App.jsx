@@ -40,8 +40,8 @@ const routerInfo = [
 // }; 
 const PrivateRoute = ({ children }) => {
   const navigate = useNavigate();
-  const userId = auth.onCheckOut();
-  if (!userId) {
+  const adminId = auth.onCheckOut();
+  if (!adminId) {
     return  navigate("/login");
   }
   return children;

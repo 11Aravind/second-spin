@@ -9,8 +9,8 @@
 // export default { onCheckOut };
 const auth = {
   onCheckOut: () => {
-    const userId = JSON.parse(localStorage.getItem("userId"));
-    return userId;
+    const adminId = JSON.parse(localStorage.getItem("adminId"));
+    return adminId;
   },
 };
 

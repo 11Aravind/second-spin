@@ -104,7 +104,7 @@ export const Topnavbar = () => {
             <div className="dropdown">
                 <button className="dropbtn gradient-text"><b>Admin</b></button>
                 <div className="dropdown-content" style={{"cursor": "pointer","padding": "16px 7px 6px 5px"}}>
-                    <div className="d-flex" ><i className="bi bi-power err"></i> Logout</div>
+                    <div className="d-flex"  onClick={()=>localStorage.removeItem('adminId')}><i className="bi bi-power err"></i> Logout</div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {useRef,useState} from "react"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./CSS/Login.css"
 import axios from "axios"
 export const Login = () => {
@@ -30,18 +31,15 @@ export const Login = () => {
       "email": email,
       "password": password
     }
-    axios.post('api/user/login', loginData)
+    axios.post('http://localhost:5001/api/admin/login', loginData)
       .then((res) => {
-        console.log(res);
-        if (res.status === "failed") {
-
-          showHideMessage(res.message)
+        if (res.data.status === "failed") {
+          toast.error(res.data.message)
         }
         else {
-          const id = localStorage.setItem("userId", JSON.stringify(res.user_id));
+          const id = localStorage.setItem("adminId", JSON.stringify(res.data.user_id));
           navigate("/")
         }
-        // dispatch(setRoute("/signup"))
       })
       .catch((err) => {
         showHideMessage("Something went wrong try again")
@@ -55,10 +53,10 @@ export const Login = () => {
     setMessage(pattern.test(email) ? " " : "Enter valid e-mail");
   };
   return (
-    <div className="content-div">
+    <div className="">
+         <ToastContainer />
       <div className="formbold-main-wrapper">
         <div className="formbold-form-wrapper">
-          <form method="POST">
             <div className="formbold-form-title">
               <h2 className="">SIGN IN</h2>
             </div>
@@ -81,9 +79,8 @@ export const Login = () => {
                 placeholder="Password" />
             </div>
             <div className="formbold-mb-3">
-              <button className="formbold-btn">SIGN IN</button>
+              <button className="formbold-btn" type="button" onClick={submitLoginForm}>SIGN IN</button>
             </div>
-          </form>
         </div>
       </div>
     </div>
