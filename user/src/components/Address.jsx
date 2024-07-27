@@ -129,6 +129,8 @@
 //   export default Address;
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { fetchAndStoreAddress } from "../Slice/addressSlice";
 import { useNavigate } from "react-router";
@@ -237,10 +239,10 @@ const Address = ({ changeAddressVisibility }) => {
         order_id: null,
       };
 
-      axios
-        .post("http://localhost:5001/api/address/store", addressData)
+      axios.post("http://localhost:5001/api/address/store", addressData)
         .then((res) => {
           const newAddress = [...addressList, res.data];
+          toast.success(res.data.message)
           dispatch(fetchAndStoreAddress(newAddress));
           changeAddressVisibility();
         })
@@ -251,6 +253,7 @@ const Address = ({ changeAddressVisibility }) => {
   return (
     <>
       <form className="container row g-3">
+      <ToastContainer />
         <div className="col-md-6">
           <label htmlFor="inputEmail4" className="form-label">
             Name
