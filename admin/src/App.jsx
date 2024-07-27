@@ -14,6 +14,7 @@ import Notfound from "./pages/Notfound"
 import Home from "./pages/Home"
 import Blogs from "./pages/Blogs"
 import auth from "./auth.js"
+import { useEffect } from "react"
 const routerInfo = [
   { path: "/", component: <Home /> },
   { path: "/productdetails", component: <Product /> },
@@ -28,21 +29,88 @@ const routerInfo = [
   { path: "/signup", component: <Signup /> },
   { path: "*", component: <Notfound /> },
 ];
-const PrivateRoute = ({ children }) => {
-  const userId = auth.onCheckOut();
-  const navigate=useNavigate();
-  if (!userId) {
-    return navigate("/login");
-  }
+// const PrivateRoute = ({ children }) => {
+//   const userId = auth.onCheckOut();
+//   const navigate=useNavigate();
+//   if (!userId) {
+//     return navigate("/login");
+//   }
 
+//   return children;
+// }; 
+const PrivateRoute = ({ children }) => {
+  const navigate = useNavigate();
+  const userId = auth.onCheckOut();
+  if (!userId) {
+    return  navigate("/login");
+  }
   return children;
-}; 
+};
 const App = () => {
   const noCommonComponents = ['/login'];
   const location = useLocation();
+  const navigate = useNavigate();
 
+  useEffect(()=>{
+    if (!auth.onCheckOut()) {
+      return  navigate("/login");
+    }
+  },[])
 
   return (
+
+  //   <div className="nav-container">
+  //   {!noCommonComponents.includes(location.pathname) && <Navbar />}
+  //   <Routes>
+  //     {routerInfo.map((eachRoute, id) => {
+  //       if (eachRoute.path !== '/login') {
+  //         return (
+  //           <Route
+  //             key={id}
+  //             path={eachRoute.path}
+  //             element={
+  //               <PrivateRoute>
+  //                 {eachRoute.component}
+  //               </PrivateRoute>
+  //             }
+  //           />
+  //         );
+  //       }
+
+  //       return (
+  //         <Route key={id} path={eachRoute.path} element={eachRoute.component} />
+  //       );
+  //     })}
+  //   </Routes>
+  // </div>
+  <div className="nav-container">
+  {!noCommonComponents.includes(location.pathname) && <Navbar />}
+  <Routes>
+    {routerInfo.map((eachRoute, id) => {
+      if (noCommonComponents.includes(eachRoute.path)) {
+        return (
+          <Route key={id} path={eachRoute.path} element={eachRoute.component} />
+        );
+      }
+
+      return (
+        <Route
+          key={id}
+          path={eachRoute.path}
+          element={
+            <PrivateRoute>
+              {eachRoute.component}
+            </PrivateRoute>
+          }
+        />
+      );
+    })}
+  </Routes>
+</div>
+  );
+}
+
+export default App;
     // <div className="nav-container">
     //   {!noCommonComponents.includes(location.pathname) && (
     //     <Navbar />
@@ -58,31 +126,3 @@ const App = () => {
     //     }
     //   </Routes>
     // </div>
-    <div className="nav-container">
-    {!noCommonComponents.includes(location.pathname) && <Navbar />}
-    <Routes>
-      {routerInfo.map((eachRoute, id) => {
-        if (eachRoute.path !== '/login') {
-          return (
-            <Route
-              key={id}
-              path={eachRoute.path}
-              element={
-                <PrivateRoute>
-                  {eachRoute.component}
-                </PrivateRoute>
-              }
-            />
-          );
-        }
-
-        return (
-          <Route key={id} path={eachRoute.path} element={eachRoute.component} />
-        );
-      })}
-    </Routes>
-  </div>
-  );
-}
-
-export default App;
