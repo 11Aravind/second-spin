@@ -1,115 +1,91 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {useRef,useState} from "react"
+
 import "./CSS/Login.css"
+import axios from "axios"
 export const Login = () => {
+  const navigate = useNavigate()
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const [msg, setMessage] = useState(false);
+  const showHideMessage = (msg) => {
+    setMessage(msg);
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  }
+  const checkPasswordLength = (e) => {
+    const currentValue = e.target.value;
+    if (currentValue.length < 6) {
+      setMessage("Password length must be >=6 ");
+    }
+    else {
+      setMessage("")
+    }
+  }
+  const submitLoginForm = () => {
+    const email = emailRef.current.value
+    const password = passwordRef.current.value
+    const loginData = {
+      "email": email,
+      "password": password
+    }
+    axios.post('api/user/login', loginData)
+      .then((res) => {
+        console.log(res);
+        if (res.status === "failed") {
+
+          showHideMessage(res.message)
+        }
+        else {
+          const id = localStorage.setItem("userId", JSON.stringify(res.user_id));
+          navigate("/")
+        }
+        // dispatch(setRoute("/signup"))
+      })
+      .catch((err) => {
+        showHideMessage("Something went wrong try again")
+        console.log(err);
+      });
+  }
+  const validateEmail = (e) => {
+    const email = e.target.value
+    // Regular expression pattern for a valid email address
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setMessage(pattern.test(email) ? " " : "Enter valid e-mail");
+  };
   return (
     <div className="content-div">
-    <div className="formbold-main-wrapper">
-      <div className="formbold-form-wrapper">
-        <form  method="POST">
-          <div className="formbold-form-title">
-            <h2 className="">SIGN IN</h2>
-          </div>
-
-         
-
-          <div className="formbold-mb-3">
-            {/* <label htmlFor="address" className="formbold-form-label">
-              E-mail
-            </label> */}
-            <input placeholder="E-mail"
-              type="email"
-              name="address"
-              id="address"
-              className="formbold-form-input"
-            />
-          </div>
-
-          <div className="formbold-mb-3">
-            {/* <label htmlFor="address2" className="formbold-form-label">
-              Password
-            </label> */}
-            <input type="password" className="formbold-form-input"   placeholder="Password"/>
-            {/* <small>forget password?</small> */}
-          </div>
-
-          {/* <div className="formbold-input-flex">
-            <div>
-              <label htmlFor="state" className="formbold-form-label"> State/Prvince </label>
-              <input
-                type="text"
-                name="state"
-                id="state"
+      <div className="formbold-main-wrapper">
+        <div className="formbold-form-wrapper">
+          <form method="POST">
+            <div className="formbold-form-title">
+              <h2 className="">SIGN IN</h2>
+            </div>
+            <div className="formbold-mb-3">
+              <input placeholder="E-mail"
+                type="email"
+                name="address"
+                id="address"
+                ref={emailRef}
+                onChange={validateEmail}
                 className="formbold-form-input"
               />
             </div>
-            <div>
-              <label htmlFor="country" className="formbold-form-label"> Country </label>
+            <div className="formbold-mb-3">
               <input
-                type="text"
-                name="country"
-                id="country"
+                type="password"
                 className="formbold-form-input"
-              />
+                ref={passwordRef}
+                onChange={checkPasswordLength}
+                placeholder="Password" />
             </div>
-          </div> */}
-
-          {/* <div className="formbold-input-flex">
-            <div>
-              <label htmlFor="post" className="formbold-form-label"> Post/Zip code </label>
-              <input
-                type="text"
-                name="post"
-                id="post"
-                className="formbold-form-input"
-              />
-            </div>
-            <div>
-              <label htmlFor="area" className="formbold-form-label"> Area Code </label>
-              <input
-                type="text"
-                name="area"
-                id="area"
-                className="formbold-form-input"
-              />
-            </div>
-          </div> */}
-
-          {/* <div className="formbold-checkbox-wrapper">
-            <label htmlFor="supportCheckbox" className="formbold-checkbox-label">
-              <div className="formbold-relative">
-                <input
-                  type="checkbox"
-                  id="supportCheckbox"
-                  className="formbold-input-checkbox"
-                />
-                <div className="formbold-checkbox-inner">
-                  <span className="formbold-opacity-0">
-                    <svg
-                      width="11"
-                      height="8"
-                      viewBox="0 0 11 8"
-                      fill="none"
-                      className="formbold-stroke-current"
-                    >
-                      <path
-                        d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                        stroke-width="0.4"
-                      ></path>
-                    </svg>
-                  </span>
-                </div>
-              </div>
-              I agree to the defined
-             
-            </label>
-          </div> */}  <div className="formbold-mb-3">
+            <div className="formbold-mb-3">
               <button className="formbold-btn">SIGN IN</button>
-          </div>
-        
-<small className="redirect">New here ? <Link to="/signup">Create Account</Link></small>
-        </form>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
