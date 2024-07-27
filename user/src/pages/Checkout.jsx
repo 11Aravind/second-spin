@@ -11,6 +11,7 @@ import "./css/style.css";
 import "./css/OrderConfirmation.css";
 import Address from "../components/Address"
 import Notfound from "../pages/Notfound"
+
 export const Checkout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -54,7 +55,7 @@ export const Checkout = () => {
   //payment section
   const amount = cartTotal ;
   const currency = "INR";
-  const receiptId = "qwsaq1";
+  // const receiptId = "qwsaq1";
 
   const paymentHandler = async (e) => {
     // const product = items.map(({ _id, price, quantity }) => {
@@ -69,11 +70,10 @@ export const Checkout = () => {
     const cartData = {
       amount,
       currency,
-      receipt: receiptId,
       userId: userId,
       addressId: addressId,
       items: result,
-      razorpayOrderId: "",
+      stripOrderId: "",
       status: paymentMode === "cod" ? "success" : "pending",
       paymentMode: paymentMode,
       order_message: "",
@@ -104,7 +104,6 @@ export const Checkout = () => {
       const result = stripe.redirectToCheckout({
         sessionId: session.id
       });
-
       if (result.error) {
         console.log(result.error);
       }

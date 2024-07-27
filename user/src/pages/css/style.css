@@ -1,6 +1,6 @@
 .checkOutBtn {
-    background: var(--primary);
-    border: none;
+  background: linear-gradient(45deg, #c338fc, #ff00ff);
+      border: none;
     /* padding: 2px 9px; */
     /* font-size: 13px; */
     line-height: 37px;

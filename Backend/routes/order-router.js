@@ -6,11 +6,11 @@ const stripe = new Stripe("sk_test_51KQwUGSDqjJiCnel8Ob1iTjmIMYUL9rYTogF8wpaqepJ
 const orderRoute = express.Router()
 // orderRoute.get("/all",getAllOrder);
 // orderRoute.post("/checkout",storeOrder);
-orderRoute.get("/",async (req, res) => {
+orderRoute.get("/", async (req, res) => {
     let orderDetails;
     const { userId } = req.query;
     try {
-        orderDetails = await Order.find({userId})
+        orderDetails = await Order.find({ userId })
     } catch (error) {
         console.log(error);
     }
@@ -21,45 +21,56 @@ orderRoute.get("/",async (req, res) => {
 });
 
 orderRoute.post("/checkout", async (req, res) => {
-    const {products} = req.body;
-const { amount, currency, receipt, userId, addressId, items, razorpayOrderId, status, paymentMode, order_message } = products;
-console.log(amount);
-const baseURL = 'http://localhost:5173/';
-    const lineItems = products.items.map((product)=>({
-        price_data:{
-            currency:"inr",
-            product_data:{
-                name:product.name,
+    const { userId, addressId, items, stripOrderId, status, paymentMode, order_message, amount, currency } = req.body;
+    const { products } = req.body;
+    let a = new Date();
+    let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
+    // console.log(products.amount);
+    const baseURL = 'http://localhost:5173/';
+    const lineItems = products.items.map((product) => ({
+        price_data: {
+            currency: "inr",
+            product_data: {
+                name: product.name,
                 // images:[product.image]
                 images: [`${baseURL}${product.image}`] // Prepend baseURL to the image filename
             },
-            unit_amount:product.price * 100,
+            unit_amount: product.price * 100,
         },
-        quantity:product.quantity
+        quantity: product.quantity
     }));
-
+try{
+    const newOrder = new Order({
+        userId:products.userId,
+        addressId:products.addressId,
+        items:products.items,
+        totelamount:products.amount,
+        stripOrderId:0,
+        dateOfOrder: date,
+        status: "success",
+        paymentMode:products.paymentMode,
+        order_message: "Order placed"
+    })
+    const savedOrder = await newOrder.save();
     const session = await stripe.checkout.sessions.create({
-        payment_method_types:["card"],
-        line_items:lineItems,
-        mode:"payment",
-        success_url:"http://localhost:5173/Orderplaced",
-        cancel_url:"http://localhost:3000/cancel",
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: "http://localhost:5173/Orderplaced",
+        cancel_url: "http://localhost:3000/cancel",
     });
-console.log(session.id);
-    res.json({id:session.id})
+    savedOrder.stripOrderId = session.id;
+    await savedOrder.save();
+    // console.log(session.id);
+    res.json({ id: session.id })
+} catch (error) {
+    console.error('Error creating Stripe session:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+    
+    
 
-    // const product = await stripe.products.create({
-    //     name: "T-Shirt",
-    //     userId:userId
-    // });
 
-    // if (product) {
-    //     var price = await stripe.prices.create({
-    //         product: `${product.id}`,
-    //         unit_amount:amount,
-    //         currency: 'inr',
-    //     });
-    // }
 
 
     // if (price.id) {
@@ -82,7 +93,7 @@ console.log(session.id);
 }
 )
 orderRoute.post("/cod", async (req, res) => {
-    const { userId, addressId, items, razorpayOrderId, status, paymentMode, order_message, amount, currency, receiptId } = req.body;
+    const { userId, addressId, items, stripOrderId, status, paymentMode, order_message, amount, currency } = req.body;
     let a = new Date();
     let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
     const newOrder = new Order({
@@ -96,6 +107,7 @@ orderRoute.post("/cod", async (req, res) => {
         paymentMode,
         order_message: "Order placed"
     })
+
     try {
         await newOrder.save();
         res.json({ status: "success", message: "success cod" });
@@ -106,3 +118,27 @@ orderRoute.post("/cod", async (req, res) => {
 });
 // orderRoute.post("/validate",validatePaymentStatus )
 export default orderRoute;
+
+export const validatePaymentStatus = async (req, res) => {
+    const { amount, currency, userId, addressId, items, stripOrderId, status, paymentMode, order_message } = products;
+  let a = new Date();
+    let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
+    try {
+        const newOrder = new Order({
+            userId,
+            addressId,
+            items,
+            totelamount: amount,
+            stripOrderId: id,
+            dateOfOrder: date,
+            status: "success",
+            paymentMode,
+            order_message: "Order placed"
+        })
+        await newOrder.save();
+        res.json({ status: "success", message: "success cod" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: "data not stored in db", error: err });
+    }
+}
