@@ -32,10 +32,10 @@ export const Categorydetails = () => {
     return (
         <div className={visibility ? "flat-container" : "content-div"}>
             <div className="card-header">
-                <div className="card-headding">Category</div>
+                <div className="card-headding gradient-text ">Category</div>
                 {/* <div className="errorMessage">{alertMessage}</div> */}
                 <div className="top-button">
-                    <Link to="/addcategory"> <button className="btn-primary"> +Add</button></Link>
+                    <Link to="/addcategory"> <button className="btn-primary btn-color"> +Add</button></Link>
                 </div>
             </div>
             {/* <div className="content-div"> */}
@@ -285,7 +285,7 @@ export const AddCategory = () => {
       <div className="content-div">
         <ToastContainer />
         <div className="card-header">
-          <div className="card-headding">Add Category</div>
+          <div className="card-headding gradient-text ">Add Category</div>
           <div className="errorMessage">{message}</div>
         </div>
         <div className="table-container">
@@ -353,7 +353,7 @@ export const AddCategory = () => {
           </div>
 
           <div className="row" style={{ padding: '16px 37px' }}>
-            <button className="btn btn-primary" onClick={saveCategory}>
+            <button className="btn btn-primary btn-color" onClick={saveCategory}>
               Save
             </button>
           </div>
@@ -581,7 +581,7 @@ export const Subcategory = () => {
     <div className="content-div" style={{ top: "57%" }}>
       <ToastContainer />
       <div className="card-header">
-        <div className="card-heading">Add Subcategory</div>
+        <div class="card-headding gradient-text ">Add Subcategory</div>
       </div>
       <div className="table-container">
         <div className="row" style={{ padding: "37px" }}>
@@ -624,7 +624,7 @@ export const Subcategory = () => {
           </div>
         </div>
         <div className="row" style={{ padding: "16px 37px" }}>
-          <button className="btn btn-primary" onClick={saveSubcategory}>
+          <button className="btn btn-primary btn-color" onClick={saveSubcategory}>
             Save
           </button>
         </div>

@@ -150,3 +150,9 @@ a {
 .submenu:hover{
   background-color: #d3f0cc;
 }
+.btn-color{
+  background: linear-gradient(45deg, #c338fc, #ff00ff);
+}
+.err{
+  color:red
+};

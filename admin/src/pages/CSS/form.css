@@ -36,6 +36,12 @@ textarea{
     font-weight: 500;
     /* text-transform: uppercase; */
 }
+.gradient-text {
+    background: linear-gradient(45deg, #c338fc, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
 .errorMessage{
     color: red;
 }

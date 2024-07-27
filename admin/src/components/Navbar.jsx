@@ -56,7 +56,7 @@ const Navbar = () => {
                 <div className="side-nav-container" >
                     {menuData.map((menuItem, index) => (
                         <div className="menu-container" key={index}>
-                            <div className="main-menu-headding">{menuItem.menu}</div>
+                            <div className="main-menu-headding gradient-text">{menuItem.menu}</div>
 
                             {Array.isArray(menuItem.subMenu) ? (
                                 <>
@@ -90,7 +90,7 @@ export const Topnavbar = () => {
 
             <div className="top-leftContainer">
                 <div className="logo">
-                    <img src="https://fabrikbrands.com/wp-content/uploads/Car-Logos-With-Wings-11-2048x1280.png" alt="logo" style={{ width: "40px" }} />
+                    <img src="./logo3ai.png" alt="logo" style={{ width: "49px" }} />
                 </div>
                 <div className="closingBtn" onClick={() => dispatch(changeVisibility(!visibility))}>
                     <div className="bar"></div>
@@ -102,9 +102,9 @@ export const Topnavbar = () => {
                 Admin
             </div> */}
             <div className="dropdown">
-                <button className="dropbtn">Admin</button>
-                <div className="dropdown-content">
-                    <a href="#">Logout</a>
+                <button className="dropbtn gradient-text"><b>Admin</b></button>
+                <div className="dropdown-content" style={{"cursor": "pointer","padding": "16px 7px 6px 5px"}}>
+                    <div className="d-flex" ><i className="bi bi-power err"></i> Logout</div>
                 </div>
             </div>
         </div>
