@@ -119,26 +119,38 @@ orderRoute.post("/cod", async (req, res) => {
 // orderRoute.post("/validate",validatePaymentStatus )
 export default orderRoute;
 
-export const validatePaymentStatus = async (req, res) => {
-    const { amount, currency, userId, addressId, items, stripOrderId, status, paymentMode, order_message } = products;
-  let a = new Date();
-    let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
+// export const validatePaymentStatus = async (req, res) => {
+//     const { amount, currency, userId, addressId, items, stripOrderId, status, paymentMode, order_message } = products;
+//   let a = new Date();
+//     let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
+//     try {
+//         const newOrder = new Order({
+//             userId,
+//             addressId,
+//             items,
+//             totelamount: amount,
+//             stripOrderId: id,
+//             dateOfOrder: date,
+//             status: "success",
+//             paymentMode,
+//             order_message: "Order placed"
+//         })
+//         await newOrder.save();
+//         res.json({ status: "success", message: "success cod" });
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send({ message: "data not stored in db", error: err });
+//     }
+// }
+orderRoute.get("/all",async (req, res) => {
+    let orderDetails;
     try {
-        const newOrder = new Order({
-            userId,
-            addressId,
-            items,
-            totelamount: amount,
-            stripOrderId: id,
-            dateOfOrder: date,
-            status: "success",
-            paymentMode,
-            order_message: "Order placed"
-        })
-        await newOrder.save();
-        res.json({ status: "success", message: "success cod" });
-    } catch (err) {
-        console.log(err);
-        res.status(500).send({ message: "data not stored in db", error: err });
+        orderDetails = await Order.find()
+    } catch (error) {
+        console.log(error);
     }
-}
+    if (orderDetails.length !== 0)
+        res.status(200).json({ status: "success", message: "", data: orderDetails })
+    else
+        res.status(400).json({ status: "success", messgae: "order was empty", data: orderDetails })
+});

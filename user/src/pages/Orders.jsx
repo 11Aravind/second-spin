@@ -21,7 +21,7 @@ const Orders = () => {
     axios.get(`http://localhost:5001/api/order/?userId=${userId}`)
       .then((res) => {
         let orders = res.data.data;
-        // console.log(res.data.data);
+        console.log(res.data.data);
         const ordersWithProductNames = orders.map((order) => {
           const itemsWithProductNames = order.items.map((item) => {
             const product = products.find((product) => product._id === item.id);
@@ -35,6 +35,7 @@ const Orders = () => {
           return { ...order, items: itemsWithProductNames };
         });
         setOrders(ordersWithProductNames);
+        console.log(ordersWithProductNames);
         setLoading(false);
       })
       .catch((err) => {

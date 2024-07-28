@@ -63,4 +63,20 @@ categoryRoute.post("/subcategory/store", upload.single("image"),async (req, res)
         res.status(401).json({ "message": `some thing went wrong ${err}`, "status": "failed" })
     }
 });
+categoryRoute.delete('/:category_id',async(req,res)=>{
+    const category_id=req.params.category_id;
+    let deleteFlag;
+    try{
+        deleteFlag=await Category.findByIdAndDelete(category_id);
+       
+    }catch(err){
+        return  res.status(500).send({status:"failed",message:'deletion failed',error:err,id:category_id});
+    }
+    if (!deleteFlag) {
+        return res.status(404).json({status:"failed", message: 'Category not found' ,id:category_id});
+    }
+    return  res.status(200).json({ status:"success",message: 'Category deleted successfully', deleteFlag });
+    
+    });
+
 export default categoryRoute;

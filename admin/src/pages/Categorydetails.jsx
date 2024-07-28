@@ -10,25 +10,34 @@ export const Categorydetails = () => {
     const visibility = useSelector((state) => state.visibility.visibility)
     const deleteCategory = (e) => {
         const category_id = e.target.id;
-        const url = `api/category/${category_id}`;
-        httpRequest('delete', url)
-            .then((data) => {
-                setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));
+        const url = `http://localhost:5001/api/category/${category_id}`;
+        axios.delete(url)
+            .then((res) => {
+              console.log(res.data);
+              if(res.data.status=="success")
+             { toast.success(res.data.message, {
+                position: 'top-right',
+                autoClose: 3000,
+              });
+                setCategoryDetails(prevDetails => prevDetails.filter(category => category._id !== category_id));}
+                else{
+                  toast.error(res.data.message, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                  });
+                }
             });
     }
     useEffect(() => {
-        httpRequest('get', "api/category").then((data) => {
-            // Check if the fetched data is an object and has 'categoryDetails' array
-            if (data && Array.isArray(data.categoryDetails)) {
-                setCategoryDetails(data.categoryDetails);
-            } else {
-                console.error("Fetched data does not contain 'categoryDetails' array:", data);
-            }
+        axios.get("http://localhost:5001/api/category").then((res) => {
+                setCategoryDetails(res.data.payload);
+
+            console.log(res.data.payload);
         }).catch(error => {
             console.error("Error fetching data:", error);
         });
     }, []);
-    const tableHeadding = [{ th: "#id" }, { th: "Main category" }, { th: "Category" }, { th: "subCategory" }, { th: "image" }, { th: "Action" },];
+    const tableHeadding = [{ th: "#id" }, { th: "vechicle" }, { th: "partsName" }, { th: "partsName" }, { th: "image" }, { th: "Action" },];
     return (
         <div className={visibility ? "flat-container" : "content-div"}>
             <div className="card-header">
@@ -36,6 +45,7 @@ export const Categorydetails = () => {
                 {/* <div className="errorMessage">{alertMessage}</div> */}
                 <div className="top-button">
                     <Link to="/addcategory"> <button className="btn-primary btn-color"> +Add</button></Link>
+            <ToastContainer />
                 </div>
             </div>
             {/* <div className="content-div"> */}
@@ -55,9 +65,9 @@ export const Categorydetails = () => {
                             categorys.map((category, id) =>
                                 <tr key={id} scope="row">
                                     <td>{category._id}</td>
-                                    <td>{category.vehicleType}</td>
-                                    <td>{category.category}</td>
-                                    <td>{category.subCategory}</td>
+                                    <td>{category.vechicle}</td>
+                                    <td>{category.partsName}</td>
+                                    <td>{category.spairPatsType}</td>
                                     <td><img src={`http://localhost:5001/${category.image}`} alt="banner" className="bannerImg" /></td>
                                     <td>  <i className="bi bi-trash3-fill" id={category._id} onClick={deleteCategory}></i>  </td>
                                     {/* <td><i className="bi bi-pencil-square"></i> </td> */}

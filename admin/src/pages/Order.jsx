@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import {httpRequest} from "../API/api"
+// import {httpRequest} from "../API/api"
+import axios from "axios"
 import {useSelector} from "react-redux"
 const Order = () => {
     const tableHeadding = [
@@ -17,10 +18,10 @@ const[orders,setOrders]=useState([])
 const visibility=useSelector((state)=>state.visibility.visibility)
 
     useEffect(()=>{
-        httpRequest('get','api/order/')
+        axios.get('http://localhost:5001/api/order/all')
         .then((res)=>{
             console.log(res)
-            setOrders(res.data)
+            setOrders(res.data.data)
         })
         .catch((err)=>console.log(err));
     },[])
@@ -48,7 +49,7 @@ const visibility=useSelector((state)=>state.visibility.visibility)
                             <td>{id+1}</td>
                             <td>{order.userId}</td>
                             <td>{order.addressId}</td>
-                            <td>{order.totelamount}</td>
+                            <td>{order.totelAmount}</td>
                             <td>{order.paymentMode}</td>
                             <td>{order.dateOfOrder}</td>
                             <td>{order.order_message}</td>
