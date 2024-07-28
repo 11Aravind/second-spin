@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
-import { httpRequest } from "../API/api"
 import { useSelector } from "react-redux"
 import axios from "axios"
 export const Categorydetails = () => {
     const [categorys, setCategoryDetails] = useState([]);
+    const [subCategorys, setSubCategoryList] = useState([]);
     const visibility = useSelector((state) => state.visibility.visibility)
     const deleteCategory = (e) => {
         const category_id = e.target.id;
@@ -29,9 +29,11 @@ export const Categorydetails = () => {
             });
     }
     useEffect(() => {
+      axios.get("http://localhost:5001/api/category/subcategory").then(res=>setSubCategoryList(res.data.payload))
+      .catch(err=>console.log(err))
+
         axios.get("http://localhost:5001/api/category").then((res) => {
                 setCategoryDetails(res.data.payload);
-
             console.log(res.data.payload);
         }).catch(error => {
             console.error("Error fetching data:", error);
@@ -69,7 +71,10 @@ export const Categorydetails = () => {
                                     <td>{category.partsName}</td>
                                     <td>{category.spairPatsType}</td>
                                     <td><img src={`http://localhost:5001/${category.image}`} alt="banner" className="bannerImg" /></td>
-                                    <td>  <i className="bi bi-trash3-fill" id={category._id} onClick={deleteCategory}></i>  </td>
+                                    {
+                                      subCategorys.find(cat=>cat.category_id===category._id)!==undefined ? <td>  <i className="bi bi-trash3-fill" id={category._id} onClick={deleteCategory}></i>  </td>:"This added in Subcategory"
+                                    }
+                                   
                                     {/* <td><i className="bi bi-pencil-square"></i> </td> */}
                                 </tr>
                             )
