@@ -73,11 +73,18 @@
     align-items: center;
   }
   
-  .order-flag {
+  .order-flag-success{
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background-color: green; /* Change as needed */
+    margin-right: 10px;
+  }
+  .order-flag-failed{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red; /* Change as needed */
     margin-right: 10px;
   }
   

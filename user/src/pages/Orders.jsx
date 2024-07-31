@@ -153,6 +153,7 @@ const Orders = () => {
   // console.log(addresses);
   const toggleAddress = (id) => {
     setSelectedRow(selectedRow === id ? null : id);
+    console.log(selectedRow);
   };
 
   useEffect(() => {
@@ -223,7 +224,7 @@ const Orders = () => {
             {orders.map((order, index) => {
               const address = addresses.find(addr => addr._id === order.addressId);
               return (
-                <div className="order-container"  key={index}>
+                <div className="order-container" key={index}>
                   {order.items.map((item, key) => (
                     <div key={key} >
                       <div className="order-row" onClick={() => toggleAddress(order._id)}>
@@ -236,12 +237,14 @@ const Orders = () => {
                         </div>
                         <div className="cancel-order">
                           <div className="flag-container d-flex">
-                            <span className="order-flag"></span>
+                            <span className={order.order_message !== "Order Canceled" ? "order-flag-success" : "order-flag-failed"}></span>
                             <span style={{ fontWeight: "600" }}> {order.order_message}</span>
                           </div>
-                          <span><button id={order._id} onClick={(e) => cancelOrder(e)}>cancel order</button></span>
-                          {/* <span>Your item has been delivered</span> */}
+                       {order.order_message !== "Order Canceled" &&  <span><button id={order._id} onClick={(e) => cancelOrder(e)}>cancel order</button></span>}
                         </div>
+                       { selectedRow !== order._id?<i className="bi bi-chevron-right"></i>: <i className="bi bi-chevron-down"></i>}
+                        
+                       
                       </div>
                       {selectedRow === order._id && (
                         <div className="deliver-address">
@@ -253,7 +256,7 @@ const Orders = () => {
                           </div>
                           <div className="address-right">
                             <div className="address-heading mediumfont">More actions</div>
-                            <div className="desc">Download Invoice</div>
+                            <div className="desc"><button>Download Invoice</button></div>
                           </div>
                         </div>
                       )}
