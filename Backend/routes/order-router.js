@@ -39,36 +39,36 @@ orderRoute.post("/checkout", async (req, res) => {
         },
         quantity: product.quantity
     }));
-try{
-    const newOrder = new Order({
-        userId:products.userId,
-        addressId:products.addressId,
-        items:products.items,
-        totelamount:products.amount,
-        stripOrderId:0,
-        dateOfOrder: date,
-        status: "success",
-        paymentMode:products.paymentMode,
-        order_message: "Order placed"
-    })
-    const savedOrder = await newOrder.save();
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items: lineItems,
-        mode: "payment",
-        success_url: "http://localhost:5173/Orderplaced",
-        cancel_url: "http://localhost:3000/cancel",
-    });
-    savedOrder.stripOrderId = session.id;
-    await savedOrder.save();
-    // console.log(session.id);
-    res.json({ id: session.id })
-} catch (error) {
-    console.error('Error creating Stripe session:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-    
-    
+    try {
+        const newOrder = new Order({
+            userId: products.userId,
+            addressId: products.addressId,
+            items: products.items,
+            totelamount: products.amount,
+            stripOrderId: 0,
+            dateOfOrder: date,
+            status: "success",
+            paymentMode: products.paymentMode,
+            order_message: "Order placed"
+        })
+        const savedOrder = await newOrder.save();
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: lineItems,
+            mode: "payment",
+            success_url: "http://localhost:5173/Orderplaced",
+            cancel_url: "http://localhost:3000/cancel",
+        });
+        savedOrder.stripOrderId = session.id;
+        await savedOrder.save();
+        // console.log(session.id);
+        res.json({ id: session.id })
+    } catch (error) {
+        console.error('Error creating Stripe session:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+
+
 
 
 
@@ -142,7 +142,7 @@ export default orderRoute;
 //         res.status(500).send({ message: "data not stored in db", error: err });
 //     }
 // }
-orderRoute.get("/all",async (req, res) => {
+orderRoute.get("/all", async (req, res) => {
     let orderDetails;
     try {
         orderDetails = await Order.find()
@@ -154,3 +154,21 @@ orderRoute.get("/all",async (req, res) => {
     else
         res.status(400).json({ status: "success", messgae: "order was empty", data: orderDetails })
 });
+orderRoute.put("/cancelOrder/:orderId", async (req, res) => {
+    try {
+        const orderId = req.params.orderId;
+        console.log(orderId);
+        const updatedUser = await Order.findByIdAndUpdate(
+            orderId,
+            { $set: { order_message: "Order Canceled" } },
+            { new: true } // return the updated document
+        );
+        if (!updatedUser) {
+            return res.status(404).send({ message: `order not found ${updatedUser}` });
+        }
+        res.status(200).send({ status: "success", message: "order was canceled" });
+    } catch (err) {
+        res.status(400).json({ status: "failed", messgae: `something went wrong ${err}` })
+
+    }
+})

@@ -1,0 +1,166 @@
+
+  
+  .header-inner {
+    width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 10px 10px 0 0;
+    padding: 32px;
+  }
+  
+  .header-content {
+    width: 480px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .header-logo {
+    width: 45%;
+  }
+  
+  .header-logo img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .header-info {
+    width: 45%;
+    text-align: right;
+  }
+  
+  .header-info h1 {
+    font-size: 21px;
+    color: #ff0000;
+    letter-spacing: -1px;
+    margin: 0;
+  }
+  
+  .header-info p {
+    font-size: 12px;
+    color: #5b5b5b;
+    margin: 0;
+  }
+  
+  /* Order Details */
+  .order-details {
+    width: 100%;
+    background-color: #fff;
+  }
+  
+  .order-details-inner {
+    width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+  }
+  
+  .order-details-content {
+    width: 480px;
+    margin: 0 auto;
+  }
+  
+  .order-details-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .order-details-table th,
+  .order-details-table td {
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 18px;
+    padding: 10px;
+  }
+  
+  .order-details-table th {
+    color: #5b5b5b;
+    text-align: left;
+  }
+  
+  .order-details-table td {
+    color: #646a6e;
+  }
+  
+  .order-details-table .item {
+    font-size: 12px;
+    color: #ff0000;
+  }
+  
+  .order-details-table .item-sku {
+    color: #646a6e;
+  }
+  
+  .order-details-table .quantity {
+    text-align: center;
+  }
+  
+  .order-details-table .subtotal {
+    text-align: right;
+  }
+  .invoiceContainer{
+    margin-top: 64px;
+  }
+  .order-details-table .total {
+    color: #1e2b33;
+    font-weight: bold;
+  }
+ 
+  .order-details-table .separator {
+    background-color: #bebebe;
+  }
+  
+  /* Total */
+  .total {
+    width: 100%;
+    background-color: #e1e1e1;
+  }
+  
+  .total-inner {
+    width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+  }
+  
+  .total-content {
+    width: 480px;
+    margin: 0 auto;
+  }
+  
+  .total-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .total-table td {
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 22px;
+    text-align: right;
+  }
+  
+  .total-table .grand-total {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .total-table .separator {
+    background-color: #e4e4e4;
+  }
+  
+  /* Footer */
+  .footer {
+    width: 100%;
+    background-color: #e1e1e1;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .footer a {
+    color: #ff0000;
+    text-decoration: none;
+  }
+  
+  .footer small {
+    color: #646a6e;
+  }
+  

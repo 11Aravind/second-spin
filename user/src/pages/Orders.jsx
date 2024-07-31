@@ -28,7 +28,7 @@
 //       .then((res) => {
 //         let orders = res.data.data;
 //         console.log(res.data.data);
-      
+
 //         // const ordersWithProductNames = orders.map((order) => {
 //         //   const itemsWithProductNames = order.items.map((item) => {
 //         //     const product = products.find((product) => product._id === item.id);
@@ -90,7 +90,7 @@
 //                       <div className="order-description">
 //                         <p>{item.name}</p>
 //                         <p>  <b>₹</b>{item.newPrice}  <b>Qnty-</b>{item.quantity} </p>
-                       
+
 //                         {/* Quantity: {item.quantity}<br />
 //                         Payment Mode: {order.paymentMode}, Date: {order.dateOfOrder}<br />
 //                         Address: {address ? address.address : 'Address not found'} */}
@@ -120,7 +120,7 @@
 //                      <div className="desc">Download Invoice</div>
 //                         </div>
 //                       </div>)   }
-                    
+
 //                     </div>
 //                   ))}
 //                 </div>
@@ -149,8 +149,8 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null);
-const [addresses,setaddresses]=useState([])
-// console.log(addresses);
+  const [addresses, setaddresses] = useState([])
+  // console.log(addresses);
   const toggleAddress = (id) => {
     setSelectedRow(selectedRow === id ? null : id);
   };
@@ -175,11 +175,12 @@ const [addresses,setaddresses]=useState([])
               newPrice: product ? product.newPrice : item.price
             };
           });
-          return { ...order,
-             items: itemsWithProductDetails,
+          return {
+            ...order,
+            items: itemsWithProductDetails,
             paymentMode: order.paymentMode,
             order_message: order.order_message
-           };
+          };
         });
 
         setOrders(orders);
@@ -196,6 +197,21 @@ const [addresses,setaddresses]=useState([])
   if (loading) {
     return <div>Loading...</div>;
   }
+  const cancelOrder = (e) => {
+    const userConfirmed = window.confirm('Do you want to cancel the order?');
+    if (userConfirmed) {
+      // Your cancellation logic here
+      console.log('Order has been cancelled.');
+      const orderId = e.target.id
+      axios.put(`http://localhost:5001/api/order/cancelOrder/${orderId}`)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+      // You can also call a function to handle the cancellation
+      // e.g., cancelOrder();
+    } else {
+      console.log('Order cancellation was aborted.');
+    }
+  }
 
   return (
     <div className="container">
@@ -207,10 +223,10 @@ const [addresses,setaddresses]=useState([])
             {orders.map((order, index) => {
               const address = addresses.find(addr => addr._id === order.addressId);
               return (
-                <div key={index}>
+                <div className="order-container"  key={index}>
                   {order.items.map((item, key) => (
-                    <div className="order-container" key={key} onClick={() => toggleAddress(order._id)}>
-                      <div className="order-row">
+                    <div key={key} >
+                      <div className="order-row" onClick={() => toggleAddress(order._id)}>
                         <div className="img">
                           <img src={`${imgPath}${item.image}`} alt="img" />
                         </div>
@@ -219,11 +235,12 @@ const [addresses,setaddresses]=useState([])
                           <p><b>₹</b>{item.newPrice} <b>Qnty-</b>{item.quantity}</p>
                         </div>
                         <div className="cancel-order">
-                          <div className="flag-container">
+                          <div className="flag-container d-flex">
                             <span className="order-flag"></span>
                             <span style={{ fontWeight: "600" }}> {order.order_message}</span>
                           </div>
-                          <span>Your item has been delivered</span>
+                          <span><button id={order._id} onClick={(e) => cancelOrder(e)}>cancel order</button></span>
+                          {/* <span>Your item has been delivered</span> */}
                         </div>
                       </div>
                       {selectedRow === order._id && (

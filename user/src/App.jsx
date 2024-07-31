@@ -22,10 +22,11 @@ import Orderplaced from './pages/Orderplaced'
 import Orders from './pages/Orders'
 import Profile from './pages/Profile'
 import Subcategory from './pages/Subcategory'
+import Invoice from './pages/Invoice'
 
 function App() {
   const dispatch=useDispatch();
-  const noCommonComponents = ['/login', '/signup'];
+  const noCommonComponents = ['/login', '/signup','/invoice'];
   const location = useLocation();
   useEffect(() => {
     // Fetching categories
@@ -81,6 +82,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/subcategory/:id" element={<Subcategory />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/invoice" element={<Invoice />} />
         <Route path="*" element={<Notfound />} />
       </Routes>
 
