@@ -37,4 +37,19 @@ router.post('/save',upload.single("image"),async (req, res, next) => {
       res.status(500).json({ status: "failed", message: `product was not inserted${error}` })
     }
   });
+  router.delete('/:product_id',async(req,res)=>{
+    const product_id=req.params.product_id;
+    let deleteFlag;
+    try{
+        deleteFlag=await Product.findByIdAndDelete(product_id);
+       
+    }catch(err){
+        return  res.status(500).send({status:"failed",message:'deletion failed',error:err,id:product_id});
+    }
+    if (!deleteFlag) {
+        return res.status(404).json({status:"failed", message: 'Category not found' ,id:product_id});
+    }
+    return  res.status(200).json({ status:"success",message: 'Category deleted successfully', deleteFlag });
+    
+    });
 export default router;

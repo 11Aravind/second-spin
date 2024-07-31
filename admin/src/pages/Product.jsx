@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import { httpRequest } from "../API/api"
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import axios from "axios"
 import "../components/assct/Table.css"
 const Product = () => {
     const tableHeadding = [
@@ -14,8 +17,27 @@ const Product = () => {
         { th: "Action" },
     ];
     const [products, setProductList] = useState([]);
-    const visibility=useSelector((state)=>state.visibility.visibility)
-
+    const visibility = useSelector((state) => state.visibility.visibility)
+    const deleteProduct = (e) => {
+        const product_id = e.target.id;
+        const url = `http://localhost:5001/api/product/${product_id}`;
+        axios.delete(url)
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.status == "success") {
+                    toast.success(res.data.message, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                    });
+                    setProductList(prevDetails => prevDetails.filter(product => product._id !== product_id));
+                } else {
+                    toast.error(res.data.message, {
+                        position: 'top-right',
+                        autoClose: 3000,
+                    });
+                }
+            });
+    }
     useEffect(() => {
         httpRequest('get', "api/product").then((data) => {
             // Check if the fetched data is an object and has 'productDetails' array
@@ -29,44 +51,45 @@ const Product = () => {
         });
     }, []);
     return (
-   
-        <div className={visibility?"flat-container":"content-div"} > 
-        <div className="card-header">
-            <div className="card-headding">Product Details</div>
-            <div className="top-button">
-                {
-                    <Link to="/addproduct"> <button className="btn-primary"> +Add</button></Link>
-                }     
-                 </div>
-        </div>
-        <table className="table-container table">
-            <thead>
-                <tr className="table-headding">
+
+        <div className={visibility ? "flat-container" : "content-div"} >
+            <div className="card-header">
+                <div className="card-headding gradient-text">Product Details</div>
+                <ToastContainer />
+                <div className="top-button">
                     {
-                        tableHeadding.map((eachHeadding, id) =>
-                            <td key={id}>{eachHeadding.th}</td>
+                        <Link to="/addproduct"> <button className="btn-primary btn-color"> +Add</button></Link>
+                    }
+                </div>
+            </div>
+            <table className="table-container table">
+                <thead>
+                    <tr className="table-headding">
+                        {
+                            tableHeadding.map((eachHeadding, id) =>
+                                <td key={id}>{eachHeadding.th}</td>
+                            )
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        products.map((product, id) =>
+                            <tr key={id} scope="row">
+                                <td>{id + 1}</td>
+                                <td>{product.name}</td>
+                                <td> <img src={`http://localhost:5001/${product.image}`} alt="img" style={{ "width": "100px" }} /> </td>
+                                <td>{product.oldPrice}</td>
+                                <td>{product.newPrice}</td>
+                                <td>{product.description}</td>
+                                <td>  <i className="bi bi-trash3-fill" onClick={e => deleteProduct(e)} id={product._id}></i>  </td>
+                                {/* <td><i className="bi bi-pencil-square"></i> </td> */}
+                            </tr>
                         )
                     }
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    products.map((product, id) =>
-                        <tr key={id} scope="row">
-                            <td>{id+1}</td>
-                            <td>{product.name}</td>
-                            <td> <img src={`http://localhost:5001/${product.image}`} alt="img" style={{"width": "100px"}} /> </td>
-                            <td>{product.oldPrice}</td>
-                            <td>{product.newPrice}</td>
-                            <td>{product.description}</td>
-                            <td>  <i className="bi bi-trash3-fill"></i>  </td>
-                            {/* <td><i className="bi bi-pencil-square"></i> </td> */}
-                        </tr>
-                    )
-                }
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
     );
 }
 export default Product;
