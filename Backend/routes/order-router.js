@@ -172,3 +172,20 @@ orderRoute.put("/cancelOrder/:orderId", async (req, res) => {
 
     }
 })
+orderRoute.post("/updateStatus",async(req, res) => {
+    try {
+        const { id, order_message } = req.body
+        const order = await Order.findByIdAndUpdate(
+            id,
+            { order_message },
+        );
+        if (order) {
+            res.status(200).json({ message: "Order updated successfully" });
+        } else {
+            res.status(404).json({ message: "Order not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error updating order", error });
+
+    }
+})

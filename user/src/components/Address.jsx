@@ -343,7 +343,7 @@ const Address = ({ changeAddressVisibility }) => {
           <div className="col-md-6">
             <button
               type="button"
-              className="checkOutBtn cancelBtn"
+              className=" clsBtn"
               onClick={changeAddressVisibility}
             >
               CANCEL

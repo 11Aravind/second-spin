@@ -14,7 +14,18 @@ addressrouter.get("/", async (req, res) => {
     }
     return res.status(200).json({ status: "success", message: "Success", data: { addressList } });
 })
-
+addressrouter.get("/all", async (req, res) => {
+    let addressList;
+    try {
+        addressList = await Address.find(); // Corrected here
+    } catch (error) {
+        return res.status(404).json({ status: "failed", message: `Something went wrong: ${error}`, data: [] });
+    }
+    if (addressList.length === 0) {
+        return res.status(200).json({ status: "failed", message: "Address list empty", data: [] });
+    }
+    return res.status(200).json({ status: "success", message: "Success", data: { addressList } });
+})
 addressrouter.post("/store", async (req, res) => {
     const { userId, name, mobileNo, address, order_id } = req.body;
     let userAddress = new Address({
