@@ -205,9 +205,11 @@ const Order = () => {
     const visibility = useSelector((state) => state.visibility.visibility);
 
     const handleEditing = (id) => {
+        console.log(id); // This will print the correct ID
         setOrderId(id);
         setOrderUpdate(true);
     };
+    
 
     const updateOrderStatus = () => {
         const data = {
@@ -245,7 +247,7 @@ const Order = () => {
             setCombinedList(combineOrdersAndAddresses(orders, addressList));
         }
     }, [orders, addressList]);
-
+console.log(combinedList);
     return (
         <div className={visibility ? "flat-container" : "content-div"}>
             <ToastContainer />
@@ -283,9 +285,10 @@ const Order = () => {
                             </td> */}
                             {
                                 entry.orderMessage !== "Order Canceled" &&
-                                <td onClick={() => handleEditing(entry._id)} id={entry._id}>
-                                    <i className="bi bi-pencil-square"></i>
-                                </td>
+                                <td onClick={() => handleEditing(entry.orderId)} id={entry.orderId}>
+                                <i className="bi bi-pencil-square"></i>
+                            </td>
+                            
                             }
                         </tr>
                     ))}

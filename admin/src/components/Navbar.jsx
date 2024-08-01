@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { changeVisibility } from "../Slice/visibilitySlice"
 const Navbar = () => {
@@ -81,13 +81,47 @@ const Navbar = () => {
     );
 }
 export default Navbar;
+// export const Topnavbar = () => {
+//     const dispatch = useDispatch();
+//     const visibility = useSelector((state) => state.visibility.visibility)
+//     useEffect(()=>{
+
+//     },[adminId])
+//     return (
+//         <div className="topnav-container">
+
+//             <div className="top-leftContainer">
+//                 <div className="logo">
+//                     <img src="./logo3ai.png" alt="logo" style={{ width: "49px" }} />
+//                 </div>
+//                 <div className="closingBtn" onClick={() => dispatch(changeVisibility(!visibility))}>
+//                     <div className="bar"></div>
+//                     <div className="bar"></div>
+//                     <div className="bar"></div>
+//                 </div>
+//             </div>
+//             <div className="dropdown">
+//                 <button className="dropbtn gradient-text"><b>Admin</b></button>
+//                 <div className="dropdown-content" style={{"cursor": "pointer","padding": "16px 7px 6px 5px"}}>
+//                     <div className="d-flex"  onClick={()=>localStorage.removeItem('adminId')}><i className="bi bi-power err"></i> Logout</div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
 export const Topnavbar = () => {
     const dispatch = useDispatch();
-    const visibility = useSelector((state) => state.visibility.visibility)
-    // dispatch(changeVisibility(!visibility))
+    const visibility = useSelector((state) => state.visibility.visibility);
+    const navigate = useNavigate(); // For navigation
+
+    const handleLogout = () => {
+        localStorage.removeItem('adminId');
+        dispatch(changeVisibility(!visibility)); // Toggle visibility to trigger a re-render or update any necessary state
+        navigate('/login'); // Redirect to login or any other appropriate route
+    };
+
     return (
         <div className="topnav-container">
-
             <div className="top-leftContainer">
                 <div className="logo">
                     <img src="./logo3ai.png" alt="logo" style={{ width: "49px" }} />
@@ -98,13 +132,12 @@ export const Topnavbar = () => {
                     <div className="bar"></div>
                 </div>
             </div>
-            {/* <div className="admin-name">
-                Admin
-            </div> */}
             <div className="dropdown">
                 <button className="dropbtn gradient-text"><b>Admin</b></button>
-                <div className="dropdown-content" style={{"cursor": "pointer","padding": "16px 7px 6px 5px"}}>
-                    <div className="d-flex"  onClick={()=>localStorage.removeItem('adminId')}><i className="bi bi-power err"></i> Logout</div>
+                <div className="dropdown-content" style={{"cursor": "pointer","padding": "16px 7px 6px 5px","margin-top": "2px","padding-left": "5px","padding-right": "12px"}}>
+                    <div className="d-flex" onClick={handleLogout}>
+                        <i className="bi bi-power err" style={{"margin-right": "5px"}}></i> Logout
+                    </div>
                 </div>
             </div>
         </div>

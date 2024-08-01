@@ -58,7 +58,7 @@ export const Login = () => {
       <div className="formbold-main-wrapper">
         <div className="formbold-form-wrapper">
             <div className="formbold-form-title">
-              <h2 className="">SIGN IN</h2>
+              <h2 className="">Login</h2>
             </div>
             <div className="formbold-mb-3">
               <input placeholder="E-mail"
@@ -79,7 +79,7 @@ export const Login = () => {
                 placeholder="Password" />
             </div>
             <div className="formbold-mb-3">
-              <button className="formbold-btn" type="button" onClick={submitLoginForm}>SIGN IN</button>
+              <button className="formbold-btn btn-color" type="button" onClick={submitLoginForm}>Login</button>
             </div>
         </div>
       </div>
