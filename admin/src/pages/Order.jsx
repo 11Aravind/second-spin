@@ -273,7 +273,7 @@ const Order = () => {
                             <td>{entry.dateOfOrder}</td>
                             {/* <td>{entry.orderMessage}</td> */}
                             <td style={entry.orderMessage === "Order Canceled" ? { color: "red", fontWeight: 500 } : {}}>
-                            {entry.orderMessage}
+                                {entry.orderMessage}
                             </td>
                             <td>{entry.paymentMode}</td>
                             {/* <td>
@@ -281,11 +281,12 @@ const Order = () => {
                                     <button onClick={() => handleEditing(entry.orderId)}>Edit</button>
                                 }
                             </td> */}
-
-                            {entry.order_message !== "Order Canceled" &&
+                            {
+                                entry.orderMessage !== "Order Canceled" &&
                                 <td onClick={() => handleEditing(entry._id)} id={entry._id}>
                                     <i className="bi bi-pencil-square"></i>
-                                </td>}
+                                </td>
+                            }
                         </tr>
                     ))}
                 </tbody>

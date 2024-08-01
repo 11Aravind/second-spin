@@ -38,6 +38,7 @@ const Product = () => {
                 }
             });
     }
+    const [orders, setOrders] = useState([])
     useEffect(() => {
         httpRequest('get', "api/product").then((data) => {
             // Check if the fetched data is an object and has 'productDetails' array
@@ -49,7 +50,14 @@ const Product = () => {
         }).catch(error => {
             console.log("Error fetching data:", error);
         });
+        axios.get('http://localhost:5001/api/order/all')
+            .then(res => {
+                // console.log(res.data.data);
+                setOrders(res.data.data)
+            })
     }, []);
+    console.log(products);
+    console.log(orders);
     return (
 
         <div className={visibility ? "flat-container" : "content-div"} >
@@ -75,15 +83,17 @@ const Product = () => {
                 <tbody>
                     {
                         products.map((product, id) =>
-                            <tr key={id} scope="row">
+                              <tr key={id} scope="row">
                                 <td>{id + 1}</td>
                                 <td>{product.name}</td>
                                 <td> <img src={`http://localhost:5001/${product.image}`} alt="img" style={{ "width": "100px" }} /> </td>
                                 <td>{product.oldPrice}</td>
                                 <td>{product.newPrice}</td>
                                 <td>{product.description}</td>
-                                <td>  <i className="bi bi-trash3-fill" onClick={e => deleteProduct(e)} id={product._id}></i>  </td>
-                                {/* <td><i className="bi bi-pencil-square"></i> </td> */}
+                                {/* {
+                                orders.find(order => order._id === product._id) !== undefined ? <td>  <i className="bi bi-trash3-fill" id={product._id} onClick={e => deleteProduct(e)}></i>  </td> : "This added in Subcategory"
+                                } */}
+                                <td><i className="bi bi-pencil-square"></i> </td>
                             </tr>
                         )
                     }
