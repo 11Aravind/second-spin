@@ -1,4 +1,5 @@
 import { Categorydetails, AddCategory } from "./pages/Categorydetails"
+import {Subcategory} from "./pages/Subcategory.jsx"
 import { Route, Routes, useLocation } from "react-router-dom"
 import AddProduct from "./pages/AddProduct.jsx"
 import { Signup } from "./pages/Signup.jsx"
@@ -6,7 +7,7 @@ import Product from "./pages/Product.jsx"
 import { Login } from "./pages/Login.jsx"
 import Navbar from "./components/Navbar";
 import { useNavigate } from "react-router-dom";
-
+import {AddSubcategory} from "./pages/AddSubcategory.jsx"
 import Order from "./pages/Order.jsx"
 import Addblog from "./pages/Addblog"
 import Gallery from "./pages/Gallery"
@@ -25,7 +26,9 @@ const routerInfo = [
   { path: "/blogs", component: <Blogs /> },
   { path: "/addblog", component: <Addblog /> },
   { path: "/category", component: <Categorydetails /> },
+  { path: "/subcategory", component: <Subcategory /> },
   { path: "/addcategory", component: <AddCategory /> },
+  { path: "/addsubcategory", component: <AddSubcategory /> },
   { path: "/gallery", component: <Gallery /> },
   { path: "/login", component: <Login /> },
   { path: "/signup", component: <Signup /> },

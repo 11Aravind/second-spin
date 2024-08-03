@@ -20,6 +20,10 @@ const Navbar = () => {
                     url: "/category"
                 },
                 {
+                    menu: 'Sub category',
+                    url: "/subcategory"
+                },
+                {
                     menu: 'Product',
                     url: "/productdetails"
                 },
@@ -134,9 +138,9 @@ export const Topnavbar = () => {
             </div>
             <div className="dropdown">
                 <button className="dropbtn gradient-text"><b>Admin</b></button>
-                <div className="dropdown-content" style={{"cursor": "pointer","padding": "16px 7px 6px 5px","margin-top": "2px","padding-left": "5px","padding-right": "12px"}}>
+                <div className="dropdown-content" style={{"cursor": "pointer","padding": "16px 7px 6px 5px","marginTop": "2px","paddingLeft": "5px","paddingRight": "12px"}}>
                     <div className="d-flex" onClick={handleLogout}>
-                        <i className="bi bi-power err" style={{"margin-right": "5px"}}></i> Logout
+                        <i className="bi bi-power err" style={{"marginRight": "5px"}}></i> Logout
                     </div>
                 </div>
             </div>

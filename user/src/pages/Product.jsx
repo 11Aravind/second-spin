@@ -30,7 +30,7 @@ const Product = () => {
                 </div>
             </Link>
         </div>
-    )): <div class="message-container">
+    )): <div className="message-container">
             <h1>204 </h1>
             <small>Notice - The subcategory and its product was currently not added</small>
         </div>

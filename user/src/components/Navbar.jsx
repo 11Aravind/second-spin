@@ -210,7 +210,7 @@ const Navbar = () => {
                         <i className="bi bi-cart"></i>
                         <small className="cart-count">{totalItems}</small>
                     </Link>
-                    {/* <button class="keep-shoppingBtn">Login/Signup</button> */}
+                    {/* <button className="keep-shoppingBtn">Login/Signup</button> */}
                 </div>)}
             </div>
 
