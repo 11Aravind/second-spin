@@ -198,22 +198,48 @@ const Orders = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  const cancelOrder = (e) => {
+  // const cancelOrder = (e) => {
+  //   const userConfirmed = window.confirm('Do you want to cancel the order?');
+  //   if (userConfirmed) {
+  //     // Your cancellation logic here
+  //     console.log('Order has been cancelled.');
+  //     const orderId = e.target.id
+  //     axios.put(`http://localhost:5001/api/order/cancelOrder/${orderId}`)
+  //       .then((res) => console.log(res))
+  //       .catch((err) => console.log(err))
+  //     // You can also call a function to handle the cancellation
+  //     // e.g., cancelOrder();
+  //   } else {
+  //     console.log('Order cancellation was aborted.');
+  //   }
+  // }
+  const cancelOrder = async (e) => {
     const userConfirmed = window.confirm('Do you want to cancel the order?');
     if (userConfirmed) {
-      // Your cancellation logic here
-      console.log('Order has been cancelled.');
-      const orderId = e.target.id
-      axios.put(`http://localhost:5001/api/order/cancelOrder/${orderId}`)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err))
-      // You can also call a function to handle the cancellation
-      // e.g., cancelOrder();
+      const orderId = e.target.id;
+      try {
+        const response = await axios.put(`http://localhost:5001/api/order/cancelOrder/${orderId}`);
+        console.log(response);
+  
+        // Update the orders state
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order._id === orderId
+              ? { ...order, order_message: "Order Canceled" }
+              : order
+          )
+        );
+  
+        console.log('Order has been cancelled.');
+      } catch (error) {
+        console.log('Error cancelling the order:', error);
+      }
     } else {
       console.log('Order cancellation was aborted.');
     }
-  }
-console.log(orders);
+  };
+  
+  console.log(orders);
 
   return (
     <div className="container">
@@ -241,11 +267,15 @@ console.log(orders);
                             <span className={order.order_message !== "Order Canceled" ? "order-flag-success" : "order-flag-failed"}></span>
                             <span style={{ fontWeight: "600" }}> {order.order_message}</span>
                           </div>
-                       {order.order_message !== "Order Canceled" &&  <span><button id={order._id} onClick={(e) => cancelOrder(e)}>cancel order</button></span>}
+                          {(order.order_message !== "Order Canceled" && order.order_message !== "Delivered") && (
+                            <span>
+                              <button id={order._id} onClick={(e) => cancelOrder(e)}>Cancel Order</button>
+                            </span>
+                          )}
                         </div>
-                       { selectedRow !== order._id?<i className="bi bi-chevron-right"></i>: <i className="bi bi-chevron-down"></i>}
-                        
-                       
+                        {selectedRow !== order._id ? <i className="bi bi-chevron-right"></i> : <i className="bi bi-chevron-down"></i>}
+
+
                       </div>
                       {selectedRow === order._id && (
                         <div className="deliver-address">
