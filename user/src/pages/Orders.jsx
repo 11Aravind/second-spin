@@ -220,7 +220,7 @@ const Orders = () => {
       try {
         const response = await axios.put(`http://localhost:5001/api/order/cancelOrder/${orderId}`);
         console.log(response);
-  
+
         // Update the orders state
         setOrders((prevOrders) =>
           prevOrders.map((order) =>
@@ -229,7 +229,7 @@ const Orders = () => {
               : order
           )
         );
-  
+
         console.log('Order has been cancelled.');
       } catch (error) {
         console.log('Error cancelling the order:', error);
@@ -238,7 +238,7 @@ const Orders = () => {
       console.log('Order cancellation was aborted.');
     }
   };
-  
+
   console.log(orders);
 
   return (
@@ -274,8 +274,6 @@ const Orders = () => {
                           )}
                         </div>
                         {selectedRow !== order._id ? <i className="bi bi-chevron-right"></i> : <i className="bi bi-chevron-down"></i>}
-
-
                       </div>
                       {selectedRow === order._id && (
                         <div className="deliver-address">
@@ -285,10 +283,13 @@ const Orders = () => {
                             <div className="head mediumfont">Phone number</div>
                             <span>{address.mobileNo}</span>
                           </div>
-                          <div className="address-right">
-                            <div className="address-heading mediumfont">More actions</div>
-                            <div className="desc"><button>Download Invoice</button></div>
-                          </div>
+                          {
+                          (order.order_message !== "Order Canceled") &&
+                            <div className="address-right">
+                              <div className="address-heading mediumfont">More actions</div>
+                              <div className="desc"><button>Download Invoice</button></div>
+                            </div>
+                          }
                         </div>
                       )}
                     </div>

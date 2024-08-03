@@ -1,0 +1,28 @@
+.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    z-index: 9999; /* Make sure it appears on top */
+  }
+  
+  .spinner {
+    width: 50px; /* Size of the spinner */
+    height: 50px;
+    border: 6px solid #f3f3f3; /* Light grey border */
+    border-top: 6px solid #3498db; /* Blue color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Keyframes for the spin animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
