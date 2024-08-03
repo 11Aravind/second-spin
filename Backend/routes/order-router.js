@@ -24,7 +24,7 @@ orderRoute.post("/checkout", async (req, res) => {
     const { userId, addressId, items, stripOrderId, status, paymentMode, order_message, amount, currency } = req.body;
     const { products } = req.body;
     let a = new Date();
-    let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
+    let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() 
     // console.log(products.amount);
     const baseURL = 'http://localhost:5173/';
     const lineItems = products.items.map((product) => ({
@@ -95,7 +95,7 @@ orderRoute.post("/checkout", async (req, res) => {
 orderRoute.post("/cod", async (req, res) => {
     const { userId, addressId, items, stripOrderId, status, paymentMode, order_message, amount, currency } = req.body;
     let a = new Date();
-    let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
+    let date = a.getDate() + "/" + a.getMonth() + "/" + a.getFullYear() + " " + a.getHours() + ":" + a.getMinutes() 
     const newOrder = new Order({
         userId,
         addressId,

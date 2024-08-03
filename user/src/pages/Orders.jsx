@@ -213,6 +213,7 @@ const Orders = () => {
       console.log('Order cancellation was aborted.');
     }
   }
+console.log(orders);
 
   return (
     <div className="container">
