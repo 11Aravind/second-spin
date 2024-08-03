@@ -93,7 +93,7 @@ const Product = () => {
                                 {/* {
                                 orders.find(order => order._id === product._id) !== undefined ? <td>  <i className="bi bi-trash3-fill" id={product._id} onClick={e => deleteProduct(e)}></i>  </td> : "This added in Subcategory"
                                 } */}
-                                <td><i className="bi bi-pencil-square"></i> </td>
+                                <td> <Link to={`/update/${product._id}`}><i className="bi bi-pencil-square"  ></i></Link> </td>
                             </tr>
                         )
                     }

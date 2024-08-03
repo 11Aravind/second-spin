@@ -17,10 +17,7 @@ const AddProduct = () => {
   const [mergedData, setMergedData] = useState([]);
 
   const [message, setMessage] = useState("");
-  // const showMessage = (msg) => {
-  //   setMessage(msg);
-  //   setTimeout(() => setMessage(""), 3000)
-  // }
+ 
   const validateForm = () => {
     let isValid = true;
     const newErrors = { ...errors };

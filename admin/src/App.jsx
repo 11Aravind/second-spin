@@ -15,6 +15,8 @@ import Home from "./pages/Home"
 import Blogs from "./pages/Blogs"
 import auth from "./auth.js"
 import { useEffect } from "react"
+import UpdateProduct from "./pages/UpdateProduct.jsx"
+import UpdateCategory from "./pages/UpdateCategory.jsx"
 const routerInfo = [
   { path: "/", component: <Home /> },
   { path: "/productdetails", component: <Product /> },
@@ -27,6 +29,8 @@ const routerInfo = [
   { path: "/gallery", component: <Gallery /> },
   { path: "/login", component: <Login /> },
   { path: "/signup", component: <Signup /> },
+  {path: "/update/:productId",component: <UpdateProduct />  },
+  {path: "/categoryupdate/:categoryId",component: <UpdateCategory />  },
   { path: "*", component: <Notfound /> },
 ];
 // const PrivateRoute = ({ children }) => {
