@@ -57,7 +57,7 @@ const AddProduct = () => {
       isValid = false;
     }
 
-    if (productLabel === "--Select--") {
+    if (productLabel === "choose_anything") {
       newErrors.productLabel = "Please select a product label";
       isValid = false;
     }
@@ -168,7 +168,7 @@ const AddProduct = () => {
     <div className="content-div">
       <ToastContainer />
       <div className="card-header">
-        <div className="card-headding">Add Product </div>
+        <div className="card-headding gradient-text ">Add Product </div>
         <div className="errorMessage">{message}</div>
       </div>
       <div className="table-container">
@@ -237,7 +237,7 @@ const AddProduct = () => {
           </div>
         </div>
         <div className="row" style={{ padding: "16px 37px" }}>
-          <button className="btn btn-primary" onClick={saveProduct}>Save</button>
+          <button className="btn btn-primary btn-color" onClick={saveProduct}>Save</button>
         </div>
       </div>
 
