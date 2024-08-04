@@ -255,7 +255,6 @@ export const AddCategory = () => {
           </div>
         </div>
       </div>
-      <Subcategory />
     </>
   );
 };

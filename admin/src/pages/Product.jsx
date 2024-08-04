@@ -52,12 +52,12 @@ const Product = () => {
         });
         axios.get('http://localhost:5001/api/order/all')
             .then(res => {
-                // console.log(res.data.data);
+                console.log(res.data.data);
                 setOrders(res.data.data)
             })
     }, []);
-    console.log(products);
-    console.log(orders);
+    // console.log(products);
+    // console.log(orders);
     return (
 
         <div className={visibility ? "flat-container" : "content-div"} >
@@ -81,7 +81,7 @@ const Product = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {/* {
                         products.map((product, id) =>
                               <tr key={id} scope="row">
                                 <td>{id + 1}</td>
@@ -91,12 +91,44 @@ const Product = () => {
                                 <td>{product.newPrice}</td>
                                 <td>{product.description}</td>
                                 {
-                                orders.find(order => order._id === product._id) !== undefined ? <td>  <i className="bi bi-trash3-fill" id={product._id} onClick={e => deleteProduct(e)}></i>  </td> : "This added in Subcategory"
+                                orders.find(order => order.name === product.name) !== undefined ? <td>  <i className="bi bi-trash3-fill" id={product._id} onClick={e => deleteProduct(e)}></i>  </td> : "This added in order"
                                 }
                                 <td> <Link to={`/update/${product._id}`}><i className="bi bi-pencil-square"  ></i></Link> </td>
                             </tr>
                         )
-                    }
+                    } */}
+                    {
+  products.map((product, id) => {
+    // Check if the product is included in any order
+    const isProductInOrder = orders.some(order =>
+      order.items.some(item => item.name === product.name)
+    );
+
+    return (
+      <tr key={id} scope="row">
+        <td>{id + 1}</td>
+        <td>{product.name}</td>
+        <td>
+          <img src={`http://localhost:5001/${product.image}`} alt="img" style={{ width: "100px" }} />
+        </td>
+        <td>{product.oldPrice}</td>
+        <td>{product.newPrice}</td>
+        <td>{product.description}</td>
+        {
+          !isProductInOrder
+            ? <td><i className="bi bi-trash3-fill" id={product._id} onClick={e => deleteProduct(e)}></i></td>
+            : <td>This added in order</td>
+        }
+        <td>
+          <Link to={`/update/${product._id}`}>
+            <i className="bi bi-pencil-square"></i>
+          </Link>
+        </td>
+      </tr>
+    );
+  })
+}
+
                 </tbody>
             </table>
         </div>
