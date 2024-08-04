@@ -33,11 +33,13 @@
     align-items: center;
     gap: 36px;
     height: 70px;
-
   }
   .img{
     width: 20%;
-    
+  }
+  .item-details {
+    display: flex;
+    padding: 9px 0px;
   }
   .img {
     display: flex;
@@ -53,7 +55,8 @@
   }
   
   .order-description {
-    width: 50%;
+    padding: 5px 22px;
+    width: 100%;
 
   }
   
@@ -64,7 +67,8 @@
   }
   
   .cancel-order {
-    width: 20%;
+    /* width: 20%; */
+    width: 49%;
     font-size: 14px;
   }
   
@@ -79,6 +83,20 @@
     border-radius: 50%;
     background-color: green; /* Change as needed */
     margin-right: 10px;
+  }
+  .item-row{
+    display: flex;
+    justify-content: center;
+  }
+  .show-hide{
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    width: 53%;
+  }
+  .cont{
+    width: 100%;
   }
   .order-flag-failed{
     width: 10px;

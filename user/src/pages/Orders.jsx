@@ -135,7 +135,6 @@
 // };
 
 // export default Orders;
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -145,16 +144,10 @@ const Orders = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
   const products = useSelector((state) => state.products.productList);
   const imgPath = useSelector((state) => state.common.imagePath);
-  // const addressArray = useSelector((state) => state.address.addressList);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [addresses, setaddresses] = useState([])
-  // console.log(addresses);
-  const toggleAddress = (id) => {
-    setSelectedRow(selectedRow === id ? null : id);
-    console.log(selectedRow);
-  };
+  const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
     const fetchOrdersAndAddresses = async () => {
@@ -164,7 +157,7 @@ const Orders = () => {
           axios.get(`http://localhost:5001/api/order/?userId=${userId}`)
         ]);
 
-        setaddresses(addressResponse.data.data.addressList);
+        setAddresses(addressResponse.data.data.addressList);
         const orders = ordersResponse.data.data.map(order => {
           const itemsWithProductDetails = order.items.map(item => {
             const product = products.find(product => product._id === item.id);
@@ -198,21 +191,11 @@ const Orders = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  // const cancelOrder = (e) => {
-  //   const userConfirmed = window.confirm('Do you want to cancel the order?');
-  //   if (userConfirmed) {
-  //     // Your cancellation logic here
-  //     console.log('Order has been cancelled.');
-  //     const orderId = e.target.id
-  //     axios.put(`http://localhost:5001/api/order/cancelOrder/${orderId}`)
-  //       .then((res) => console.log(res))
-  //       .catch((err) => console.log(err))
-  //     // You can also call a function to handle the cancellation
-  //     // e.g., cancelOrder();
-  //   } else {
-  //     console.log('Order cancellation was aborted.');
-  //   }
-  // }
+
+  const toggleAddress = (id) => {
+    setSelectedRow(selectedRow === id ? null : id);
+  };
+
   const cancelOrder = async (e) => {
     const userConfirmed = window.confirm('Do you want to cancel the order?');
     if (userConfirmed) {
@@ -221,7 +204,6 @@ const Orders = () => {
         const response = await axios.put(`http://localhost:5001/api/order/cancelOrder/${orderId}`);
         console.log(response);
 
-        // Update the orders state
         setOrders((prevOrders) =>
           prevOrders.map((order) =>
             order._id === orderId
@@ -239,8 +221,6 @@ const Orders = () => {
     }
   };
 
-  console.log(orders);
-
   return (
     <div className="container">
       {orders.length === 0 ? (
@@ -248,55 +228,117 @@ const Orders = () => {
       ) : (
         <div className="main">
           <div className="right-order">
+            {/* {orders.map((order, index) => {
+              const address = addresses.find(addr => addr._id === order.addressId);
+              return (
+                <div className="order-container" key={index}>
+                  <div className="order-row" onClick={() => toggleAddress(order._id)}>
+                    <div className="img">
+                      <img src={`${imgPath}${order.items[0].image}`} alt="img" />
+                    </div>
+                    <div className="order-description">
+                      {order.items.map((item, key) => (
+                        <div key={key}>
+                          <p>{item.name}</p>
+                          <p><b>₹</b>{item.newPrice} <b>Qnty-</b>{item.quantity}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="cancel-order">
+                      <div className="flag-container d-flex">
+                        <span className={order.order_message !== "Order Canceled" ? "order-flag-success" : "order-flag-failed"}></span>
+                        <span style={{ fontWeight: "600" }}> {order.order_message}</span>
+                      </div>
+                      {(order.order_message !== "Order Canceled" && order.order_message !== "Delivered") && (
+                        <span>
+                          <button id={order._id} onClick={(e) => cancelOrder(e)}>Cancel Order</button>
+                        </span>
+                      )}
+                    </div>
+                    {selectedRow !== order._id ? <i className="bi bi-chevron-right"></i> : <i className="bi bi-chevron-down"></i>}
+                  </div>
+                  {selectedRow === order._id && (
+                    <div className="deliver-address">
+                      <div className="address-left">
+                        <div className="address-heading mediumfont">Delivery Address</div>
+                        <div className="desc">{address ? address.address : 'Address not found'}</div>
+                        <div className="head mediumfont">Phone number</div>
+                        <span>{address.mobileNo}</span>
+                      </div>
+                      {(order.order_message !== "Order Canceled") && (
+                        <div className="address-right">
+                          <div className="address-heading mediumfont">More actions</div>
+                          <div className="desc"><button>Download Invoice</button></div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })} */}
             {orders.map((order, index) => {
               const address = addresses.find(addr => addr._id === order.addressId);
               return (
                 <div className="order-container" key={index}>
-                  {order.items.map((item, key) => (
-                    <div key={key} >
-                      <div className="order-row" onClick={() => toggleAddress(order._id)}>
-                        <div className="img">
-                          <img src={`${imgPath}${item.image}`} alt="img" />
-                        </div>
-                        <div className="order-description">
-                          <p>{item.name}</p>
-                          <p><b>₹</b>{item.newPrice} <b>Qnty-</b>{item.quantity}</p>
-                        </div>
-                        <div className="cancel-order">
-                          <div className="flag-container d-flex">
-                            <span className={order.order_message !== "Order Canceled" ? "order-flag-success" : "order-flag-failed"}></span>
-                            <span style={{ fontWeight: "600" }}> {order.order_message}</span>
-                          </div>
-                          {(order.order_message !== "Order Canceled" && order.order_message !== "Delivered") && (
-                            <span>
-                              <button id={order._id} onClick={(e) => cancelOrder(e)}>Cancel Order</button>
-                            </span>
-                          )}
-                        </div>
-                        {selectedRow !== order._id ? <i className="bi bi-chevron-right"></i> : <i className="bi bi-chevron-down"></i>}
+                  {/* <div className="order-header"> */}
+                    {/* <div className="order-summary"> */}
+                      {/* Additional order-level summary details can go here */}
+                      {/* <p>Order ID: {order._id}</p> */}
+                    {/* </div> */}
+                
+                  
+                  {/* </div> */}
+                 <div className="item-row">
+                <div className="cont">
+                {order.items.map((item, key) => (
+                    <div className="item-details" key={key}>
+                      <div className="img">
+                        <img src={`${imgPath}${item.image}`} alt={item.name} />
                       </div>
-                      {selectedRow === order._id && (
-                        <div className="deliver-address">
-                          <div className="address-left">
-                            <div className="address-heading mediumfont">Delivery Address</div>
-                            <div className="desc">{address ? address.address : 'Address not found'}</div>
-                            <div className="head mediumfont">Phone number</div>
-                            <span>{address.mobileNo}</span>
-                          </div>
-                          {
-                          (order.order_message !== "Order Canceled") &&
-                            <div className="address-right">
-                              <div className="address-heading mediumfont">More actions</div>
-                              <div className="desc"><button>Download Invoice</button></div>
-                            </div>
-                          }
-                        </div>
-                      )}
+                      <div className="order-description">
+                        <p>{item.name}</p>
+                        <p><b>₹</b>{item.newPrice} <b>Qnty-</b>{item.quantity}</p>
+                      </div>
+                     
+                    
                     </div>
                   ))}
                 </div>
+                   <div className="show-hide">
+                   <div className="cancel-order">
+                      <p className="err"> {order.order_message}</p>
+                      {(order.order_message !== "Order Canceled" && order.order_message !== "Delivered") && (
+                        <button id={order._id} onClick={(e) => cancelOrder(e)}>Cancel Order</button>
+                      )}
+                      
+                    </div>
+                   {selectedRow !== order._id ? (
+                      <i className="bi bi-chevron-right" onClick={() => toggleAddress(order._id)}></i>
+                    ) : (
+                      <i className="bi bi-chevron-down" onClick={() => toggleAddress(order._id)}></i>
+                    )}
+                   </div>
+                 </div>
+                  {selectedRow === order._id && (
+                    <div className="deliver-address">
+                      <div className="address-left">
+                        <div className="address-heading mediumfont">Delivery Address</div>
+                        <div className="desc">{address ? address.address : 'Address not found'}</div>
+                        <div className="head mediumfont">Phone number</div>
+                        <span>{address ? address.mobileNo : 'Phone number not found'}</span>
+                      </div>
+                      {(order.order_message !== "Order Canceled") && (
+                        <div className="address-right">
+                          <div className="address-heading mediumfont">More actions</div>
+                          <div className="desc"><button>Download Invoice</button></div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               );
             })}
+
           </div>
         </div>
       )}
