@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 
 const UpdateProduct = () => {
+  const navigate=useNavigate()
   const { productId } = useParams();
   const productNameRef = useRef('');
   const oldPriceRef = useRef('');
@@ -12,7 +13,7 @@ const UpdateProduct = () => {
   const descriptionRef = useRef('');
   const ex = useRef('');
   const suitedVehicleRef = useRef('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const [categoryId, setCategoryId] = useState('');
   const [productLabel, setProductLabel] = useState('');
   const [categoryList, setCategoryList] = useState([]);
@@ -55,6 +56,11 @@ const UpdateProduct = () => {
       .get(`http://localhost:5001/api/product`)
       .then((res) => {
         const product = res.data.productDetails.find((item) => item._id === productId);
+        console.log(product);
+        console.log(`${product.category_id}_${product.subCategory_id}`);
+        // console.log(product.subCategory_id);
+        
+        
         if (product) {
           productNameRef.current.value = product.name || '';
           oldPriceRef.current.value = product.oldPrice || '';
@@ -64,7 +70,9 @@ const UpdateProduct = () => {
           ex.current.value = product.productLabel ;
           setImage(product.image || '');
           setProductLabel(product.productLabel || '');
-          console.log(product.productLabel);
+          setCategoryId(`${product.category_id}_${product.subCategory_id}`)
+          // console.log(`${product.categoryId}_${product.subCategoryId}`);
+          
           
         }
       })
@@ -143,21 +151,24 @@ const UpdateProduct = () => {
     return isValid;
   };
 
-  const resetValues = () => {
-    productNameRef.current.value = "";
-    oldPriceRef.current.value = "";
-    newPriceRef.current.value = "";
-    descriptionRef.current.value = "";
-    suitedVehicleRef.current.value = "";
-    setImage('');
-    setProductLabel('');
-  }
+  // const resetValues = () => {
+  //   productNameRef.current.value = "";
+  //   oldPriceRef.current.value = "";
+  //   newPriceRef.current.value = "";
+  //   descriptionRef.current.value = "";
+  //   suitedVehicleRef.current.value = "";
+  //   setImage('');
+  //   setProductLabel('');
+  // }
 
-  const saveProduct = () => {
+  const updateProduct = () => {
     if (validateForm()) {
       const productDetails = new FormData();
       productDetails.append('name', productNameRef.current.value);
-      productDetails.append('image', image);
+      // productDetails.append('image', image);
+      if (image) {
+        productDetails.append('image', image);
+      }
       productDetails.append('description', descriptionRef.current.value);
       productDetails.append('productLabel', productLabel);
       productDetails.append('oldPrice', oldPriceRef.current.value);
@@ -166,10 +177,20 @@ const UpdateProduct = () => {
       productDetails.append('category_id', categoryId.split("_")[0]);
       productDetails.append('subCategory_id', categoryId.split("_")[1]);
       productDetails.append('suitedVechicleName', suitedVehicleRef.current.value);
-      axios.post('http://localhost:5001/api/product/save', productDetails)
+      productDetails.append('productId',productId);
+      axios.post('http://localhost:5001/api/product/update', productDetails)
         .then((response) => {
-          response.data.status === "success" ? toast.success(response.data.message) : toast.error(response.data.message);
-          resetValues();
+          // response.data.status === "success" ? toast.success(response.data.message) : toast.error(response.data.message);
+          if (response.data.status === 'success') {
+            toast.success(response.data.message, {
+              onClose: () => {
+                navigate('/productdetails');
+              }
+            });
+          } else {
+            toast.error(response.data.message);
+          }
+          // resetValues();
         })
         .catch((err) => console.log(err));
     }
@@ -179,7 +200,7 @@ const UpdateProduct = () => {
     <div className="content-div">
       <ToastContainer />
       <div className="card-header">
-        <div className="card-heading">Update Product</div>
+        <div class="card-headding gradient-text ">Update Product</div>
       </div>
       <div className="table-container">
         <div className="row" style={{ padding: "37px" }}>
@@ -190,7 +211,7 @@ const UpdateProduct = () => {
           </div>
           <div className="col">
             <label htmlFor="maincat">Category</label>
-            <select className="form-select" id="maincat" aria-label="Default select example" onChange={(e) => setCategoryId(e.target.value)}>
+            <select className="form-select" id="maincat" aria-label="Default select example" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
               <option value="">--Select--</option>
               {options.map((category, index) => (
                 <option value={category.ids} key={index}>{category.text}</option>
@@ -212,7 +233,7 @@ const UpdateProduct = () => {
           </div>
           <div className="col-3">
             <label htmlFor="productLabel">Product Label</label>
-            <select className="form-select" id="productLabel" aria-label="Default select example" onChange={(e) => setProductLabel(e.target.value)}>
+            <select className="form-select" id="productLabel" aria-label="Default select example" value={productLabel} onChange={(e) => setProductLabel(e.target.value)}>
               <option>--Select--</option>
               <option value="firstHand">First-hand</option>
               <option value="secondHand">Second-hand</option>
@@ -238,10 +259,11 @@ const UpdateProduct = () => {
             <small style={{ color: "red" }}>{errors.description}</small>
           </div>
         </div>
-        <div className="row justify-content-center" style={{ padding: "16px 37px" }}>
-          <div className="col-4">
-            <button type="button" className="btn btn-success" onClick={saveProduct}>Save Product</button>
-          </div>
+        <div className="row " style={{ padding: "16px 37px" }}>
+          {/* <div className="col-4"> */}
+            <button type="button"class="btn btn-primary btn-color" onClick={updateProduct}>Update Product</button>
+          {/* </div> */}
+          {/* <div class="row" style="padding: 16px 37px;"><button class="btn btn-primary btn-color">Update</button></div> */}
         </div>
       </div>
     </div>
