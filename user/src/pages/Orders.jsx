@@ -308,7 +308,7 @@ const Orders = () => {
                    <div className="cancel-order">
                       <p className="err"> {order.order_message}</p>
                       {(order.order_message !== "Order Canceled" && order.order_message !== "Delivered") && (
-                        <button id={order._id} onClick={(e) => cancelOrder(e)}>Cancel Order</button>
+                        <button className="cancel-btn" id={order._id} onClick={(e) => cancelOrder(e)}>Cancel Order</button>
                       )}
                       
                     </div>
