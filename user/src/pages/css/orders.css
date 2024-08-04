@@ -88,6 +88,13 @@
     display: flex;
     justify-content: center;
   }
+  .cancel-btn{
+    color: #fff;
+    border: none;
+    background: red;
+    padding: 3px 4px;
+    border-radius: 4px;
+  }
   .show-hide{
     display: flex;
     gap: 25px;
