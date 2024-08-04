@@ -11,7 +11,7 @@
 //     const spairPatsTypeRef = useRef(null);
 //     const nameRef = useRef(null);
 //     const imageRef = useRef(null);
-  
+
 //     const [message, setMessage] = useState('');
 //     const [errors, setErrors] = useState({
 //       vehicleType: '',
@@ -32,7 +32,7 @@
 //       .catch(err=>console.log(err)
 //       )
 //     },[])
-  
+
 //     const validateForm = () => {
 //       let isValid = true;
 //       const newErrors = {
@@ -41,7 +41,7 @@
 //         name: '',
 //         image: '',
 //       };
-  
+
 //       if (vehicleTypeRef.current.value === "--Select--") {
 //         newErrors.vehicleType = 'Vehicle type is required';
 //         isValid = false;
@@ -58,11 +58,11 @@
 //         newErrors.image = 'Image is required';
 //         isValid = false;
 //       }
-  
+
 //       setErrors(newErrors);
 //       return isValid;
 //     };
-  
+
 //     const saveCategory = () => {
 //       if (!validateForm()) {
 //         setTimeout(() => {
@@ -75,18 +75,18 @@
 //         }, 3000);
 //         return;
 //       }
-  
+
 //       const vehicleType = vehicleTypeRef.current.value;
 //       const spairPatsType = spairPatsTypeRef.current.value;
 //       const name = nameRef.current.value;
 //       const imageFile = imageRef.current.files[0];
-  
+
 //       const categoryData = new FormData();
 //       categoryData.append('vechicle', vehicleType);
 //       categoryData.append('spairPatsType', spairPatsType);
 //       categoryData.append('image', imageFile);
 //       categoryData.append('partsName', name);
-  
+
 //       axios.post('http://localhost:5001/api/category/save', categoryData)
 //         .then((response) => {
 //           response.data.status === 'success' ? toast.success(response.data.message) : toast.error(response.data.message);
@@ -94,14 +94,14 @@
 //         })
 //         .catch((error) => console.log(error));
 //     };
-  
+
 //     const resetValue = () => {
 //       vehicleTypeRef.current.value = '';
 //       spairPatsTypeRef.current.value = '';
 //       nameRef.current.value = '';
 //       imageRef.current.value = '';
 //     };
-  
+
 //     return (
 //       <>
 //         <div className="content-div">
@@ -128,7 +128,7 @@
 //                 </select>
 //                 <small style={{ color: 'red' }}>{errors.vehicleType}</small>
 //               </div>
-  
+
 //               <div className="col">
 //                 <label htmlFor="maincat">Spairparts Type</label>
 //                 <select
@@ -150,7 +150,7 @@
 //                 </select>
 //                 <small style={{ color: 'red' }}>{errors.spairPatsType}</small>
 //               </div>
-  
+
 //               <div className="col">
 //                 <label htmlFor="category">Image</label>
 //                 <input
@@ -161,7 +161,7 @@
 //                 />
 //                 <small style={{ color: 'red' }}>{errors.image}</small>
 //               </div>
-  
+
 //               <div className="col">
 //                 <label htmlFor="category">Parts Name</label>
 //                 <input
@@ -173,7 +173,7 @@
 //                 <small style={{ color: 'red' }}>{errors.name}</small>
 //               </div>
 //             </div>
-  
+
 //             <div className="row" style={{ padding: '16px 37px' }}>
 //               <button className="btn btn-primary btn-color" onClick={saveCategory}>
 //                 Save
@@ -185,14 +185,13 @@
 //       </>
 //     );
 //   };
-  
-//   export default UpdateCategory;
 
+//   export default UpdateCategory;
 import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export const UpdateCategory = () => {
     const { categoryId } = useParams();
@@ -200,7 +199,7 @@ export const UpdateCategory = () => {
     const spairPatsTypeRef = useRef(null);
     const nameRef = useRef(null);
     const imageRef = useRef(null);
-
+    const navigate = useNavigate()
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState({
         vehicleType: '',
@@ -249,16 +248,11 @@ export const UpdateCategory = () => {
             newErrors.name = 'Name is required';
             isValid = false;
         }
-        if (!imageRef.current.files[0]) {
-            newErrors.image = 'Image is required';
-            isValid = false;
-        }
-
         setErrors(newErrors);
         return isValid;
     };
 
-    const saveCategory = () => {
+    const updateCategory = () => {
         if (!validateForm()) {
             setTimeout(() => {
                 setErrors({
@@ -274,35 +268,44 @@ export const UpdateCategory = () => {
         const vehicleType = vehicleTypeRef.current.value;
         const spairPatsType = spairPatsTypeRef.current.value;
         const name = nameRef.current.value;
-        const imageFile = imageRef.current.files[0];
-
+        const imageFile = imageRef.current.files[0] || null;
         const categoryData = new FormData();
         categoryData.append('vechicle', vehicleType);
         categoryData.append('spairPatsType', spairPatsType);
-        categoryData.append('image', imageFile);
+        // categoryData.append('image', imageFile);
+        if (imageFile) {
+            categoryData.append('image', imageFile);
+        }
         categoryData.append('partsName', name);
+        categoryData.append('categoryId', categoryId);
 
-        axios.post('http://localhost:5001/api/category/save', categoryData)
+        axios.post('http://localhost:5001/api/category/update', categoryData)
             .then((response) => {
-                response.data.status === 'success' ? toast.success(response.data.message) : toast.error(response.data.message);
-                resetValue();
+                // response.data.status === 'success' ? toast.success(response.data.message) : toast.error(response.data.message);
+                // navigate("/category")
+                if (response.data.status === 'success') {
+                    toast.success(response.data.message, {
+                      onClose: () => {
+                        navigate('/category');
+                      }
+                    });
+                  } else {
+                    toast.error(response.data.message);
+                  }
             })
             .catch((error) => console.log(error));
     };
 
-    const resetValue = () => {
-        vehicleTypeRef.current.value = '';
-        spairPatsTypeRef.current.value = '';
-        nameRef.current.value = '';
-        imageRef.current.value = '';
-    };
+
 
     return (
         <>
             <div className="content-div">
                 <ToastContainer />
                 <div className="card-header">
-                    <div className="card-headding gradient-text ">Update Category</div>
+                    <div className="card-headding gradient-text ">Update Category
+                    </div>
+                    <span className="err">If you don't upload image then it take old pic</span>
                     <div className="errorMessage">{message}</div>
                 </div>
                 <div className="table-container">
@@ -370,8 +373,8 @@ export const UpdateCategory = () => {
                     </div>
 
                     <div className="row" style={{ padding: '16px 37px' }}>
-                        <button className="btn btn-primary btn-color" onClick={saveCategory}>
-                            Save
+                        <button className="btn btn-primary btn-color" onClick={updateCategory}>
+                            Update 
                         </button>
                     </div>
                 </div>
