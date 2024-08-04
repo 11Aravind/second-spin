@@ -18,6 +18,7 @@ import auth from "./auth.js"
 import { useEffect } from "react"
 import UpdateProduct from "./pages/UpdateProduct.jsx"
 import UpdateCategory from "./pages/UpdateCategory.jsx"
+import {UpdateSubCategory} from "./pages/UpdateSubCategory.jsx"
 const routerInfo = [
   { path: "/", component: <Home /> },
   { path: "/productdetails", component: <Product /> },
@@ -33,6 +34,7 @@ const routerInfo = [
   { path: "/login", component: <Login /> },
   { path: "/signup", component: <Signup /> },
   {path: "/update/:productId",component: <UpdateProduct />  },
+  {path: "/subcatupdate/:subcatId",component: <UpdateSubCategory />  },
   {path: "/categoryupdate/:categoryId",component: <UpdateCategory />  },
   { path: "*", component: <Notfound /> },
 ];

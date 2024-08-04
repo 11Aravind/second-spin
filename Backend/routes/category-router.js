@@ -136,5 +136,42 @@ categoryRoute.post('/update', upload.single('image'), async (req, res) => {
     }
 });
 
+categoryRoute.put("/subcategory/update/:id", upload.single("image"), async (req, res) => {
+    const { id } = req.params; // Subcategory ID from URL parameter
+    const { category_id, Subcat_name } = req.body;
+    let image;
+
+    // Check if an image file was uploaded
+    if (req.file) {
+        image = req.file.filename;
+    }
+
+    try {
+        // Find the existing subcategory by ID
+        const subcategory = await Subcategory.findById(id);
+
+        if (!subcategory) {
+            return res.status(404).json({ "message": "Subcategory not found", "status": "failed" });
+        }
+
+        // Update fields
+        subcategory.category_id = category_id || subcategory.category_id;
+        subcategory.Subcat_name = Subcat_name || subcategory.Subcat_name;
+        if (image) {
+            subcategory.image = image; // Update image if a new one is provided
+        }
+
+        // Save the updated subcategory
+        const updatedSubcategory = await subcategory.save();
+
+        if (updatedSubcategory) {
+            res.status(200).json({ "message": "Subcategory was updated", "status": "success" });
+        } else {
+            res.status(500).json({ "message": "Subcategory update failed", "status": "failed" });
+        }
+    } catch (err) {
+        res.status(500).json({ "message": `Something went wrong: ${err}`, "status": "failed" });
+    }
+});
 
 export default categoryRoute;

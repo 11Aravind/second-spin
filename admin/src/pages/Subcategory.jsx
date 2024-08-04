@@ -39,7 +39,7 @@ export const Subcategory = () => {
       console.error("Error fetching data:", error);
     });
   }, []);
-  const tableHeadding = [{ th: "#id" }, { th: "vechicle" }, { th: "partsName" }, { th: "partsName" }, { th: "image" }, { th: "Action" },];
+  const tableHeadding = [{ th: "#id" }, { th: "Subcat_name" },{ th: "image" }, { th: "Action" },];
   return (
     <div className={visibility ? "flat-container" : "content-div"}>
       <div className="card-header">
@@ -64,23 +64,19 @@ export const Subcategory = () => {
           </thead>
           <tbody>
             {
-              categorys.map((category, id) =>
+              subCategorys.map((subCategory, id) =>
                 <tr key={id} scope="row">
-                  <td>{category._id}</td>
-                  <td>{category.vechicle}</td>
-                  <td>{category.partsName}</td>
-                  <td>{category.spairPatsType}</td>
-                  <td><img src={`http://localhost:5001/${category.image}`} alt="banner" className="bannerImg" /></td>
+                  <td>{id+1}</td>
+                  <td>{subCategory.Subcat_name}</td>
+                  <td><img src={`http://localhost:5001/${subCategory.image}`} alt="banner" className="bannerImg" /></td>
                   {
-                    subCategorys.find(cat => cat.category_id === category._id) !== undefined ? <td>  <i className="bi bi-trash3-fill" id={category._id} onClick={deleteCategory}></i>  </td> : "This added in Subcategory"
+                    subCategorys.find(cat => cat.category_id === subCategory._id) !== undefined ? <td>  <i className="bi bi-trash3-fill" id={subCategory._id} onClick={deleteCategory}></i>  </td> : "This added in Product"
                   }
                   <td> 
-                    <Link to={`/categoryupdate/${category._id}`}>
+                    <Link to={`/subcatupdate/${subCategory._id}`}>
                   <i className="bi bi-pencil-square"  ></i>
                   </Link> 
                   </td>
-
-
                   {/* <td><i className="bi bi-pencil-square"></i> </td> */}
                 </tr>
               )
