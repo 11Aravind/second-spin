@@ -245,9 +245,7 @@ export const Checkout = () => {
             }
           });
       } else {
-        const stripe = await loadStripe(
-          "pk_test_51KQwUGSDqjJiCnelf5rSP7Ga4kB70od6fYzekLUc0ACE478XmSV1ttQNw5XIjrFJWjtJdYP0m1DfuSZl3NF6P52W00VWFwRASz"
-        );
+        const stripe = await loadStripe("pk_test_51KQwUGSDqjJiCnelf5rSP7Ga4kB70od6fYzekLUc0ACE478XmSV1ttQNw5XIjrFJWjtJdYP0m1DfuSZl3NF6P52W00VWFwRASz");
         const body = {
           products: cartData,
         };

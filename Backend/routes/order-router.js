@@ -31,14 +31,14 @@ orderRoute.post("/checkout", async (req, res) => {
         price_data: {
             currency: "inr",
             product_data: {
-                name: product.name,
-                // images:[product.image]
-                images: [`${baseURL}${product.image}`] // Prepend baseURL to the image filename
+                name: product.name
+                // Remove images field
+                // images: [product.image]
             },
             unit_amount: product.price * 100,
         },
         quantity: product.quantity
-    }));
+    }));    
     try {
         const newOrder = new Order({
             userId: products.userId,
