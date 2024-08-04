@@ -173,5 +173,20 @@ categoryRoute.put("/subcategory/update/:id", upload.single("image"), async (req,
         res.status(500).json({ "message": `Something went wrong: ${err}`, "status": "failed" });
     }
 });
+categoryRoute.delete('/subcat/:subcat_id', async (req, res) => {
+    const subcat_id = req.params.subcat_id;
+    let deleteFlag;
+    try {
+        deleteFlag = await Subcategory.findByIdAndDelete(subcat_id);
+
+    } catch (err) {
+        return res.status(500).send({ status: "failed", message: 'deletion failed', error: err, id: subcat_id });
+    }
+    if (!deleteFlag) {
+        return res.status(404).json({ status: "failed", message: 'Subcategory not found', id: subcat_id });
+    }
+    return res.status(200).json({ status: "success", message: 'Subcategory deleted successfully', deleteFlag });
+
+});
 
 export default categoryRoute;
