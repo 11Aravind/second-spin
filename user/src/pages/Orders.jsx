@@ -280,14 +280,6 @@ const Orders = () => {
               const address = addresses.find(addr => addr._id === order.addressId);
               return (
                 <div className="order-container" key={index}>
-                  {/* <div className="order-header"> */}
-                    {/* <div className="order-summary"> */}
-                      {/* Additional order-level summary details can go here */}
-                      {/* <p>Order ID: {order._id}</p> */}
-                    {/* </div> */}
-                
-                  
-                  {/* </div> */}
                  <div className="item-row">
                 <div className="cont">
                 {order.items.map((item, key) => (
@@ -299,9 +291,7 @@ const Orders = () => {
                         <p>{item.name}</p>
                         <p><b>₹</b>{item.newPrice} <b>Qnty-</b>{item.quantity}</p>
                       </div>
-                     
-                    
-                    </div>
+                  </div>
                   ))}
                 </div>
                    <div className="show-hide">

@@ -5,7 +5,7 @@ import "react-multilevel-sidebar/src/Sidebar.css";
 import "./CSS/navbar.css"
 import { useCart } from "react-use-cart";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 let options = [
     {
         name: "",
@@ -123,15 +123,22 @@ let options = [
     },
 ];
 
+
 const Navbar = () => {
     const [isOpen, handleClick] = useState(false);
     const userId = JSON.parse(localStorage.getItem("userId"));
-
+    const navigate = useNavigate(); // For navigation after logout
+    const logOut=()=>{
+        localStorage.removeItem('userId');
+        setItems([]);
+        navigate('/login')
+    }
     // const handleSidebarToggle = isOpen => {
     //     setIsOpen(isOpen);
     // };
 
-    const { totalItems } = useCart();
+
+    const { totalItems ,setItems} = useCart();
 
     const menuClicked = itemOptions => {
         /* 
@@ -167,7 +174,7 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="searchBox">
-                    <ReactSearchBox
+                    {/* <ReactSearchBox
                         placeholder="Search by Make Model Year,Product Type,Part Number,or Brand..."
                         data={[
                             {
@@ -198,20 +205,31 @@ const Navbar = () => {
                         autoFocus
                         leftIcon={<><i className="bi bi-search"></i></>}
                         iconBoxSize="48px"
-                    />
+                    /> */}
                 </div>
 
                 {/* <input className="" id="disabledInput" type="text" placeholder="Select your Vehicle"></input> */}
-          {     userId && (<div className="icons">
-            <Link to="/profile">
-                    <i className="bi bi-person-circle"></i>
-                    </Link>
-                    <Link to="/cart">
-                        <i className="bi bi-cart"></i>
-                        <small className="cart-count">{totalItems}</small>
-                    </Link>
-                    {/* <button className="keep-shoppingBtn">Login/Signup</button> */}
-                </div>)}
+                {
+                    userId && (<div className="icons">
+                        <div className="dropdown">
+                                    <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ background: "#fff",border:"none" }}>
+                                    <i className="bi bi-person-circle"></i>
+                                    </button>
+                                    <ul className="dropdown-menu">
+                                        <li><Link to="/orders" className="menu">My orders</Link></li>
+                                        {/* <li><Link to="/caretakingstatus" className="menu">View Requests</Link></li> */}
+                                        <li style={{ cursor: "pointer" }} onClick={logOut}><i className="bi bi-power" style={{ color: "red" }}></i>Logout</li>
+                                    </ul>
+                                </div>
+                        {/* <Link to="/profile">
+                            <i className="bi bi-person-circle"></i>
+                        </Link> */}
+                        <Link to="/cart" style={{paddingLeft:"22px"}}>
+                            <i className="bi bi-cart"></i>
+                            <small className="cart-count">{totalItems}</small>
+                        </Link>
+                        {/* <button className="keep-shoppingBtn">Login/Signup</button> */}
+                    </div>)}
             </div>
 
         </>

@@ -36,10 +36,10 @@ const Navbar = () => {
                 //     menu: 'Blog',
                 //     url: "/blogs"
                 // },
-                {
-                    menu: 'Gallery',
-                    url: "/gallery"
-                },
+                // {
+                //     menu: 'Gallery',
+                //     url: "/gallery"
+                // },
             ],
         },
     ];

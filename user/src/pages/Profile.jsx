@@ -8,11 +8,7 @@ const Profile = () => {
 
 	const handleLogout = () => {
 		localStorage.removeItem('userId');
-		toast.success("Logout Successfully", {
-			position: 'top-right',
-			autoClose: 3000,
-			onClose: () => navigate('/login') // Redirect after toast is closed
-		});
+
 	};
 
 	return (

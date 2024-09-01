@@ -146,7 +146,7 @@ const Address = ({ changeAddressVisibility }) => {
   const cityRef = useRef("");
   const stateRef = useRef("");
   const addressList = useSelector((state) => state.address.addressList);
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId =localStorage.getItem("userId")
 
   const [nameError, setNameError] = useState("");
   const [mobileError, setMobileError] = useState("");

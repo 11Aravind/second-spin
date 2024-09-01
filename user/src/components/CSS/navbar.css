@@ -147,20 +147,17 @@ body {
 .logo>img{
     width: 100%;
 }
-.cart-count{
+.cart-count {
     position: relative;
-    right: 7px;
-    top: -12px;
+    right: -16px;
+    top: -47px;
     font-size: 10px;
     color: white;
     background: linear-gradient(45deg, #c338fc, #ff00ff);
     /* background: #298015; */
-    
-
     /* height: 16px; */
     padding: 3px 4px;
     border-radius: 50%;
-
 }
 .card.h-100 {
     border: none;

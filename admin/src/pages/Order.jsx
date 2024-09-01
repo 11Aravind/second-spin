@@ -2,7 +2,7 @@
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 // import axios from "axios"
-// import "./CSS/order.css"
+import "./CSS/order.css"
 // import { useSelector } from "react-redux"
 // const combineOrdersAndAddresses = (orders, addressList) => {
 //     return orders.map(order => {
@@ -158,8 +158,15 @@ import { useEffect, useState, useRef } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import "./CSS/order.css";
 import { useSelector } from "react-redux";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
+import { Button } from 'primereact/button';
+import 'primereact/resources/themes/saga-blue/theme.css';  // Choose your theme
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 const combineOrdersAndAddresses = (orders, addressList) => {
     return orders.map(order => {
@@ -182,34 +189,24 @@ const combineOrdersAndAddresses = (orders, addressList) => {
     }).flat().filter(entry => entry !== null); // Flatten and remove null values
 };
 
-const Order = () => {
-    const tableHeading = [
-        { th: "#id" },
-        { th: "Product Name" },
-        { th: "Address" },
-        { th: "Item Total" },
-        { th: "Qny" },
-        { th: "Date of Order" },
-        { th: "Order Message" },
-        { th: "pay Mode" },
-        { th: "Action" },
-    ];
-    const messageRef = useRef(null);
 
+const Order = () => {
+    const messageRef = useRef(null);
     const [orders, setOrders] = useState([]);
     const [addressList, setAddressList] = useState([]);
     const [orderId, setOrderId] = useState();
     const [orderUpdate, setOrderUpdate] = useState(false);
     const [combinedList, setCombinedList] = useState([]);
+    const [globalFilter, setGlobalFilter] = useState('');
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const messsageRef = useRef(null);
 
     const visibility = useSelector((state) => state.visibility.visibility);
 
     const handleEditing = (id) => {
-        console.log(id); // This will print the correct ID
         setOrderId(id);
         setOrderUpdate(true);
     };
-    
 
     const updateOrderStatus = () => {
         const data = {
@@ -220,7 +217,6 @@ const Order = () => {
             .then((res) => {
                 toast.success('Order status was updated!');
                 setOrderUpdate(false);
-                // Update the order in the state
                 setOrders(prevOrders =>
                     prevOrders.map(order =>
                         order._id === orderId ? { ...order, order_message: data.order_message } : order
@@ -247,61 +243,75 @@ const Order = () => {
             setCombinedList(combineOrdersAndAddresses(orders, addressList));
         }
     }, [orders, addressList]);
-console.log(combinedList);
+
+    const statusBodyTemplate = (rowData) => {
+        return (
+            <span style={rowData.orderMessage === "Order Canceled" ? { color: "red", fontWeight: 500 } : {}}>
+                {rowData.orderMessage}
+            </span>
+        );
+    };
+
+    const actionBodyTemplate = (rowData) => {
+        return (
+            rowData.orderMessage !== "Order Canceled" && (
+                <Button
+                    icon="pi pi-pencil"
+                    className="p-button-rounded p-button-text"
+                    onClick={() => handleEditing(rowData.orderId)}
+                />
+            )
+        );
+    };
+
     return (
         <div className={visibility ? "flat-container" : "content-div"}>
             <ToastContainer />
             <div className="card-header">
-                <div className="main-menu-headding  gradient-text">Order Details</div>
+                <div className="main-menu-heading gradient-text">Order Details</div>
                 <div className="top-button"></div>
             </div>
-            <table className="table-container table">
-                <thead>
-                    <tr className="table-heading">
-                        {tableHeading.map((heading, id) => (
-                            <td key={id}>{heading.th}</td>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {combinedList.map((entry, id) => (
-                        <tr key={id} scope="row">
-                            <td>{id + 1}</td>
-                            <td>{entry.productName}</td>
-                            <td>{entry.address},{entry.phoneNumber}</td>
-                            {/* <td></td> */}
-                            <td>{entry.itemTotal}</td>
-                            <td>{entry.quantity}</td>
-                            <td>{entry.dateOfOrder}</td>
-                            {/* <td>{entry.orderMessage}</td> */}
-                            <td style={entry.orderMessage === "Order Canceled" ? { color: "red", fontWeight: 500 } : {}}>
-                                {entry.orderMessage}
-                            </td>
-                            <td>{entry.paymentMode}</td>
-                            {/* <td>
-                                {entry.orderMessage !== "Order Canceled" &&
-                                    <button onClick={() => handleEditing(entry.orderId)}>Edit</button>
-                                }
-                            </td> */}
-                            {
-                                entry.orderMessage !== "Order Canceled" &&
-                                <td onClick={() => handleEditing(entry.orderId)} id={entry.orderId}>
-                                <i className="bi bi-pencil-square"></i>
-                            </td>
-                            
-                            }
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {orderUpdate &&
+            <div className="table-header">
+                <InputText
+                    type="search"
+                    onInput={(e) => setGlobalFilter(e.target.value)}
+                    placeholder="Search by Product Name, Order Message, Item Total..."
+                    style={{ width: '30%' }}
+                />
+                <Dropdown
+                    value={rowsPerPage}
+                    options={[5, 10, 15].map(val => ({ label: val, value: val }))}
+                    onChange={(e) => setRowsPerPage(e.value)}
+                    placeholder="Rows per page"
+                    style={{ marginLeft: '10px' }}
+                />
+            </div>
+            <DataTable
+                value={combinedList}
+                paginator
+                rows={rowsPerPage}
+                globalFilter={globalFilter}
+                emptyMessage="No orders found."
+                className="p-datatable-sm"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} orders"
+            >
+                <Column field="productName" header="Product Name" sortable />
+                <Column field="address" header="Address" body={(rowData) => `${rowData.address}, ${rowData.phoneNumber}`} sortable />
+                <Column field="itemTotal" header="Item Total" sortable />
+                <Column field="quantity" header="Quantity" sortable />
+                <Column field="dateOfOrder" header="Date of Order" sortable />
+                <Column field="orderMessage" header="Order Message" body={statusBodyTemplate} sortable />
+                <Column field="paymentMode" header="Payment Mode" sortable />
+                <Column body={actionBodyTemplate} header="Action" />
+            </DataTable>
+            {orderUpdate && (
                 <div className="update-status">
                     <div className="box-title"><h5 className="modal-title">Update Order</h5></div> <hr />
                     <div className="body">
                         <select ref={messageRef}>
                             <option value="Order Placed">Order Placed</option>
                             <option value="Shipped">Shipped</option>
-                            <option value="Out For Delivery">Out For Delivery</option>
+                            <option value="Out For Deliver">Out For Deliver</option>
                             <option value="Delivered">Delivered</option>
                         </select>
                     </div> <hr />
@@ -310,9 +320,10 @@ console.log(combinedList);
                         <button className="footer-btn" onClick={updateOrderStatus}>Update</button>
                     </div>
                 </div>
-            }
+            )}
         </div>
     );
 };
 
 export default Order;
+
