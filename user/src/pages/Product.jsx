@@ -12,7 +12,7 @@ const Product = () => {
         {filteredProducts.length!==0?filteredProducts.map((product, index) => (
         <div className="col-6 col-sm-6 col-md-4 col-lg-3" key={index}>
             <Link to={`/product/${product._id}`} className="card-link">
-                <div className="card h-100">
+                <div className="card h-100 phover">
                     <div className="img-container">
                         <img src={`http://localhost:5001/${product.image}`} className="card-img-top product-image" alt="..." />
                     </div>
@@ -23,7 +23,7 @@ const Product = () => {
                                 <div className="newprice ">₹{product.newPrice}
                                 <div className="oldPrice">₹{product.oldPrice}</div>
                                 </div>
-                                <div className="cart"><i className="bi bi-cart"></i></div>
+                                {/* <div className="cart"><i className="bi bi-cart"></i></div> */}
                             </div>
                         </div>
                     </div>

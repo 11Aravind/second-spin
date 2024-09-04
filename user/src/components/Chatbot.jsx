@@ -76,7 +76,7 @@ const Chatbot = ({ onClose }) => {
   };
 
   return (
-    <div className='main'>
+    <div className='mains'>
       <div className="chatbot-container">
         <div className="chatbot-header">
           <h6>AI Assistant</h6>

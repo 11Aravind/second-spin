@@ -141,7 +141,7 @@ import { useSelector } from "react-redux";
 import "./css/orders.css";
 
 const Orders = () => {
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId")
   const products = useSelector((state) => state.products.productList);
   const imgPath = useSelector((state) => state.common.imagePath);
   const [orders, setOrders] = useState([]);
@@ -319,8 +319,8 @@ const Orders = () => {
                       </div>
                       {(order.order_message !== "Order Canceled") && (
                         <div className="address-right">
-                          <div className="address-heading mediumfont">More actions</div>
-                          <div className="desc"><button>Download Invoice</button></div>
+                          {/* <div className="address-heading mediumfont">More actions</div>
+                          <div className="desc"><button>Download Invoice</button></div> */}
                         </div>
                       )}
                     </div>

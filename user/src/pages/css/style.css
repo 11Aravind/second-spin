@@ -16,8 +16,8 @@
 }
 .smallBtn{
     color: white;
-    background: var(--primary);
-    border: none;
+    background: linear-gradient(45deg, #c338fc, #ff00ff);
+        border: none;
     padding: 7px 16px;
     border-radius: 18px;
     font-size: 13px;

@@ -149,7 +149,7 @@ import axios from "axios";
 import { fetchAndStoreAddress } from "../Slice/addressSlice";
 import "./css/style.css";
 import "./css/OrderConfirmation.css";
-import Address from "../components/Address";
+import Address,{AddressList} from "../components/Address";
 import Notfound from "../pages/Notfound";
 
 export const Checkout = () => {
@@ -161,10 +161,10 @@ export const Checkout = () => {
   const [isAddressVisible, setAddressVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const addressList = useSelector((state) => state.address.addressList);
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId")
   
   const onCheckOut = () => {
-    const userId = JSON.parse(localStorage.getItem("userId"));
+    const userId = localStorage.getItem("userId")
     userId === null && navigate("/login");
     return userId;
   };
@@ -179,6 +179,7 @@ export const Checkout = () => {
         else {
           dispatch(fetchAndStoreAddress(response.data.data.addressList));
         }
+        console.log(response.data);
       })
       .catch((err) => console.error("Error fetching address:", err));
   }, [dispatch]);
@@ -279,7 +280,7 @@ export const Checkout = () => {
     <div className="container col-10">
       {isLoading && <Loader />} {/* Show loader when isLoading is true */}
       <h5 className="headdingSpace">DELIVERY ADDRESS</h5>
-      {addressList.length !== 0 &&
+      {/* {addressList.length !== 0 &&
         addressList.map((address, key) => {
           return (
             <div
@@ -297,12 +298,11 @@ export const Checkout = () => {
                 <b>{address.name}</b> {address.address}
               </label>
               <div className="remove" id={address._id}>
-                {/* Add handleRemoveAddress function if needed */}
-                {/* <i className="bi bi-trash3"></i> */}
               </div>
             </div>
           );
-        })}
+        })} */}
+        <AddressList changeAddressid={changeAddressid}/>
 
       <div className="col-12 ">
         <button

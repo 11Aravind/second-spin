@@ -12,6 +12,8 @@ const ProductDetails = () => {
   const { id } = useParams();
   const products=useSelector(state=>state.products.productList);
   const product = products.filter((item) => item._id === id);
+  console.log(product);
+  
   // console.log(product);
   // console.log(id);
   // console.log(product);
@@ -31,7 +33,7 @@ const ProductDetails = () => {
           {product && <img src={`http://localhost:5001/${product[0].image}`} alt="" />}
         </div>
         <div className="rigt">
-          <div className="product-name">
+          <div className="product-name" style={{textTransform:"uppercase"}}>
             {product && product[0].name}
           </div>
           <div className="price productdetails-price">
@@ -39,7 +41,7 @@ const ProductDetails = () => {
             <div className="oldPrice"> ₹ {product && product[0].oldPrice}</div>
           </div>
           <div className="addToCart fixedBtn">
-           
+
             <Link to="/cart">
               {/* <button className="small-btn" onClick={addToCart}>ADD TO CART</button> */}
                <ButtonComponent
@@ -51,6 +53,12 @@ const ProductDetails = () => {
             {/* {showCart && <Cart callbackShowCart={callbackShowCart} />} */}
           </div>
           <div className="sub-headding-dropdown" onClick={() => isDescriptionVisible(!description)}>
+<div>          <span>Product Quality</span> :<span
+  style={{
+    color: product[0].productLabel === "firstHand" ? "green" : "red"
+  }}>{product[0].productLabel==="firstHand" &&"First Hand"}{product[0].productLabel==="secondHand" &&"Second Hand"}</span>
+</div>
+
             <div >Description</div>
             <div className="icon">{description ? <i className="bi bi-chevron-up"></i> : <i className="bi bi-chevron-down"></i>}</div>
           </div>

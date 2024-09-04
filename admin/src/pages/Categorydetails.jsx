@@ -214,7 +214,7 @@ export const Categorydetails = () => {
 };
 
 
-
+import { useRef } from "react";
 
 export const AddCategory = () => {
   const vehicleTypeRef = useRef(null);

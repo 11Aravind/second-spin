@@ -126,7 +126,7 @@ let options = [
 
 const Navbar = () => {
     const [isOpen, handleClick] = useState(false);
-    const userId = JSON.parse(localStorage.getItem("userId"));
+    const userId = localStorage.getItem("userId")
     const navigate = useNavigate(); // For navigation after logout
     const logOut=()=>{
         localStorage.removeItem('userId');

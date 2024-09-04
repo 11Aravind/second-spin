@@ -230,24 +230,43 @@ const Address = ({ changeAddressVisibility }) => {
   };
 
   const saveAddress = () => {
+    const trimmedUserId = userId ? userId.trim().replace(/(^"|"$)/g, '') : null;
+
     if (validateForm()) {
       const addressData = {
-        userId: userId,
+        userId: trimmedUserId,
         name: nameRef.current.value.trim(),
         mobileNo: mobileRef.current.value.trim(),
         address: `${addressRef.current.value.trim()}, ${localityRef.current.value.trim()}, ${cityRef.current.value.trim()}, ${pincodeRef.current.value.trim()}, ${stateRef.current.value.trim()}`,
         order_id: null,
       };
+console.log("addressData",addressData);
 
       axios.post("http://localhost:5001/api/address/store", addressData)
         .then((res) => {
+          // const newAddress = [...addressList, res.data];
+          // console.log("newAddress",newAddress);
+          
+          // toast.success(res.data.message)
+          // dispatch(fetchAndStoreAddress(newAddress));
+          // changeAddressVisibility();
           const newAddress = [...addressList, res.data];
-          toast.success(res.data.message)
-          dispatch(fetchAndStoreAddress(newAddress));
-          changeAddressVisibility();
+    console.log("newAddress", newAddress);
+
+    toast.success(res.data.message);
+    dispatch(fetchAndStoreAddress(newAddress));  // Update the global state
+    changeAddressVisibility();
+
+    // Refetch the address list after successfully adding a new address
+    axios.get(`http://localhost:5001/api/address?userId=${trimmedUserId}`)
+      .then((response) => {
+        dispatch(fetchAndStoreAddress(response.data.data.addressList));
+      })
+      .catch((err) => console.error("Error refetching address after update:", err));
         })
         .catch((error) => console.log(error));
     }
+    
   };
 
   return (
@@ -366,3 +385,39 @@ const Address = ({ changeAddressVisibility }) => {
 
 export default Address;
 
+export const AddressList = ({ changeAddressid }) => {
+  const addressList = useSelector((state) => state.address.addressList);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+
+  const handleAddressClick = (addressId) => {
+    setSelectedAddressId(addressId);
+    changeAddressid(addressId);
+  };
+
+  return (
+    <div className="row row-cols-1 row-cols-md-2 g-4">
+      {addressList.length === 0 ? "" : (
+        addressList.map((address, key) => (
+          <div className="col" key={key} onClick={() => handleAddressClick(address._id)} style={{cursor:"pointer"}}>
+            <div className={`card ${selectedAddressId === address._id ? 'selected' : ''}`}>
+              {/* Hidden radio button for logical selection */}
+              <input 
+                type="radio" 
+                name="flexRadioDefault" 
+                id={`address_${key}`} 
+                style={{ display: 'none' }} 
+                checked={selectedAddressId === address._id} 
+                onChange={() => {}} 
+              />
+              <div className="card-body">
+                <p className="card-text">
+                  <b>{address.name}</b>{address.address}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
